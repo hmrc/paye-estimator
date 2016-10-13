@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PAYE Estimator DEV</title>
+</head>
+<body>
+<!-- Include Scala.js compiled code -->
+<script type="text/javascript" src="../../../target/scala-2.11/paye-estimator-fastopt.js"></script>
+<script>
+    var pc = new uk.gov.hmrc.paye.estimator.domain.PayeEstimator()
+    pc.calculation()
+</script>
+</body>
+</html>

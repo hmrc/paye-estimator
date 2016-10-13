@@ -19,7 +19,7 @@ object HmrcBuild extends Build {
       scalaVersion := "2.11.8",
       libraryDependencies ++= Seq(
 
-        //add scala js wrapper ('%%%') libs here 
+        //add scala js wrapper ('%%%') libs here
 
         Test.scalaTest,
         Test.pegdown
@@ -33,8 +33,6 @@ object HmrcBuild extends Build {
       //minify
       scalaJSStage := FullOptStage
     )
-
-  lazy val js = "library.js"
 }
 
 object Dependencies {
