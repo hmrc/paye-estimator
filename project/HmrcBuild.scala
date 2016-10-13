@@ -12,7 +12,7 @@ object HmrcBuild extends Build {
   
   val nameApp = "paye-estimator"
 
-  lazy val simpleReactiveMongo = Project(nameApp, file("."))
+  lazy val payeEstimator = Project(nameApp, file("."))
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, ScalaJSPlugin)
     .settings(
       autoSourceHeader := false,
