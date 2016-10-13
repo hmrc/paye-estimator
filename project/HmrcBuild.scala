@@ -33,6 +33,8 @@ object HmrcBuild extends Build {
       //minify
       scalaJSStage := FullOptStage
     )
+
+  lazy val js = "library.js"
 }
 
 object Dependencies {
