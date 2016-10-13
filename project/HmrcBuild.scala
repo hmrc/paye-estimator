@@ -12,15 +12,13 @@ object HmrcBuild extends Build {
   
   val nameApp = "paye-estimator"
 
-  lazy val payeEstimator = Project(nameApp, file("."))
+  lazy val root = Project(nameApp, file("."))
+    .aggregate(libraryJS)
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, ScalaJSPlugin)
     .settings(
       autoSourceHeader := false,
       scalaVersion := "2.11.8",
       libraryDependencies ++= Seq(
-
-        //add scala js wrapper ('%%%') libs here 
-
         Test.scalaTest,
         Test.pegdown
       ),
@@ -33,8 +31,14 @@ object HmrcBuild extends Build {
       //minify
       scalaJSStage := FullOptStage
     )
+    //.dependsOn(jsLib)
 
-  lazy val js = "library.js"
+  val library = crossProject.in(file(".")).settings(
+    name := "fooLib"
+  ).jsSettings(
+    // JS-specific settings here
+  )
+  lazy val libraryJS = library.js
 }
 
 object Dependencies {
