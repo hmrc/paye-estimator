@@ -20,9 +20,9 @@ object HmrcBuild extends Build {
       libraryDependencies ++= Seq(
 
         //add scala js wrapper ('%%%') libs here
-
         Test.scalaTest,
-        Test.pegdown
+        Test.pegdown,
+        "org.scala-js" %%% "scalajs-java-time" % "0.2.0"
       ),
       resolvers += Resolver.typesafeRepo("releases"),
       crossScalaVersions := Seq("2.11.8"),
