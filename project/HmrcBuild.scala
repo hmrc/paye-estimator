@@ -19,13 +19,18 @@ object HmrcBuild extends Build {
       scalaVersion := "2.11.8",
       libraryDependencies ++= Seq(
 
-        //add scala js wrapper ('%%%') libs here
         Test.scalaTest,
         Test.pegdown,
-        "org.scala-js" %%% "scalajs-java-time" % "0.2.0"
+
+        //add scala js wrapper ('%%%') libs here
+        "org.scala-js" %%% "scalajs-java-time" % "0.2.0",
+        "com.lihaoyi" %%% "utest" % "0.4.3" % "test"
       ),
+
+      testFrameworks += new TestFramework("utest.runner.Framework"),
+
       resolvers += Resolver.typesafeRepo("releases"),
-      crossScalaVersions := Seq("2.11.8"),
+//      crossScalaVersions := Seq("2.11.8"),
       //Rhino JS interpreter disabled, Node.js must be installed
       scalaJSUseRhino := false,
       //add js libraries
@@ -35,6 +40,7 @@ object HmrcBuild extends Build {
     )
 }
 
+// TODO: Remove once all tests are converted. 
 object Dependencies {
 
   object Compile {

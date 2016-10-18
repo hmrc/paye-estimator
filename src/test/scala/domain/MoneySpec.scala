@@ -16,35 +16,40 @@
 
 package domain
 
-import org.scalatest.{WordSpecLike, Matchers}
+import utest.TestSuite
+import utest._
 
-class MoneySpec extends WordSpecLike with Matchers {
+// See
+// http://www.scala-js.org/tutorial/basic/
+// https://github.com/lihaoyi/utest
 
-  "Money " should {
+object MoneyTests extends TestSuite{
 
-    "should do no rounding" in {
+  val tests = this{
+
+    'should_do_no_rounding{
       val money = Money(1000.4567)
-      money.value shouldBe (BigDecimal(1000.4567))
+      assert(money.value.equals(BigDecimal(1000.4567)))
     }
 
-    "should round to 2 decimal places with no rounding up" in {
+    'should_round_to_2_decimal_places_with_no_rounding_up{
       val money = Money(1000.4567, 2, false)
-      money.value shouldBe (BigDecimal(1000.45))
+      assert(money.value.equals(BigDecimal(1000.45)))
     }
 
-    "should round to 3 decimal places with no rounding up" in {
+    'should_round_to_3_decimal_places_with_no_rounding_up{
       val money = Money(1000.4567, 3, false)
-      money.value shouldBe BigDecimal(1000.456)
+      assert(money.value.equals(BigDecimal(1000.456)))
     }
 
-    "should round up to 2 decimal places" in {
+    'should_round_up_to_2_decimal_places{
       val money = Money(1000.4567, 2, true)
-      money.value shouldBe BigDecimal(1000.46)
+      assert(money.value.equals(BigDecimal(1000.46)))
     }
 
-    "should round up to 1 decimal places" in {
+    'should_round_up_to_1_decimal_places{
       val money = Money(1000.4567, 1, true)
-      money.value shouldBe BigDecimal(1000.5)
+      assert(money.value.equals(BigDecimal(1000.5)))
     }
   }
 
