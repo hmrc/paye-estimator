@@ -2,6 +2,7 @@
 name := "paye-estimator"
 
 lazy val root = project.in(file("."))
+//  TODO: temp comment until SbtAutoBuildPlugin has had PR for removing default settings with test arguments merged and release
 //  .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, ScalaJSPlugin)
   .enablePlugins(SbtGitVersioning, ScalaJSPlugin)
   .settings(
