@@ -1402,7 +1402,18 @@ function $s_Lservices_TaxCalculatorService$class__calculateScottishElement__Lser
     throw new $c_s_MatchError().init___O(x1)
   }
 }
-function $s_Lservices_TaxCalculatorService$class__calculateTax__Lservices_TaxCalculatorService__T__I__T__I__T__I__Ldomain_TaxCalc($$this, isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn) {
+function $s_Lservices_TaxCalculatorService$class__services$TaxCalculatorService$$performIsMultiplyFunction__Lservices_TaxCalculatorService__Ldomain_Money__Z__I__Ldomain_Money($$this, amount, isMultiplier, rhs) {
+  if (isMultiplier) {
+    var this$1 = $m_s_math_BigDecimal$();
+    var amount$1 = amount.$$times__s_math_BigDecimal__Ldomain_Money(this$1.apply__I__Ljava_math_MathContext__s_math_BigDecimal(rhs, this$1.defaultMathContext$1));
+    return new $c_Ldomain_Money().init___s_math_BigDecimal__I__Z(amount$1.value__s_math_BigDecimal(), 2, true)
+  } else {
+    var this$3 = $m_s_math_BigDecimal$();
+    var amount$2 = amount.$$div__s_math_BigDecimal__Ldomain_Money(this$3.apply__I__Ljava_math_MathContext__s_math_BigDecimal(rhs, this$3.defaultMathContext$1));
+    return new $c_Ldomain_Money().init___s_math_BigDecimal__I__Z(amount$2.value__s_math_BigDecimal(), 2, true)
+  }
+}
+function $s_Lservices_TaxCalculatorService$class__calculateTax__Lservices_TaxCalculatorService__T__I__T__I__T__I__T($$this, isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn) {
   var hours = new $c_s_Some().init___O(hoursIn);
   var isPensionAge = $s_Lservices_TaxCalculatorService$class__convertToBoolean__Lservices_TaxCalculatorService__T__Z($$this, isStatePensionAge);
   var updatedPayPeriod = (($uI(hours.x$2) > 0) ? "annually" : payPeriod);
@@ -1452,19 +1463,8 @@ function $s_Lservices_TaxCalculatorService$class__calculateTax__Lservices_TaxCal
   })));
   var averageAnnualTaxRate = $s_Lservices_TaxCalculatorService$class__calculateAverageAnnualTaxRate__Lservices_TaxCalculatorService__s_Option__Ldomain_Money($$this, annualTaxBreakdown);
   var this$8 = $m_s_math_BigDecimal$();
-  var taxCalResult = new $c_Ldomain_TaxCalc().init___Z__T__s_Option__s_Option__s_math_BigDecimal__s_math_BigDecimal__s_math_BigDecimal__s_math_BigDecimal__Z__sc_Seq(isPensionAge, taxCode, $s_Lservices_TaxCalculatorService$class__getHourlyGrossPay__p0__Lservices_TaxCalculatorService__s_Option__s_math_BigDecimal__s_Option($$this, hours, this$8.apply__I__Ljava_math_MathContext__s_math_BigDecimal(grossPayPence, this$8.defaultMathContext$1)), hours, averageAnnualTaxRate.value__s_math_BigDecimal(), payeTax.bandRate$1.$$plus__s_math_BigDecimal__s_math_BigDecimal(nicTax.employeeNICBandRate$1), payeTax.bandRate$1, nicTax.employeeNICBandRate$1, payeTax.isTapered$1, taxBreakdown);
-  return taxCalResult
-}
-function $s_Lservices_TaxCalculatorService$class__services$TaxCalculatorService$$performIsMultiplyFunction__Lservices_TaxCalculatorService__Ldomain_Money__Z__I__Ldomain_Money($$this, amount, isMultiplier, rhs) {
-  if (isMultiplier) {
-    var this$1 = $m_s_math_BigDecimal$();
-    var amount$1 = amount.$$times__s_math_BigDecimal__Ldomain_Money(this$1.apply__I__Ljava_math_MathContext__s_math_BigDecimal(rhs, this$1.defaultMathContext$1));
-    return new $c_Ldomain_Money().init___s_math_BigDecimal__I__Z(amount$1.value__s_math_BigDecimal(), 2, true)
-  } else {
-    var this$3 = $m_s_math_BigDecimal$();
-    var amount$2 = amount.$$div__s_math_BigDecimal__Ldomain_Money(this$3.apply__I__Ljava_math_MathContext__s_math_BigDecimal(rhs, this$3.defaultMathContext$1));
-    return new $c_Ldomain_Money().init___s_math_BigDecimal__I__Z(amount$2.value__s_math_BigDecimal(), 2, true)
-  }
+  new $c_Ldomain_TaxCalc().init___Z__T__s_Option__s_Option__s_math_BigDecimal__s_math_BigDecimal__s_math_BigDecimal__s_math_BigDecimal__Z__sc_Seq(isPensionAge, taxCode, $s_Lservices_TaxCalculatorService$class__getHourlyGrossPay__p0__Lservices_TaxCalculatorService__s_Option__s_math_BigDecimal__s_Option($$this, hours, this$8.apply__I__Ljava_math_MathContext__s_math_BigDecimal(grossPayPence, this$8.defaultMathContext$1)), hours, averageAnnualTaxRate.value__s_math_BigDecimal(), payeTax.bandRate$1.$$plus__s_math_BigDecimal__s_math_BigDecimal(nicTax.employeeNICBandRate$1), payeTax.bandRate$1, nicTax.employeeNICBandRate$1, payeTax.isTapered$1, taxBreakdown);
+  return "{\"statePensionAge\":false,\"taxCode\":\"1100T\",\"averageAnnualTaxRate\":2.33,\"marginalTaxRate\":12,\"payeBand\":0,\"employeeNICBand\":12,\"tapered\":false,\"taxBreakdown\":[{\"period\":\"annual\",\"grossPay\":10000.08,\"taxFreePay\":10000.08,\"taxablePay\":0,\"additionalTaxablePay\":0,\"taxCategories\":[{\"taxType\":\"incomeTax\",\"total\":0.00,\"aggregation\":[{\"percentage\":20,\"amount\":0.0},{\"percentage\":40,\"amount\":0.0},{\"percentage\":45,\"amount\":0.0}]},{\"taxType\":\"employeeNationalInsurance\",\"total\":232.81,\"aggregation\":[{\"percentage\":12,\"amount\":232.81}]},{\"taxType\":\"employerNationalInsurance\",\"total\":260.55,\"aggregation\":[{\"percentage\":13.8,\"amount\":260.55}]}],\"totalDeductions\":232.81,\"takeHomePay\":9767.27},{\"period\":\"monthly\",\"grossPay\":833.34,\"taxFreePay\":833.34,\"taxablePay\":0,\"additionalTaxablePay\":0,\"taxCategories\":[{\"taxType\":\"incomeTax\",\"total\":0.00,\"aggregation\":[{\"percentage\":20,\"amount\":0.00},{\"percentage\":40,\"amount\":0.00},{\"percentage\":45,\"amount\":0.00}]},{\"taxType\":\"employeeNationalInsurance\",\"total\":19.40,\"aggregation\":[{\"percentage\":12,\"amount\":19.40}]},{\"taxType\":\"employerNationalInsurance\",\"total\":21.71,\"aggregation\":[{\"percentage\":13.8,\"amount\":21.71}]}],\"totalDeductions\":19.40,\"takeHomePay\":813.94},{\"period\":\"weekly\",\"grossPay\":192.31,\"taxFreePay\":192.31,\"taxablePay\":0,\"additionalTaxablePay\":0,\"taxCategories\":[{\"taxType\":\"incomeTax\",\"total\":0.00,\"aggregation\":[{\"percentage\":20,\"amount\":0.00},{\"percentage\":40,\"amount\":0.00},{\"percentage\":45,\"amount\":0.00}]},{\"taxType\":\"employeeNationalInsurance\",\"total\":4.48,\"aggregation\":[{\"percentage\":12,\"amount\":4.48}]},{\"taxType\":\"employerNationalInsurance\",\"total\":5.01,\"aggregation\":[{\"percentage\":13.8,\"amount\":5.01}]}],\"totalDeductions\":4.48,\"takeHomePay\":187.83}]}"
 }
 function $s_Lservices_TaxCalculatorService$class__calculateAverageAnnualTaxRate__Lservices_TaxCalculatorService__s_Option__Ldomain_Money($$this, annualTaxBreakdown) {
   if ($is_s_Some(annualTaxBreakdown)) {
@@ -5603,132 +5603,6 @@ function $m_Lservices_TaxCalculatorStartup$() {
   return $n_Lservices_TaxCalculatorStartup$
 }
 /** @constructor */
-function $c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$() {
-  $c_O.call(this)
-}
-$c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype = new $h_O();
-$c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype.constructor = $c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$;
-/** @constructor */
-function $h_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$() {
-  /*<skip>*/
-}
-$h_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype = $c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype;
-$c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype.init___ = (function() {
-  return this
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype.$$js$exported$meth$main__O = (function() {
-  return "Hello world!"
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype.main = (function() {
-  return this.$$js$exported$meth$main__O()
-});
-var $d_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$ = new $TypeData().initClass({
-  Luk_gov_hmrc_paye_estimator_domain_HelloWorld$: 0
-}, false, "uk.gov.hmrc.paye.estimator.domain.HelloWorld$", {
-  Luk_gov_hmrc_paye_estimator_domain_HelloWorld$: 1,
-  O: 1
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$.prototype.$classData = $d_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$;
-var $n_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$ = (void 0);
-function $m_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$() {
-  if ((!$n_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$)) {
-    $n_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$ = new $c_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$().init___()
-  };
-  return $n_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$
-}
-$e.uk = ($e.uk || {});
-$e.uk.gov = ($e.uk.gov || {});
-$e.uk.gov.hmrc = ($e.uk.gov.hmrc || {});
-$e.uk.gov.hmrc.paye = ($e.uk.gov.hmrc.paye || {});
-$e.uk.gov.hmrc.paye.estimator = ($e.uk.gov.hmrc.paye.estimator || {});
-$e.uk.gov.hmrc.paye.estimator.domain = ($e.uk.gov.hmrc.paye.estimator.domain || {});
-$e.uk.gov.hmrc.paye.estimator.domain.HelloWorld = $m_Luk_gov_hmrc_paye_estimator_domain_HelloWorld$;
-/** @constructor */
-function $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$() {
-  $c_O.call(this)
-}
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype = new $h_O();
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype.constructor = $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$;
-/** @constructor */
-function $h_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$() {
-  /*<skip>*/
-}
-$h_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype = $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype;
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype.init___ = (function() {
-  return this
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype.$$js$exported$meth$calculation__O = (function() {
-  var this$2 = $m_s_Console$();
-  var this$3 = $as_Ljava_io_PrintStream(this$2.outVar$2.v$1);
-  this$3.java$lang$JSConsoleBasedPrintStream$$printString__T__V("1 million pounds\n")
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype.calculation = (function() {
-  return this.$$js$exported$meth$calculation__O()
-});
-var $d_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$ = new $TypeData().initClass({
-  Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$: 0
-}, false, "uk.gov.hmrc.paye.estimator.domain.PayeEstimator$", {
-  Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$: 1,
-  O: 1
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$.prototype.$classData = $d_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$;
-var $n_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$ = (void 0);
-function $m_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$() {
-  if ((!$n_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$)) {
-    $n_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$ = new $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$().init___()
-  };
-  return $n_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$
-}
-$e.uk = ($e.uk || {});
-$e.uk.gov = ($e.uk.gov || {});
-$e.uk.gov.hmrc = ($e.uk.gov.hmrc || {});
-$e.uk.gov.hmrc.paye = ($e.uk.gov.hmrc.paye || {});
-$e.uk.gov.hmrc.paye.estimator = ($e.uk.gov.hmrc.paye.estimator || {});
-$e.uk.gov.hmrc.paye.estimator.domain = ($e.uk.gov.hmrc.paye.estimator.domain || {});
-$e.uk.gov.hmrc.paye.estimator.domain.PayeEstimator = $m_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator$;
-/** @constructor */
-function $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2() {
-  $c_O.call(this)
-}
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype = new $h_O();
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype.constructor = $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2;
-/** @constructor */
-function $h_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2() {
-  /*<skip>*/
-}
-$h_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype = $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype;
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype.init___ = (function() {
-  return this
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype.$$js$exported$meth$calculation__O = (function() {
-  var this$2 = $m_s_Console$();
-  var this$3 = $as_Ljava_io_PrintStream(this$2.outVar$2.v$1);
-  this$3.java$lang$JSConsoleBasedPrintStream$$printString__T__V("2 million pounds\n")
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype.calculation = (function() {
-  return this.$$js$exported$meth$calculation__O()
-});
-var $d_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2 = new $TypeData().initClass({
-  Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2: 0
-}, false, "uk.gov.hmrc.paye.estimator.domain.PayeEstimator2", {
-  Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2: 1,
-  O: 1
-});
-$c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype.$classData = $d_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2;
-$e.uk = ($e.uk || {});
-$e.uk.gov = ($e.uk.gov || {});
-$e.uk.gov.hmrc = ($e.uk.gov.hmrc || {});
-$e.uk.gov.hmrc.paye = ($e.uk.gov.hmrc.paye || {});
-$e.uk.gov.hmrc.paye.estimator = ($e.uk.gov.hmrc.paye.estimator || {});
-$e.uk.gov.hmrc.paye.estimator.domain = ($e.uk.gov.hmrc.paye.estimator.domain || {});
-/** @constructor */
-$e.uk.gov.hmrc.paye.estimator.domain.PayeEstimator2 = (function() {
-  var $thiz = new $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2();
-  $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype.init___.call($thiz);
-  return $thiz
-});
-$e.uk.gov.hmrc.paye.estimator.domain.PayeEstimator2.prototype = $c_Luk_gov_hmrc_paye_estimator_domain_PayeEstimator2.prototype;
-/** @constructor */
 function $c_jl_Class() {
   $c_O.call(this);
   this.data$1 = null
@@ -5871,67 +5745,6 @@ function $m_jl_Math$() {
     $n_jl_Math$ = new $c_jl_Math$().init___()
   };
   return $n_jl_Math$
-}
-/** @constructor */
-function $c_jl_System$() {
-  $c_O.call(this);
-  this.out$1 = null;
-  this.err$1 = null;
-  this.in$1 = null;
-  this.getHighPrecisionTime$1 = null
-}
-$c_jl_System$.prototype = new $h_O();
-$c_jl_System$.prototype.constructor = $c_jl_System$;
-/** @constructor */
-function $h_jl_System$() {
-  /*<skip>*/
-}
-$h_jl_System$.prototype = $c_jl_System$.prototype;
-$c_jl_System$.prototype.init___ = (function() {
-  $n_jl_System$ = this;
-  this.out$1 = new $c_jl_JSConsoleBasedPrintStream().init___jl_Boolean(false);
-  this.err$1 = new $c_jl_JSConsoleBasedPrintStream().init___jl_Boolean(true);
-  this.in$1 = null;
-  var x = $g.performance;
-  if ($uZ((!(!x)))) {
-    var x$1 = $g.performance.now;
-    if ($uZ((!(!x$1)))) {
-      var jsx$1 = (function() {
-        return $uD($g.performance.now())
-      })
-    } else {
-      var x$2 = $g.performance.webkitNow;
-      if ($uZ((!(!x$2)))) {
-        var jsx$1 = (function() {
-          return $uD($g.performance.webkitNow())
-        })
-      } else {
-        var jsx$1 = (function() {
-          return $uD(new $g.Date().getTime())
-        })
-      }
-    }
-  } else {
-    var jsx$1 = (function() {
-      return $uD(new $g.Date().getTime())
-    })
-  };
-  this.getHighPrecisionTime$1 = jsx$1;
-  return this
-});
-var $d_jl_System$ = new $TypeData().initClass({
-  jl_System$: 0
-}, false, "java.lang.System$", {
-  jl_System$: 1,
-  O: 1
-});
-$c_jl_System$.prototype.$classData = $d_jl_System$;
-var $n_jl_System$ = (void 0);
-function $m_jl_System$() {
-  if ((!$n_jl_System$)) {
-    $n_jl_System$ = new $c_jl_System$().init___()
-  };
-  return $n_jl_System$
 }
 /** @constructor */
 function $c_jl_reflect_Array$() {
@@ -6156,17 +5969,6 @@ var $d_ju_Formatter$RegExpExtractor = new $TypeData().initClass({
   O: 1
 });
 $c_ju_Formatter$RegExpExtractor.prototype.$classData = $d_ju_Formatter$RegExpExtractor;
-/** @constructor */
-function $c_s_DeprecatedConsole() {
-  $c_O.call(this)
-}
-$c_s_DeprecatedConsole.prototype = new $h_O();
-$c_s_DeprecatedConsole.prototype.constructor = $c_s_DeprecatedConsole;
-/** @constructor */
-function $h_s_DeprecatedConsole() {
-  /*<skip>*/
-}
-$h_s_DeprecatedConsole.prototype = $c_s_DeprecatedConsole.prototype;
 /** @constructor */
 function $c_s_FallbackArrayBuilding() {
   $c_O.call(this)
@@ -6534,32 +6336,6 @@ function $m_s_sys_package$() {
   };
   return $n_s_sys_package$
 }
-/** @constructor */
-function $c_s_util_DynamicVariable() {
-  $c_O.call(this);
-  this.v$1 = null
-}
-$c_s_util_DynamicVariable.prototype = new $h_O();
-$c_s_util_DynamicVariable.prototype.constructor = $c_s_util_DynamicVariable;
-/** @constructor */
-function $h_s_util_DynamicVariable() {
-  /*<skip>*/
-}
-$h_s_util_DynamicVariable.prototype = $c_s_util_DynamicVariable.prototype;
-$c_s_util_DynamicVariable.prototype.toString__T = (function() {
-  return (("DynamicVariable(" + this.v$1) + ")")
-});
-$c_s_util_DynamicVariable.prototype.init___O = (function(init) {
-  this.v$1 = init;
-  return this
-});
-var $d_s_util_DynamicVariable = new $TypeData().initClass({
-  s_util_DynamicVariable: 0
-}, false, "scala.util.DynamicVariable", {
-  s_util_DynamicVariable: 1,
-  O: 1
-});
-$c_s_util_DynamicVariable.prototype.$classData = $d_s_util_DynamicVariable;
 /** @constructor */
 function $c_s_util_Either$() {
   $c_O.call(this)
@@ -7425,9 +7201,6 @@ $c_sjsr_RuntimeString$.prototype.init___ = (function() {
 $c_sjsr_RuntimeString$.prototype.indexOf__T__I__I__I = (function(thiz, ch, fromIndex) {
   var str = this.fromCodePoint__p1__I__T(ch);
   return $uI(thiz.indexOf(str, fromIndex))
-});
-$c_sjsr_RuntimeString$.prototype.valueOf__C__T = (function(value) {
-  return $as_T($g.String.fromCharCode(value))
 });
 $c_sjsr_RuntimeString$.prototype.toCharArray__T__AC = (function(thiz) {
   var length = $uI(thiz.length);
@@ -8879,20 +8652,6 @@ var $d_Ldomain_AnnualAllowance = new $TypeData().initClass({
 });
 $c_Ldomain_AnnualAllowance.prototype.$classData = $d_Ldomain_AnnualAllowance;
 /** @constructor */
-function $c_Ljava_io_OutputStream() {
-  $c_O.call(this)
-}
-$c_Ljava_io_OutputStream.prototype = new $h_O();
-$c_Ljava_io_OutputStream.prototype.constructor = $c_Ljava_io_OutputStream;
-/** @constructor */
-function $h_Ljava_io_OutputStream() {
-  /*<skip>*/
-}
-$h_Ljava_io_OutputStream.prototype = $c_Ljava_io_OutputStream.prototype;
-$c_Ljava_io_OutputStream.prototype.close__V = (function() {
-  /*<skip>*/
-});
-/** @constructor */
 function $c_Ljava_math_BigDecimal$() {
   $c_O.call(this);
   this.ZERO$1 = null;
@@ -9925,7 +9684,7 @@ $c_Lservices_LiveTaxCalculatorService$.prototype.init___ = (function() {
   return this
 });
 $c_Lservices_LiveTaxCalculatorService$.prototype.$$js$exported$meth$calculateTax__T__I__T__I__T__I__O = (function(isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn) {
-  return $s_Lservices_TaxCalculatorService$class__calculateTax__Lservices_TaxCalculatorService__T__I__T__I__T__I__Ldomain_TaxCalc(this, isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn)
+  return $s_Lservices_TaxCalculatorService$class__calculateTax__Lservices_TaxCalculatorService__T__I__T__I__T__I__T(this, isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn)
 });
 $c_Lservices_LiveTaxCalculatorService$.prototype.calculateTax = (function(arg$1, arg$2, arg$3, arg$4, arg$5, arg$6) {
   var prep0 = $as_T(arg$1);
@@ -11226,43 +10985,6 @@ function $m_ju_regex_Pattern$() {
     $n_ju_regex_Pattern$ = new $c_ju_regex_Pattern$().init___()
   };
   return $n_ju_regex_Pattern$
-}
-/** @constructor */
-function $c_s_Console$() {
-  $c_s_DeprecatedConsole.call(this);
-  this.outVar$2 = null;
-  this.errVar$2 = null;
-  this.inVar$2 = null
-}
-$c_s_Console$.prototype = new $h_s_DeprecatedConsole();
-$c_s_Console$.prototype.constructor = $c_s_Console$;
-/** @constructor */
-function $h_s_Console$() {
-  /*<skip>*/
-}
-$h_s_Console$.prototype = $c_s_Console$.prototype;
-$c_s_Console$.prototype.init___ = (function() {
-  $n_s_Console$ = this;
-  this.outVar$2 = new $c_s_util_DynamicVariable().init___O($m_jl_System$().out$1);
-  this.errVar$2 = new $c_s_util_DynamicVariable().init___O($m_jl_System$().err$1);
-  this.inVar$2 = new $c_s_util_DynamicVariable().init___O(null);
-  return this
-});
-var $d_s_Console$ = new $TypeData().initClass({
-  s_Console$: 0
-}, false, "scala.Console$", {
-  s_Console$: 1,
-  s_DeprecatedConsole: 1,
-  O: 1,
-  s_io_AnsiColor: 1
-});
-$c_s_Console$.prototype.$classData = $d_s_Console$;
-var $n_s_Console$ = (void 0);
-function $m_s_Console$() {
-  if ((!$n_s_Console$)) {
-    $n_s_Console$ = new $c_s_Console$().init___()
-  };
-  return $n_s_Console$
 }
 /** @constructor */
 function $c_s_Enumeration() {
@@ -12753,22 +12475,6 @@ var $d_sr_Nothing$ = new $TypeData().initClass({
   jl_Throwable: 1,
   O: 1,
   Ljava_io_Serializable: 1
-});
-/** @constructor */
-function $c_Ljava_io_FilterOutputStream() {
-  $c_Ljava_io_OutputStream.call(this);
-  this.out$2 = null
-}
-$c_Ljava_io_FilterOutputStream.prototype = new $h_Ljava_io_OutputStream();
-$c_Ljava_io_FilterOutputStream.prototype.constructor = $c_Ljava_io_FilterOutputStream;
-/** @constructor */
-function $h_Ljava_io_FilterOutputStream() {
-  /*<skip>*/
-}
-$h_Ljava_io_FilterOutputStream.prototype = $c_Ljava_io_FilterOutputStream.prototype;
-$c_Ljava_io_FilterOutputStream.prototype.init___Ljava_io_OutputStream = (function(out) {
-  this.out$2 = out;
-  return this
 });
 /** @constructor */
 function $c_Ljava_math_BigDecimal() {
@@ -15168,30 +14874,6 @@ var $d_jl_Integer = new $TypeData().initClass({
 }, (void 0), (void 0), (function(x) {
   return $isInt(x)
 }));
-/** @constructor */
-function $c_jl_JSConsoleBasedPrintStream$DummyOutputStream() {
-  $c_Ljava_io_OutputStream.call(this)
-}
-$c_jl_JSConsoleBasedPrintStream$DummyOutputStream.prototype = new $h_Ljava_io_OutputStream();
-$c_jl_JSConsoleBasedPrintStream$DummyOutputStream.prototype.constructor = $c_jl_JSConsoleBasedPrintStream$DummyOutputStream;
-/** @constructor */
-function $h_jl_JSConsoleBasedPrintStream$DummyOutputStream() {
-  /*<skip>*/
-}
-$h_jl_JSConsoleBasedPrintStream$DummyOutputStream.prototype = $c_jl_JSConsoleBasedPrintStream$DummyOutputStream.prototype;
-$c_jl_JSConsoleBasedPrintStream$DummyOutputStream.prototype.init___ = (function() {
-  return this
-});
-var $d_jl_JSConsoleBasedPrintStream$DummyOutputStream = new $TypeData().initClass({
-  jl_JSConsoleBasedPrintStream$DummyOutputStream: 0
-}, false, "java.lang.JSConsoleBasedPrintStream$DummyOutputStream", {
-  jl_JSConsoleBasedPrintStream$DummyOutputStream: 1,
-  Ljava_io_OutputStream: 1,
-  O: 1,
-  Ljava_io_Closeable: 1,
-  Ljava_io_Flushable: 1
-});
-$c_jl_JSConsoleBasedPrintStream$DummyOutputStream.prototype.$classData = $d_jl_JSConsoleBasedPrintStream$DummyOutputStream;
 function $isArrayOf_jl_Long(obj, depth) {
   return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.jl_Long)))
 }
@@ -19662,59 +19344,6 @@ var $d_sr_ScalaRunTime$$anon$1 = new $TypeData().initClass({
 });
 $c_sr_ScalaRunTime$$anon$1.prototype.$classData = $d_sr_ScalaRunTime$$anon$1;
 /** @constructor */
-function $c_Ljava_io_PrintStream() {
-  $c_Ljava_io_FilterOutputStream.call(this);
-  this.java$io$PrintStream$$autoFlush$f = false;
-  this.charset$3 = null;
-  this.java$io$PrintStream$$encoder$3 = null;
-  this.java$io$PrintStream$$closing$3 = false;
-  this.java$io$PrintStream$$closed$3 = false;
-  this.errorFlag$3 = false;
-  this.bitmap$0$3 = false
-}
-$c_Ljava_io_PrintStream.prototype = new $h_Ljava_io_FilterOutputStream();
-$c_Ljava_io_PrintStream.prototype.constructor = $c_Ljava_io_PrintStream;
-/** @constructor */
-function $h_Ljava_io_PrintStream() {
-  /*<skip>*/
-}
-$h_Ljava_io_PrintStream.prototype = $c_Ljava_io_PrintStream.prototype;
-$c_Ljava_io_PrintStream.prototype.append__jl_CharSequence__jl_Appendable = (function(x$1) {
-  return this.append__jl_CharSequence__Ljava_io_PrintStream(x$1)
-});
-$c_Ljava_io_PrintStream.prototype.init___Ljava_io_OutputStream__Z__Ljava_nio_charset_Charset = (function(_out, autoFlush, charset) {
-  this.java$io$PrintStream$$autoFlush$f = autoFlush;
-  this.charset$3 = charset;
-  $c_Ljava_io_FilterOutputStream.prototype.init___Ljava_io_OutputStream.call(this, _out);
-  this.java$io$PrintStream$$closing$3 = false;
-  this.java$io$PrintStream$$closed$3 = false;
-  this.errorFlag$3 = false;
-  return this
-});
-$c_Ljava_io_PrintStream.prototype.append__jl_CharSequence__Ljava_io_PrintStream = (function(csq) {
-  this.print__T__V(((csq === null) ? "null" : $objectToString(csq)));
-  return this
-});
-$c_Ljava_io_PrintStream.prototype.append__C__jl_Appendable = (function(x$1) {
-  return this.append__C__Ljava_io_PrintStream(x$1)
-});
-$c_Ljava_io_PrintStream.prototype.append__C__Ljava_io_PrintStream = (function(c) {
-  this.print__C__V(c);
-  return this
-});
-function $is_Ljava_io_PrintStream(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Ljava_io_PrintStream)))
-}
-function $as_Ljava_io_PrintStream(obj) {
-  return (($is_Ljava_io_PrintStream(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "java.io.PrintStream"))
-}
-function $isArrayOf_Ljava_io_PrintStream(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Ljava_io_PrintStream)))
-}
-function $asArrayOf_Ljava_io_PrintStream(obj, depth) {
-  return (($isArrayOf_Ljava_io_PrintStream(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Ljava.io.PrintStream;", depth))
-}
-/** @constructor */
 function $c_Ljava_time_Month() {
   $c_jl_Enum.call(this);
   this.value$2 = 0;
@@ -23502,88 +23131,6 @@ var $d_Lservices_TaxablePayCalculator = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_Lservices_TaxablePayCalculator.prototype.$classData = $d_Lservices_TaxablePayCalculator;
-/** @constructor */
-function $c_jl_JSConsoleBasedPrintStream() {
-  $c_Ljava_io_PrintStream.call(this);
-  this.isErr$4 = null;
-  this.flushed$4 = false;
-  this.buffer$4 = null
-}
-$c_jl_JSConsoleBasedPrintStream.prototype = new $h_Ljava_io_PrintStream();
-$c_jl_JSConsoleBasedPrintStream.prototype.constructor = $c_jl_JSConsoleBasedPrintStream;
-/** @constructor */
-function $h_jl_JSConsoleBasedPrintStream() {
-  /*<skip>*/
-}
-$h_jl_JSConsoleBasedPrintStream.prototype = $c_jl_JSConsoleBasedPrintStream.prototype;
-$c_jl_JSConsoleBasedPrintStream.prototype.init___jl_Boolean = (function(isErr) {
-  this.isErr$4 = isErr;
-  var out = new $c_jl_JSConsoleBasedPrintStream$DummyOutputStream().init___();
-  $c_Ljava_io_PrintStream.prototype.init___Ljava_io_OutputStream__Z__Ljava_nio_charset_Charset.call(this, out, false, null);
-  this.flushed$4 = true;
-  this.buffer$4 = "";
-  return this
-});
-$c_jl_JSConsoleBasedPrintStream.prototype.print__T__V = (function(s) {
-  this.java$lang$JSConsoleBasedPrintStream$$printString__T__V(((s === null) ? "null" : s))
-});
-$c_jl_JSConsoleBasedPrintStream.prototype.java$lang$JSConsoleBasedPrintStream$$printString__T__V = (function(s) {
-  var rest = s;
-  while ((rest !== "")) {
-    var thiz = rest;
-    var nlPos = $uI(thiz.indexOf("\n"));
-    if ((nlPos < 0)) {
-      this.buffer$4 = (("" + this.buffer$4) + rest);
-      this.flushed$4 = false;
-      rest = ""
-    } else {
-      var jsx$1 = this.buffer$4;
-      var thiz$1 = rest;
-      this.doWriteLine__p4__T__V((("" + jsx$1) + $as_T(thiz$1.substring(0, nlPos))));
-      this.buffer$4 = "";
-      this.flushed$4 = true;
-      var thiz$2 = rest;
-      var beginIndex = ((1 + nlPos) | 0);
-      rest = $as_T(thiz$2.substring(beginIndex))
-    }
-  }
-});
-$c_jl_JSConsoleBasedPrintStream.prototype.doWriteLine__p4__T__V = (function(line) {
-  var x = $g.console;
-  if ($uZ((!(!x)))) {
-    var x$1 = this.isErr$4;
-    if ($uZ(x$1)) {
-      var x$2 = $g.console.error;
-      var jsx$1 = $uZ((!(!x$2)))
-    } else {
-      var jsx$1 = false
-    };
-    if (jsx$1) {
-      $g.console.error(line)
-    } else {
-      $g.console.log(line)
-    }
-  }
-});
-$c_jl_JSConsoleBasedPrintStream.prototype.print__C__V = (function(c) {
-  this.java$lang$JSConsoleBasedPrintStream$$printString__T__V($m_sjsr_RuntimeString$().valueOf__C__T(c))
-});
-$c_jl_JSConsoleBasedPrintStream.prototype.close__V = (function() {
-  /*<skip>*/
-});
-var $d_jl_JSConsoleBasedPrintStream = new $TypeData().initClass({
-  jl_JSConsoleBasedPrintStream: 0
-}, false, "java.lang.JSConsoleBasedPrintStream", {
-  jl_JSConsoleBasedPrintStream: 1,
-  Ljava_io_PrintStream: 1,
-  Ljava_io_FilterOutputStream: 1,
-  Ljava_io_OutputStream: 1,
-  O: 1,
-  Ljava_io_Closeable: 1,
-  Ljava_io_Flushable: 1,
-  jl_Appendable: 1
-});
-$c_jl_JSConsoleBasedPrintStream.prototype.$classData = $d_jl_JSConsoleBasedPrintStream;
 /** @constructor */
 function $c_ju_Arrays$$anon$3() {
   $c_O.call(this);

@@ -2,20 +2,18 @@
 <html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="./paye-estimator-fastopt.js"></script> // NOTE: this is a copy of ../../../target/scala-2.11/classes/paye-estimator-fastopt.js
+
+<!-- NOTE: This is for Spike only. this is a copy of ../../../target/scala-2.11/classes/paye-estimator-fastopt.js -->
+<script type="text/javascript" src="./paye-estimator-fastopt.js"></script>
 <script type="text/javascript">
 
 function calculate() {
     var isStatePensionAge = $('input[name="StatePensionAge"]:checked').val();
     var taxYear = 2015;
     var taxCode = $('input[name="TaxCode"]').val();
-    alert('taxCode ' + taxCode);
     var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
-    alert('grossPayPence ' + grossPayPence);
     var payPeriod = $("#GrossPayType").val();
-    alert('pay period is sss ' + payPeriod);
     var hours = parseInt($('input[name="HourlyRate"]').val(), 10);
-    alert('hours is ' + hours);
 
 // TODO: Note: All reference data has not been defined so hardwired values at present.
 // TODO. Add hours + payPeriod.
