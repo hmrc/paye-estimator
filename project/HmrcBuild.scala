@@ -31,6 +31,7 @@ object HmrcBuild extends Build {
 
       resolvers += Resolver.typesafeRepo("releases"),
 //      crossScalaVersions := Seq("2.11.8"),
+      scalaJSOutputWrapper := ("var __ScalaJSEnv = { exportsNamespace: exports };", ""),
       //Rhino JS interpreter disabled, Node.js must be installed
       scalaJSUseRhino := false,
       //add js libraries
