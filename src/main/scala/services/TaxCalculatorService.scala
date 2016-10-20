@@ -17,13 +17,11 @@
 package services
 
 import java.time.LocalDate
-
 import domain._
-
-import scala.concurrent.{ExecutionContext, Future}
 import scala.math.BigDecimal
 import scala.math.BigDecimal.RoundingMode
 import scala.scalajs.js.annotation.JSExport
+import upickle.default._
 
 @JSExport
 object OptionFactory {
@@ -40,6 +38,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
   @JSExport
   def calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
+// TODO: Interface
 //    def calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hours: Option[Int]): Option[TaxCalc] = {
 
     val hours = Some(hoursIn)
@@ -75,18 +74,19 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
 
       val taxCalResult = TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hours, averageAnnualTaxRate.value, payeTax.bandRate + nicTax.employeeNICBandRate, payeTax.bandRate, nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
+      buildResponse(taxCalResult)
 
-      // Temporary JSON response to allow spike to continue.
-      """{"statePensionAge":false,"taxCode":"1100T","averageAnnualTaxRate":2.33,"marginalTaxRate":12,"payeBand":0,"employeeNICBand":12,"tapered":false,"taxBreakdown":[{"period":"annual","grossPay":10000.08,"taxFreePay":10000.08,"taxablePay":0,"additionalTaxablePay":0,"taxCategories":[{"taxType":"incomeTax","total":0.00,"aggregation":[{"percentage":20,"amount":0.0},{"percentage":40,"amount":0.0},{"percentage":45,"amount":0.0}]},{"taxType":"employeeNationalInsurance","total":232.81,"aggregation":[{"percentage":12,"amount":232.81}]},{"taxType":"employerNationalInsurance","total":260.55,"aggregation":[{"percentage":13.8,"amount":260.55}]}],"totalDeductions":232.81,"takeHomePay":9767.27},{"period":"monthly","grossPay":833.34,"taxFreePay":833.34,"taxablePay":0,"additionalTaxablePay":0,"taxCategories":[{"taxType":"incomeTax","total":0.00,"aggregation":[{"percentage":20,"amount":0.00},{"percentage":40,"amount":0.00},{"percentage":45,"amount":0.00}]},{"taxType":"employeeNationalInsurance","total":19.40,"aggregation":[{"percentage":12,"amount":19.40}]},{"taxType":"employerNationalInsurance","total":21.71,"aggregation":[{"percentage":13.8,"amount":21.71}]}],"totalDeductions":19.40,"takeHomePay":813.94},{"period":"weekly","grossPay":192.31,"taxFreePay":192.31,"taxablePay":0,"additionalTaxablePay":0,"taxCategories":[{"taxType":"incomeTax","total":0.00,"aggregation":[{"percentage":20,"amount":0.00},{"percentage":40,"amount":0.00},{"percentage":45,"amount":0.00}]},{"taxType":"employeeNationalInsurance","total":4.48,"aggregation":[{"percentage":12,"amount":4.48}]},{"taxType":"employerNationalInsurance","total":5.01,"aggregation":[{"percentage":13.8,"amount":5.01}]}],"totalDeductions":4.48,"takeHomePay":187.83}]}"""
-
+// TODO:
 //    }
 //    catch {
-//// TODO...UPDATES!!!
 //      case ex: TaxCalculatorConfigException => None/// throw ex
 //      case ex: BadRequestException => None// throw ex
 //      case ex: Throwable => None// throw ex
 //    }
   }
+
+  @JSExport
+  def buildResponse(taxCalc:TaxCalc) = write(taxCalc)
 
   def convertToBoolean(isStatePensionAge: String): Boolean = {
     isStatePensionAge.toLowerCase() match {

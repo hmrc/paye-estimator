@@ -24,7 +24,8 @@ object HmrcBuild extends Build {
 
         //add scala js wrapper ('%%%') libs here
         "org.scala-js" %%% "scalajs-java-time" % "0.2.0",
-        "com.lihaoyi" %%% "utest" % "0.4.3" % "test"
+        "com.lihaoyi" %%% "utest" % "0.4.3" % "test",
+        "com.lihaoyi" %%% "upickle" % "0.4.3"
       ),
 
       testFrameworks += new TestFramework("utest.runner.Framework"),
