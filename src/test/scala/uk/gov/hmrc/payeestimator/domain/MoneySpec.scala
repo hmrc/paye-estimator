@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package services
-
 /*
  * Copyright 2016 HM Revenue & Customs
  *
@@ -32,29 +30,38 @@ package services
  * limitations under the License.
  */
 
-import java.time.LocalDate
-import domain.Money
+package uk.gov.hmrc.payeestimator.domain
 
-trait LivePAYETaxCalcServiceSuccess {
-  val service = new PAYETaxCalculatorService {
+import org.scalatest.{WordSpecLike, Matchers}
+
+class MoneySpec extends WordSpecLike with Matchers {
+
+  "Money " should {
+
+    "should do no rounding" in {
+      val money = Money(1000.4567)
+      money.value shouldBe BigDecimal(1000.4567)
+    }
+
+    "should round to 2 decimal places with no rounding up" in {
+      val money = Money(1000.4567, 2, roundingUp = false)
+      money.value shouldBe BigDecimal(1000.45)
+    }
+
+    "should round to 3 decimal places with no rounding up" in {
+      val money = Money(1000.4567, 3, roundingUp = false)
+      money.value shouldBe BigDecimal(1000.456)
+    }
+
+    "should round up to 2 decimal places" in {
+      val money = Money(1000.4567, 2, roundingUp = true)
+      money.value shouldBe BigDecimal(1000.46)
+    }
+
+    "should round up to 1 decimal places" in {
+      val money = Money(1000.4567, 1, roundingUp = true)
+      money.value shouldBe BigDecimal(1000.5)
+    }
   }
-}
 
-trait LiveNICTaxCalcServiceSuccess {
-  val service = new NICTaxCalculatorService {
-  }
-}
-
-trait ExcessPayCalculatorSetup {
-  val taxCode:String
-  val payPeriod: String
-  val date: LocalDate
-  val taxablePay: Money
-  val bandId: Int
-}
-
-trait ExcessPayCalculatorFullTaxableAmountSetup extends ExcessPayCalculatorSetup {
-  override val date: LocalDate = LocalDate.now
-  override val bandId: Int = 1
-  override val taxablePay: Money = Money(BigDecimal.valueOf(60000.00))
 }

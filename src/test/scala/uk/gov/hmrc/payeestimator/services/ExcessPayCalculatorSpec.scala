@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
-
-import domain.Money
 import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain.Money
 
 class ExcessPayCalculatorSpec extends WordSpecLike with Matchers {
 

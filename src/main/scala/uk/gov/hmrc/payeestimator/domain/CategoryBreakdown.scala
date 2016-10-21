@@ -14,27 +14,11 @@
  * limitations under the License.
  */
 
-package domain
-
-//import play.api.libs.json.Json
+package uk.gov.hmrc.payeestimator.domain
 
 case class CategoryBreakdown(categoryBreakdown: Seq[Category], expenditureOnServices: BigDecimal, accountingAdjustments: BigDecimal, totalExpenditure: BigDecimal)
 
 case class Category(category: String, allocation: BigDecimal ,subCategory: Seq[Category])
 
 case class CategoryUsage(category: String, allocation: BigDecimal, subCategory: Seq[CategoryUsage], percentage: BigDecimal)
-
-//object CategoryBreakdown {
-//
-//  implicit val formatCategory = Json.format[Category]
-//  implicit val format= Json.format[CategoryBreakdown]
-//}
-//
-//object Category {
-//  implicit val format = Json.format[Category]
-//}
-//
-//object CategoryUsage {
-//  implicit val format = Json.format[CategoryUsage]
-//}
 

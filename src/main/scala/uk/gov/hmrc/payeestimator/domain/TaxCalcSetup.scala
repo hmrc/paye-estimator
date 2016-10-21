@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package domain
+package uk.gov.hmrc.payeestimator.domain
 
 import java.time.LocalDate
+
 
 case class TaxYearBands(taxYearBands: Seq[TaxBands])
 

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
-import domain._
+import uk.gov.hmrc.payeestimator.domain._
 import scala.math.BigDecimal
 
 trait Builder {

@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
-import domain._
-
+import uk.gov.hmrc.payeestimator.domain._
 
 object TaxCalculatorStartup {
 
@@ -41,7 +40,7 @@ trait TaxCalculatorHelper {
   }
 
   def isStandardTaxCode(taxCode: String): Boolean = {
-    taxCode.matches("([0-9]{1,4}[L-N,T,X]{1}){1}")
+    taxCode.matches("([0-9]{1,4}[L-N,T]{1}){1}")
   }
 
   def isTaxableCode(taxCode: String): Boolean = {
@@ -62,44 +61,44 @@ trait TaxCalculatorHelper {
   }
 
   def isValidScottishTaxCode(taxCode: String): Boolean = {
-    taxCode.matches("([S]{1}[0-9]{1,4}[L-N,T,X]{1}){1}") ||
-      taxCode.matches("([S][N][T]){1}") ||
+    taxCode.matches("([S]{1}[0-9]{1,4}[L-N,T]{1}){1}") ||
       taxCode.matches("([S][B][R]){1}") ||
-      taxCode.matches("([S][D][0,1]){1}")
+      taxCode.matches("([S][D][0,1]){1}") ||
+      taxCode.matches("([S][K][0-9]{1,4}){1}")
   }
 
   def isUnTaxedIncomeTaxCode(taxCode: String): Boolean = {
-    taxCode matches ("([S]?[K]{1}[0-9]{1,4}){1}")
+    taxCode matches("([S]?[K]{1}[0-9]{1,4}){1}")
   }
 
-  def loadTaxBands(): TaxYearBands = {
+  def loadTaxBands() : TaxYearBands = {
     TaxCalculatorStartup.taxCalcData.get("taxYearBands") match {
       case Some(taxYearBands: TaxYearBands) => taxYearBands
       case _ => throw new TaxCalculatorConfigException("Error, no tax bands configured")
     }
   }
 
-  def loadNICRateLimits(): NICRateLimits = {
+  def loadNICRateLimits() : NICRateLimits = {
     TaxCalculatorStartup.taxCalcData.get("nicRateLimits") match {
       case Some(nicRateLimits: NICRateLimits) => nicRateLimits
       case _ => throw new TaxCalculatorConfigException("Error, no national insurance rates and limits configured")
     }
   }
 
-  def getTaxBands(localDate: LocalDate): TaxBands = {
-      val taxBands = loadTaxBands().taxYearBands.sortWith(_.fromDate.getYear < _.fromDate.getYear())
-        .filter(band => band.fromDate.isBefore(localDate) || band.fromDate.isEqual(localDate))
-      taxBands.last
+  def getTaxBands(localDate: LocalDate) : TaxBands = {
+    val taxBands = loadTaxBands().taxYearBands.sortWith(_.fromDate.getYear < _.fromDate.getYear())
+      .filter(band => band.fromDate.isBefore(localDate) || band.fromDate.isEqual(localDate))
+    taxBands.last
   }
 
-  def getRateLimits(localDate: LocalDate): NICRateLimit = {
-      val rateLimits = loadNICRateLimits().rateLimits.sortWith(_.fromDate.getYear < _.fromDate.getYear())
-        .filter(rateLimit => rateLimit.fromDate.isBefore(localDate) || rateLimit.fromDate.isEqual(localDate))
-      rateLimits.last
+  def getRateLimits(localDate: LocalDate) : NICRateLimit = {
+    val rateLimits = loadNICRateLimits().rateLimits.sortWith(_.fromDate.getYear < _.fromDate.getYear())
+      .filter(rateLimit => rateLimit.fromDate.isBefore(localDate) || rateLimit.fromDate.isEqual(localDate))
+    rateLimits.last
   }
 
   def getPreviousBandMaxTaxAmount(payPeriod: String, band: Int): Option[BigDecimal] = {
-    Option(getTaxBands(LocalDate.now()).taxBands.filter(_.band == band - 1).head.periods.filter(_.periodType.equals(payPeriod)).head.cumulativeMaxTax)
+    Option(getTaxBands(LocalDate.now()).taxBands.filter(_.band == band-1).head.periods.filter(_.periodType.equals(payPeriod)).head.cumulativeMaxTax)
   }
 
   def resolveRateLimitByPeriod(rateLimit:RateLimit, period:String) = {
@@ -112,15 +111,14 @@ trait TaxCalculatorHelper {
 
   def rateLimit(limitType: String, payPeriod: String): PartialFunction[RateLimit, Money] = {
     case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) => {
-      val limit: Money = Money((resolveRateLimitByPeriod(rateLimit,payPeriod)))
-      limit
+      Money(resolveRateLimitByPeriod(rateLimit, payPeriod))
     }
   }
 
   def splitTaxCode(taxCode: String): String = {
-    if (isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode))
+    if(isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode))
       taxCode.stripSuffix(taxCode.substring(taxCode.length - 1, taxCode.length))
-    else if (isUnTaxedIncomeTaxCode(taxCode))
+    else if(isUnTaxedIncomeTaxCode(taxCode))
       taxCode.toUpperCase.contains("SK") match {
         case true => taxCode.toUpperCase.stripPrefix("SK")
         case false => taxCode.toUpperCase.stripPrefix("K")
@@ -130,10 +128,9 @@ trait TaxCalculatorHelper {
 
   def removeScottishElement(taxCode: String): String = {
     isValidScottishTaxCode(taxCode) match {
-      case true => taxCode.substring(1, taxCode.length)
+      case true => taxCode.substring(1,taxCode.length)
       case false => taxCode
     }
   }
 
 }
-

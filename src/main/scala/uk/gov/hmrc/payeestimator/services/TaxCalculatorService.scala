@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
-import domain._
+import uk.gov.hmrc.payeestimator.domain._
 import scala.math.BigDecimal
 import scala.math.BigDecimal.RoundingMode
 import scala.scalajs.js.annotation.JSExport
@@ -36,7 +36,6 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
   val payeTaxCalculatorService: PAYETaxCalculatorService
   val nicTaxCalculatorService: NICTaxCalculatorService
 
-// TODO...replace options and update package structure.
   @JSExport
   def calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
 
@@ -67,7 +66,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
     val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
 
-    val taxCalResult = TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hours, averageAnnualTaxRate.value, payeTax.bandRate + nicTax.employeeNICBandRate, payeTax.bandRate, nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
+    val taxCalResult = TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, payeTax.bandRate + nicTax.employeeNICBandRate, payeTax.bandRate, nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
 
     buildResponse(taxCalResult)
   }
@@ -97,10 +96,10 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     }
   }
 
-  def calculateScottishElement(payeTaxAmount: Money, taxCode: String, date: LocalDate): Option[BigDecimal] = {
+  def calculateScottishElement(payeTaxAmount: Money, taxCode: String, date: LocalDate): BigDecimal = {
     isValidScottishTaxCode(taxCode) match {
-      case true => Option((payeTaxAmount*getTaxBands(date).scottishRate/100).value)
-      case false => None
+      case true => (payeTaxAmount*getTaxBands(date).scottishRate/100).value
+      case false => -1
     }
   }
 
@@ -108,19 +107,18 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     val grossPay = Money(taxBreakdown.grossPay)
 
     taxBreakdown.period match {
-      case "annual" => {
+      case "annual" =>
         Seq(
           taxBreakdown,
           deriveTaxBreakdown(date, bandId, taxCode, grossPay, "monthly", nicTax, false, 12, payeAggregation, isStatePensionAge),
           deriveTaxBreakdown(date, bandId, taxCode, grossPay, "weekly", nicTax, false , 52, payeAggregation, isStatePensionAge)
         )
-      }
-      case "monthly" => {
+
+      case "monthly" =>
         Seq(deriveTaxBreakdown(date, bandId, taxCode, grossPay, "annual", nicTax, true, 12, payeAggregation, isStatePensionAge), taxBreakdown)
-      }
-      case "weekly" => {
+
+      case "weekly" =>
         Seq(deriveTaxBreakdown(date, bandId, taxCode, grossPay, "annual", nicTax, true, 52, payeAggregation, isStatePensionAge), taxBreakdown)
-      }
     }
   }
 
@@ -179,16 +177,16 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
   private def performIsMultiplyFunction(amount: Money, isMultiplier: Boolean, rhs: Int): Money = {
     if(isMultiplier){
-      Money(amount.*(rhs), 2, true)
+      Money(amount.*(rhs), 2, roundingUp = true)
     }
     else
-      Money(amount./(rhs), 2, true)
+      Money(amount./(rhs), 2, roundingUp = true)
   }
 
-  private def getHourlyGrossPay(hours: Option[Int], grossPay: BigDecimal): Option[BigDecimal]  = {
+  private def getHourlyGrossPay(hours: Option[Int], grossPay: BigDecimal): BigDecimal  = {
     hours match {
-      case Some(value: Int) => Option(grossPay/100)
-      case _ => None
+      case Some(value: Int) => grossPay/100
+      case _ => -1
     }
   }
 }

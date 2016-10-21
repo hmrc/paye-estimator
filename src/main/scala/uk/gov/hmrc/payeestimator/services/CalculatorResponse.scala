@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
-import domain.{Aggregation, TaxBand, Allowance, Money}
-
-//import uk.gov.hmrc.taxcalc.domain.{Aggregation, Allowance, Money, TaxBand}
+import uk.gov.hmrc.payeestimator.domain.{TaxBand, Aggregation, Money, Allowance}
 
 trait CalculatorResponse {
-
-  def success: Boolean = ???
-  def result: Any = ???
+  def success: Boolean
+  def result: Any
 }
 
 case class ExcessPayResponse(override val success: Boolean, override val result: Money) extends CalculatorResponse
 
 case class AllowanceResponse(override val success: Boolean, override val result: Seq[(String, Allowance)]) extends CalculatorResponse
 
-case class TaxablePayResponse(override val success: Boolean, override val result: Money, isTapered: Boolean) extends CalculatorResponse
+case class TaxablePayResponse(override val success: Boolean, override val result: Money, isTapered: Boolean, additionalTaxablePay: Money) extends CalculatorResponse
 
 case class TaxBandResponse(override val success: Boolean, override val result: TaxBand) extends CalculatorResponse
 

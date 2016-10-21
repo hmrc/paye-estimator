@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package domain
+package uk.gov.hmrc.payeestimator.domain
 
 import scala.math.BigDecimal.RoundingMode
 

@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
-import domain.{PAYETaxResult, Money}
-
+import uk.gov.hmrc.payeestimator.domain.{PAYETaxResult, Money}
 
 trait PAYETaxCalculatorService extends TaxCalculatorHelper {
 
@@ -32,9 +31,10 @@ trait PAYETaxCalculatorService extends TaxCalculatorHelper {
         val excessPay = ExcessPayCalculator(taxCode, today, taxBand.band, payPeriod, taxablePay.result).calculate().result
         val finalBandTaxedAmount = Money(excessPay * (taxBand.rate / (100)), 2, true)
         val previousBandMaxTax = if (taxBand.band > 1 && !isBasicRateTaxCode(taxCode)) Money(getPreviousBandMaxTaxAmount(payPeriod, taxBand.band).get, 2, true) else Money(0)
-        PAYETaxResult(taxablePay.result, excessPay, finalBandTaxedAmount, taxBand.band, previousBandMaxTax, taxBand.rate, taxablePay.isTapered)
+        val rate = if(taxablePay.result.value == 0) BigDecimal(0) else taxBand.rate
+        PAYETaxResult(taxablePay.result, excessPay, finalBandTaxedAmount, taxBand.band, previousBandMaxTax, rate, taxablePay.isTapered, taxablePay.additionalTaxablePay)
       }
-      case false => throw new Exception("Invalid Tax Code!")
+      case false => throw new TaxCalculatorConfigException("Invalid Tax Code!")
     }
   }
 }

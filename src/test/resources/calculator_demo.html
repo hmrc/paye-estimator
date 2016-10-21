@@ -19,7 +19,7 @@ function calculate() {
     var payPeriod = $("#GrossPayType").val();
     var hours = parseInt($('input[name="HourlyRate"]').val(), 10);
 
-    var result = services.LiveTaxCalculatorService().calculateTax(
+    var result = uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
         isStatePensionAge,
         taxYear,
         taxCode,

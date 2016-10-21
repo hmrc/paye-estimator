@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
-import domain._
-
+import uk.gov.hmrc.payeestimator.domain._
 
 trait Calculator {
 
-  def calculate(): CalculatorResponse = ???
+  def calculate(): CalculatorResponse
 
   protected def isAnnual(payPeriod: String): Boolean = {
-   payPeriod.equals("annual")
+    payPeriod.equals("annual")
   }
 
 }
 
-class TaxCalculatorConfigException(message: String) extends Exception(message)
+class TaxCalculatorConfigException(message:String) extends Exception(message)
 
 case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int, payPeriod: String, taxablePay: Money) extends Calculator with TaxCalculatorHelper {
 
@@ -57,7 +56,7 @@ case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int
 case class AllowanceCalculator(taxCode: String, payPeriod: String) extends Calculator with TaxCalculatorHelper{
 
   override def calculate(): AllowanceResponse = {
-  taxCode match{
+    taxCode match{
       case "ZERO" | "K0" | "0L" => applyResponse(true,Seq("weekly" -> ZeroAllowance(), "monthly" -> ZeroAllowance(), "annual" -> ZeroAllowance()))
       case _ => {
         val taxCodeNumber = BigDecimal(splitTaxCode(taxCode).toDouble)
@@ -98,12 +97,14 @@ case class TaxablePayCalculator(date: LocalDate, taxCode: String, payPeriod: Str
         }
       }
     }
-    applyResponse(true, taxablePay.head, taperingDeductionCalc.isTapered)
+
+    val additionalTaxablePay = if(isUnTaxedIncomeTaxCode(taxCode)) taxablePay.head - grossPay else Money(0)
+    applyResponse(true, taxablePay.head, taperingDeductionCalc.isTapered, additionalTaxablePay)
   }
 
-  def applyResponse(success: Boolean, taxablePay: Money, isTapered: Boolean): TaxablePayResponse = {
+  def applyResponse(success: Boolean, taxablePay: Money, isTapered: Boolean, additionalTaxablePay: Money): TaxablePayResponse = {
     val result = if(taxablePay < Money(0)) Money(0) else taxablePay
-    TaxablePayResponse(success, result, isTapered)
+    TaxablePayResponse(success, result, isTapered, additionalTaxablePay)
   }
 }
 
@@ -212,9 +213,9 @@ case class EmployerRateCalculator(date: LocalDate, grossPay: Money, payPeriod: S
       case 2 => {
         grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head match {
           case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head,
-                                  nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
+            nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
           case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head &&
-                        grossPay >  nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head match {
+            grossPay >  nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head match {
             case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
             case false => zeroRate
           }
@@ -248,7 +249,7 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, p
           case "annual" => BigDecimal(1)
           case "monthly" => BigDecimal(12)
           case "weekly" => BigDecimal(52)
-          case _ => throw new Exception(s"Pay period ${payPeriod} is not valid")
+          case _ => throw new TaxCalculatorConfigException(s"Pay period ${payPeriod} is not valid")
         })
         (annualIncome > annualIncomeThreshold) match {
           case false => applyResponse(true, taxCode, false)
@@ -256,7 +257,7 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, p
             val taperingDeduction = Money(((annualIncome.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, true)
             val taxCodeNumber = Money(BigDecimal(splitTaxCode(taxCode).toInt), 2, true)
             (taperingDeduction < taxCodeNumber) match {
-              case false => applyResponse(true, "ZERO", false)
+              case false => applyResponse(true, "ZERO", true)
               case true => applyResponse(true, s"${(taxCodeNumber-taperingDeduction).value}L", true)
             }
           }

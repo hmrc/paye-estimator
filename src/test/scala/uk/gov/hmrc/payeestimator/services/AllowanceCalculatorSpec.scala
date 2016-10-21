@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
 

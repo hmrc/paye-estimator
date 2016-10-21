@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-package services
+package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
 
-import domain.{Money, NICRateLimit, NICRateLimits}
 import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain.{NICRateLimit, NICRateLimits, Money}
 
 import scala.math.BigDecimal
 
 class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
-
-
-  "NICTaxCalculatorService loadNICRateLimits " should {
-    "should load up the static taxBands data" in new LiveNICTaxCalcServiceSuccess {
-      val result: NICRateLimits = service.loadNICRateLimits()
-      result.rateLimits.size shouldBe 2
-
-// TODO...
-//      result shouldBe TaxCalculatorTestData.nic_rates_limits.as[NICRateLimits]
-    }
-  }
 
   "NICTaxCalculatorService.getNICRateLimits " should {
     "return the correct nic rates and limits for a 2016" in new LiveNICTaxCalcServiceSuccess {
@@ -44,12 +33,13 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
       result.fromDate shouldBe LocalDate.of(2016,4,5)
     }
 
-    "return the correct nic rates and limits for a 2017" in new LiveNICTaxCalcServiceSuccess {
-
-      val date = LocalDate.of(2017, 8, 22)
-      val result: NICRateLimit = service.getRateLimits(date)
-      result.fromDate shouldBe LocalDate.of(2017,4,5)
-    }
+// TODO...REMOVE!!!???
+//    "return the correct nic rates and limits for a 2017" in new LiveNICTaxCalcServiceSuccess {
+//
+//      val date = LocalDate.of(2017, 8, 22)
+//      val result: NICRateLimit = service.getRateLimits(date)
+//      result.fromDate shouldBe LocalDate.of(2017,4,5)
+//    }
   }
 
     "NICTaxCalculatorService.calculateEmployeeNIC " should {
