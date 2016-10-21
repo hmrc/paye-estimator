@@ -18,7 +18,7 @@ package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{TaxBands, Money}
+import uk.gov.hmrc.payeestimator.domain.{PAYETaxResult, TaxBands, Money}
 
 
 class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers {
@@ -32,7 +32,7 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers {
       result.fromDate shouldBe LocalDate.of(2016,4,5)
     }
 
-// TODO...WIP!!!
+// TODO...WIP!!! Define the 2017 data.
 //    "return the correct tax band for a 2017" in new LivePAYETaxCalcServiceSuccess {
 //
 //      val date = LocalDate.of(2017, 8, 22)
@@ -58,113 +58,26 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers {
       service.isValidTaxCode("0X") shouldBe false
     }
   }
-//
-//  "PAYETaxCalculatorService.calculatePAYETaxablePay " should {
-//    "calculate weekly taxable pay" in new LivePAYETaxCalcServiceSuccess {
-//      val result = service.calculatePAYETaxablePay("1100T", "weekly", Money(673.08))
-//      result.size shouldBe 1
-//      result.head.value shouldBe 461.35
-//    }
-//
-//    "calculate monthly taxable pay" in new LivePAYETaxCalcServiceSuccess {
-//      val result = service.calculatePAYETaxablePay("1100T", "monthly",Money(2916.86))
-//      result.size shouldBe 1
-//      result.head.value shouldBe 1999.43
-//    }
-//
-//    "calculate annual taxable pay" in new LivePAYETaxCalcServiceSuccess {
-//      val result = service.calculatePAYETaxablePay("1100T", "annual", Money(35002.32))
-//      result.size shouldBe 1
-//      result.head.value shouldBe 23993.32
-//    }
-//  }
-//
-//  "PAYETaxCalculatorService.determineTaxBand " should {
-//    "return annual taxBand 2" in new LivePAYETaxCalcServiceSuccess { //35002.32
-//      val result = service.determineTaxBand("1100T", "annual", Money(23993.32))
-//      result.band shouldBe 2
-//    }
-//    "return annual taxBand 3" in new LivePAYETaxCalcServiceSuccess { //70000
-//      val result = service.determineTaxBand("1100T", "annual", Money(58991.00))
-//      result.band shouldBe 3
-//    }
-//    "return annual taxBand 4" in new LivePAYETaxCalcServiceSuccess { //200000
-//      val result = service.determineTaxBand("1100T", "annual", Money(188991.00))
-//      result.band shouldBe 4
-//    }
-//    "return monthly taxBand 2" in new LivePAYETaxCalcServiceSuccess { //2120.20
-//      val result = service.determineTaxBand("1100T", "monthly", Money(1102.77))
-//      result.band shouldBe 2
-//    }
-//    "return monthly taxBand 3" in new LivePAYETaxCalcServiceSuccess { //11500.00
-//      val result = service.determineTaxBand("1100T", "monthly", Money(10582.57))
-//      result.band shouldBe 3
-//    }
-//    "return monthly taxBand 4" in new LivePAYETaxCalcServiceSuccess { //15000.00
-//      val result = service.determineTaxBand("1100T", "monthly", Money(14082.57))
-//      result.band shouldBe 4
-//    }
-//    "return weekly taxBand 2" in new LivePAYETaxCalcServiceSuccess { //600.00
-//      val result = service.determineTaxBand("1100T", "weekly", Money(388.27))
-//      result.band shouldBe 2
-//    }
-//    "return weekly taxBand 3" in new LivePAYETaxCalcServiceSuccess { //2550.55
-//      val result = service.determineTaxBand("1100T", "weekly", Money(2338.82))
-//      result.band shouldBe 3
-//    }
-//    "return weekly taxBand 4" in new LivePAYETaxCalcServiceSuccess { //4500.00
-//      val result = service.determineTaxBand("1100T", "weekly", Money(4288.27))
-//      result.band shouldBe 4
-//    }
-//  }
-//
-//  "PAYETaxCalculatorService.calculateExcessPay " should {
-//    "calculate the annual excess value against tax band 2" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "annual", Money(23993.32))
-//      val result = service.calculateExcessPay(taxBand, "annual", Money(23993.32))
-//      result.value shouldBe BigDecimal(23993)
-//    }
-//    "calculate the annual excess value against tax band 3" in new LivePAYETaxCalcServiceSuccess { //70000
-//      val taxBand = service.determineTaxBand("1100T", "annual", Money(58991.00))
-//      val result = service.calculateExcessPay(taxBand, "annual", Money(58991.00))
-//      result.value shouldBe BigDecimal(26991)
-//    }
-//    "calculate the annual excess value against tax band 4" in new LivePAYETaxCalcServiceSuccess { //200000
-//      val taxBand = service.determineTaxBand("1100T", "annual", Money(188991.00))
-//      val result = service.calculateExcessPay(taxBand, "annual", Money(188991.00))
-//      result.value shouldBe BigDecimal(38991)
-//    }
-//    "calculate the monthly excess value against tax band 2" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "monthly", Money(1202.77))
-//      val result = service.calculateExcessPay(taxBand, "monthly", Money(1202.77))
-//      result.value shouldBe BigDecimal(1202)
-//    }
-//    "calculate the monthly excess value against tax band 3" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "monthly", Money(10582.57))
-//      val result = service.calculateExcessPay(taxBand, "monthly", Money(10582.57))
-//      result.value shouldBe BigDecimal(7915.3334)
-//    }
-//    "calculate the monthly excess value against tax band 4" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "monthly", Money(14082.57))
-//      val result = service.calculateExcessPay(taxBand, "monthly", Money(14082.57))
-//      result.value shouldBe BigDecimal(1582)
-//    }
-//    "calculate the weekly excess value against tax band 2" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "weekly", Money(388.27))
-//      val result = service.calculateExcessPay(taxBand, "weekly", Money(388.27))
-//      result.value shouldBe BigDecimal(388)
-//    }
-//    "calculate the weekly excess value against tax band 3" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "weekly", Money(2338.82))
-//      val result = service.calculateExcessPay(taxBand, "weekly", Money(2338.82))
-//      result.value shouldBe BigDecimal(1722.6154)
-//    }
-//    "calculate the weekly excess value against tax band 4" in new LivePAYETaxCalcServiceSuccess {
-//      val taxBand = service.determineTaxBand("1100T", "weekly", Money(4288.27))
-//      val result = service.calculateExcessPay(taxBand, "weekly", Money(4288.27))
-//      result.value shouldBe BigDecimal(1403.3847)
-//    }
-//  }
+
+  "PAYETaxCalculatorService.calculatePAYETaxablePay " should {
+    "calculate weekly taxable pay" in new LivePAYETaxCalcServiceSuccess {
+      val result: PAYETaxResult = service.calculatePAYETax("1100T", "weekly", Money(673.08))
+
+      result.taxablePay.value shouldBe 461.35
+    }
+
+    "calculate monthly taxable pay" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1100T", "monthly",Money(2916.86))
+
+      result.taxablePay.value shouldBe 1999.43
+    }
+
+    "calculate annual taxable pay" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1100T", "annual", Money(35002.32))
+
+      result.taxablePay.value shouldBe 23993.32
+    }
+  }
 
   "PAYETaxCalculatorService.calculatePAYETax " should {
     "Calculate Annual PAYE tax for a gross salary of 35002.32 in tax band 2" in new LivePAYETaxCalcServiceSuccess {
@@ -187,19 +100,15 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers {
       result.payeTaxAmount.value shouldBe BigDecimal(240.40)
     }
 
-// TODO...WIP!
+    "Calculate Monthly PAYE tax for a gross salary of 11500.00 in tax band 3" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1100T", "monthly", Money(11500.00))
+      result.payeTaxAmount.value shouldBe BigDecimal(3699.46)
+    }
 
-//    "Calculate Monthly PAYE tax for a gross salary of 11500.00 in tax band 3" in new LivePAYETaxCalcServiceSuccess {
-//      val result = service.calculatePAYETax("1100T", "monthly", Money(11500.00))
-//      result.payeTaxAmount.value shouldBe BigDecimal(3699.46)
-//    }
-//
-//    "Calculate Monthly PAYE tax for a gross salary of 15000.00 in tax band 4" in new LivePAYETaxCalcServiceSuccess {
-//      val result = service.calculatePAYETax("1100T", "monthly", Money(15000.00))
-//      result.payeTaxAmount.value shouldBe BigDecimal(5178.57)
-//    }
-
-
+    "Calculate Monthly PAYE tax for a gross salary of 15000.00 in tax band 4" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1100T", "monthly", Money(15000.00))
+      result.payeTaxAmount.value shouldBe BigDecimal(5178.57)
+    }
 
     "Calculate Weekly PAYE tax for a gross salary of 600.00 in tax band 2" in new LivePAYETaxCalcServiceSuccess {
       val result = service.calculatePAYETax("1100T", "weekly", Money(600.00))

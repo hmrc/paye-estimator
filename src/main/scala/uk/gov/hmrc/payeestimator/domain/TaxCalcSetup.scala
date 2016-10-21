@@ -43,13 +43,13 @@ object TaxCalcResources {
 
   val periods2 = Seq(
     PeriodCalc( "annual", 32000.00, 6400.00, 6400.00),
-    PeriodCalc( "monthly", 12500.00, 4466.6666, 3933.3333),
+    PeriodCalc( "monthly", 2666.6666, 533.3333, 533.3333),
     PeriodCalc( "weekly", 615.3846, 123.0769, 123.0769))
   val taxBands2 = TaxBand(2, BigDecimal(3000.00), 20, periods2)
 
   val periods3 = Seq(
     PeriodCalc("annual", 150000.00, 53600.00, 47200.00),
-    PeriodCalc( "monthly", 2666.6666, 533.3333, 533.3333),
+    PeriodCalc( "monthly", 12500.00, 4466.6666, 3933.3333),
     PeriodCalc( "weekly", 2884.6153, 1030.7692, 907.6923))
   val taxBands3 = TaxBand(3, BigDecimal(118000.00), 40, periods3)
 
@@ -63,8 +63,6 @@ object TaxCalcResources {
     TaxBands(LocalDate.of(2016,4,5), BigDecimal(100000.00), BigDecimal(10),
       Seq(taxBands1,taxBands2,taxBands3,taxBands4))
   ))
-
-
 
   val rateLimit1 = RateLimit("lower", 112.00, 486.00, 5824.00)
   val rateLimit2 = RateLimit("upper", 827.00, 3583.00, 43000.00)

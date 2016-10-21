@@ -97,8 +97,6 @@ case class NICTaxCategoryBuilder(isStatePensionAge: Boolean, taxResult: NICTaxRe
   }
 }
 
-
-
 trait BuildResult
 
 case class AggregationBuildResult(aggregation: Seq[Aggregation]) extends BuildResult
