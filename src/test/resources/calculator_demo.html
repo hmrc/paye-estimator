@@ -3,21 +3,30 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<!-- NOTE: This is for Spike only. this is a copy of ../../../target/scala-2.11/classes/paye-estimator-fastopt.js -->
-<script type="text/javascript" src="./paye-estimator-fastopt.js"></script>
+<!-- NOTE: Example HTML page to test the generated JavaScript.
+The javascript file referenced here this is a copy of ../../../target/scala-2.11/classes/paye-estimator-fastopt-spike.js
+This file will be removed once the build is being uploaded.
+-->
+
+<script type="text/javascript" src="paye-estimator-fastopt.js"></script>
 <script type="text/javascript">
 
 function calculate() {
     var isStatePensionAge = $('input[name="StatePensionAge"]:checked').val();
-    var taxYear = 2015;
+    var taxYear = 2016;
     var taxCode = $('input[name="TaxCode"]').val();
     var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
     var payPeriod = $("#GrossPayType").val();
     var hours = parseInt($('input[name="HourlyRate"]').val(), 10);
 
-// TODO: Note: All reference data has not been defined so hardwired values at present.
-// TODO. Add hours + payPeriod.
-    var result = services.LiveTaxCalculatorService().calculateTax(isStatePensionAge, taxYear, taxCode, grossPayPence, "weekly", -1);
+    var result = services.LiveTaxCalculatorService().calculateTax(
+        isStatePensionAge,
+        taxYear,
+        taxCode,
+        grossPayPence,
+       payPeriod,
+        -1);
+
     document.querySelector('.results').innerHTML = result;
 }
 
@@ -26,7 +35,7 @@ function calculate() {
 
 <body>
 
-<p>Example tax-calculator using scala-js to generate the calculator JavaScript from Scala.</p>
+<p>Demo Tax-Calculator interface to scala-js calculator JavaScript library.</p>
 
 <div>
     Your tax code: <input type="text" name="TaxCode" value="1100L"><br>
@@ -43,7 +52,7 @@ function calculate() {
     <div>
         Gross Pay: <input type="number" name="GrossPay" value="0"><br>
         <select id="GrossPayType">
-            <option value="annually">Year</option>
+            <option value="annual">Year</option>
             <option value="monthly">Month</option>
             <option value="weekly">Week</option>
         </select>
@@ -51,11 +60,7 @@ function calculate() {
 
     <br>
     <div>
-        Hourly rate: <input type="number" name="HourlyRate" value="0"><br>
-    </div>
-    and
-    <div>
-        Hours per week: <input type="number" name="HoursPerWeek" value="0"><br>
+        Hourly rate: <input type="number" name="HourlyRate" value="-1"><br>
     </div>
 
     <br>

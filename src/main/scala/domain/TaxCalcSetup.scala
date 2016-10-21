@@ -32,24 +32,36 @@ case class NICRateLimit(fromDate: LocalDate, earningLimit: Seq[RateLimit], thres
 
 case class RateLimit(rateLimitType: String, weekly: BigDecimal, monthly: BigDecimal, annual: BigDecimal)
 
-
 object TaxCalcResources {
-  val periods1 = Seq(PeriodCalc( "annual", 0, 0, 0), PeriodCalc( "monthly", 0, 0, 0), PeriodCalc( "weekly", 0, 0, 0))
+
+  val periods1 = Seq(
+    PeriodCalc( "annual", 0, 0, 0),
+    PeriodCalc( "monthly", 0, 0, 0),
+    PeriodCalc( "weekly", 0, 0, 0))
   val taxBands1 = TaxBand(1, BigDecimal(0.00), 10, periods1)
-  val periods2 = Seq(PeriodCalc( "annual", 32000.00, 6400.00, 6400.00), PeriodCalc( "monthly", 12500.00, 4466.6666, 3933.3333), PeriodCalc( "weekly", 615.3846, 123.0769, 123.0769))
-  val taxBands2 = TaxBand(2, BigDecimal(3000.00), 20, periods1)
 
-  val periods3 = Seq(PeriodCalc( "annual", 150000.00, 53600.00, 47200.00), PeriodCalc( "monthly", 2666.6666, 533.3333, 533.3333), PeriodCalc( "weekly", 2884.6153, 1030.7692, 907.6923))
-  val taxBands3 = TaxBand(3, BigDecimal(118000.00), 40, periods1)
+  val periods2 = Seq(
+    PeriodCalc( "annual", 32000.00, 6400.00, 6400.00),
+    PeriodCalc( "monthly", 12500.00, 4466.6666, 3933.3333),
+    PeriodCalc( "weekly", 615.3846, 123.0769, 123.0769))
+  val taxBands2 = TaxBand(2, BigDecimal(3000.00), 20, periods2)
 
-  val periods4 = Seq(PeriodCalc( "annual", -1, -1, -1), PeriodCalc( "monthly", -1, -1, -1), PeriodCalc( "weekly", -1, -1, -1))
-  val taxBands4 = TaxBand(4, BigDecimal(-1), 45, periods1)
+  val periods3 = Seq(
+    PeriodCalc("annual", 150000.00, 53600.00, 47200.00),
+    PeriodCalc( "monthly", 2666.6666, 533.3333, 533.3333),
+    PeriodCalc( "weekly", 2884.6153, 1030.7692, 907.6923))
+  val taxBands3 = TaxBand(3, BigDecimal(118000.00), 40, periods3)
 
-  val a = Seq(
-    TaxBands(LocalDate.of(2016,4,5), BigDecimal( 100000.00), BigDecimal(10), Seq(taxBands1,taxBands2,taxBands3,taxBands4))
-  )
+  val periods4 = Seq(
+    PeriodCalc( "annual", -1, -1, -1),
+    PeriodCalc( "monthly", -1, -1, -1),
+    PeriodCalc( "weekly", -1, -1, -1))
+  val taxBands4 = TaxBand(4, BigDecimal(-1), 45, periods4)
 
-  val taxYearBands = TaxYearBands(a)
+  val taxYearBands = TaxYearBands( Seq(
+    TaxBands(LocalDate.of(2016,4,5), BigDecimal(100000.00), BigDecimal(10),
+      Seq(taxBands1,taxBands2,taxBands3,taxBands4))
+  ))
 
 
 
@@ -78,7 +90,6 @@ object TaxCalcResources {
   )
 
   val nicRateLimits = NICRateLimits(Seq(nICRateLimit1))
-
 
 }
 

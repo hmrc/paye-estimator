@@ -16,12 +16,9 @@
 
 package services
 
-import java.time.{LocalDate, chrono}
-
+import java.time.LocalDate
 import domain._
-
 import scala.math.BigDecimal
-import scala.scalajs.js
 
 trait Builder {
 

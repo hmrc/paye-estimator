@@ -16,21 +16,11 @@
 
 package services
 
-import java.time
 import java.time.LocalDate
-
 import domain._
 
-//import uk.gov.hmrc.taxcalc.controllers.{BadRequestException, TaxCalculatorConfigException}
-//import uk.gov.hmrc.taxcalc.domain.{_}
-
-class TaxCalculatorConfigException1(message:String) extends Exception
-class TaxCalculatorConfigException2(message:String) extends Exception
-class TaxCalculatorConfigException3(message:String) extends Exception
-class TaxCalculatorConfigException4(message:String) extends Exception
 
 trait Calculator {
-
 
   def calculate(): CalculatorResponse = ???
 
@@ -40,6 +30,8 @@ trait Calculator {
 
 }
 
+class TaxCalculatorConfigException(message: String) extends Exception(message)
+
 case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int, payPeriod: String, taxablePay: Money) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): ExcessPayResponse = {
@@ -48,8 +40,8 @@ case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int
       isBasicRateTaxCode(taxCode) match {
         case true => applyResponse(true, taxablePay)
         case false => {
-          val previousBand = taxBands.taxBands.find(_.band == taxBandId - 1).getOrElse(throw new TaxCalculatorConfigException4(s"Could not find tax band configured for band ${taxBandId - 1}"))
-          val periodCalc = previousBand.periods.find(_.periodType.equals(payPeriod)).getOrElse(throw new TaxCalculatorConfigException4(s"Could not find period calc configured for period $payPeriod in tax band ${taxBandId - 1}"))
+          val previousBand = taxBands.taxBands.find(_.band == taxBandId - 1).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
+          val periodCalc = previousBand.periods.find(_.periodType.equals(payPeriod)).getOrElse(throw new TaxCalculatorConfigException(s"Could not find period calc configured for period $payPeriod in tax band ${taxBandId - 1}"))
           applyResponse(true, Money(periodCalc.threshold.-(taxablePay.value.intValue()).abs))
         }
       }
@@ -234,8 +226,6 @@ case class EmployerRateCalculator(date: LocalDate, grossPay: Money, payPeriod: S
           case false => zeroRate
         }
       }
-
-// TODO...NO DEFAULT CHECK!
     }
     applyResponse(true, result.aggregation)
   }

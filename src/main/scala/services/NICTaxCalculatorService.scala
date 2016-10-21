@@ -17,7 +17,6 @@
 package services
 
 import java.time.LocalDate
-
 import domain.{NICRateLimit, Aggregation, NICTaxResult, Money}
 
 trait NICTaxCalculatorService extends TaxCalculatorHelper {

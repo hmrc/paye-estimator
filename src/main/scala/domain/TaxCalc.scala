@@ -16,8 +16,6 @@
 
 package domain
 
-//import play.api.libs.json.Json
-
 case class PAYETaxResult(taxablePay: Money, excessPay: Money, finalBandTaxedAmount: Money, band: Int, previousBandMaxTax: Money, bandRate: BigDecimal, isTapered: Boolean){
   val payeTaxAmount = if(band > 1) finalBandTaxedAmount+previousBandMaxTax else finalBandTaxedAmount
 }
@@ -33,25 +31,3 @@ case class TaxBreakdown(period: String, grossPay: BigDecimal, taxFreePay: BigDec
 case class TaxCategory(taxType: String, total: BigDecimal, aggregation: Seq[Aggregation])
 
 case class Aggregation(percentage: BigDecimal, amount: BigDecimal)
-
-//object TaxCalc {
-//  implicit val formatAggregation = Json.format[Aggregation]
-//  implicit val formatTaxCategory = Json.format[TaxCategory]
-//  implicit val formatBreakdown = Json.format[TaxBreakdown]
-//  implicit val format = Json.format[TaxCalc]
-//}
-//
-//object TaxBreakdown {
-//  implicit val formatAggregation = Json.format[Aggregation]
-//  implicit val formatTaxCategory = Json.format[TaxCategory]
-//  implicit val format = Json.format[TaxBreakdown]
-//}
-//
-//object TaxCategory {
-//  implicit val formatAggregation = Json.format[Aggregation]
-//  implicit val format = Json.format[TaxCategory]
-//}
-//
-//object Aggregation {
-//  implicit val format = Json.format[Aggregation]
-//}

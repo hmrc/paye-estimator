@@ -1230,7 +1230,7 @@ function $s_Lservices_TaxCalculatorHelper$class__loadTaxBands__Lservices_TaxCalc
       return x3
     }
   };
-  throw new $c_Lservices_TaxCalculatorConfigException1().init___T("Error, no tax bands configured")
+  throw new $c_Lservices_TaxCalculatorConfigException().init___T("Error, no tax bands configured")
 }
 function $s_Lservices_TaxCalculatorHelper$class__getPreviousBandMaxTaxAmount__Lservices_TaxCalculatorHelper__T__I__s_Option($$this, payPeriod, band) {
   var jsx$1 = $m_s_Option$();
@@ -1280,7 +1280,7 @@ function $s_Lservices_TaxCalculatorHelper$class__getTaxBands__Lservices_TaxCalcu
   return $as_Ldomain_TaxBands(taxBands.last__O())
 }
 function $s_Lservices_TaxCalculatorHelper$class__resolveRateLimitByPeriod__Lservices_TaxCalculatorHelper__Ldomain_RateLimit__T__s_math_BigDecimal($$this, rateLimit, period) {
-  if ((period === "annually")) {
+  if ((period === "annual")) {
     return rateLimit.annual$1
   } else if ((period === "monthly")) {
     return rateLimit.monthly$1
@@ -1300,7 +1300,7 @@ function $s_Lservices_TaxCalculatorHelper$class__loadNICRateLimits__Lservices_Ta
       return x3
     }
   };
-  throw new $c_Lservices_TaxCalculatorConfigException2().init___T("Error, no national insurance rates and limits configured")
+  throw new $c_Lservices_TaxCalculatorConfigException().init___T("Error, no national insurance rates and limits configured")
 }
 function $s_Lservices_TaxCalculatorHelper$class__removeScottishElement__Lservices_TaxCalculatorHelper__T__T($$this, taxCode) {
   var x1 = $s_Lservices_TaxCalculatorHelper$class__isValidScottishTaxCode__Lservices_TaxCalculatorHelper__T__Z($$this, taxCode);
@@ -1414,9 +1414,9 @@ function $s_Lservices_TaxCalculatorService$class__services$TaxCalculatorService$
   }
 }
 function $s_Lservices_TaxCalculatorService$class__calculateTax__Lservices_TaxCalculatorService__T__I__T__I__T__I__T($$this, isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn) {
-  var hours = new $c_s_Some().init___O(hoursIn);
+  var hours = ((hoursIn > 0) ? new $c_s_Some().init___O(hoursIn) : $m_s_None$());
   var isPensionAge = $s_Lservices_TaxCalculatorService$class__convertToBoolean__Lservices_TaxCalculatorService__T__Z($$this, isStatePensionAge);
-  var updatedPayPeriod = (($uI(hours.x$2) > 0) ? "annually" : payPeriod);
+  var updatedPayPeriod = (($uI((hours.isEmpty__Z() ? (-1) : hours.get__O())) > 0) ? "annual" : payPeriod);
   var hi = (grossPayPence >> 31);
   var grossPay = $s_Lservices_TaxCalculatorService$class__calculateGrossPay__Lservices_TaxCalculatorService__J__s_Option__T__Ldomain_Money($$this, new $c_sjsr_RuntimeLong().init___I__I(grossPayPence, hi), hours, updatedPayPeriod);
   var updatedTaxCode = $s_Lservices_TaxCalculatorHelper$class__removeScottishElement__Lservices_TaxCalculatorHelper__T__T($$this, taxCode);
@@ -4246,7 +4246,6 @@ function $c_Ldomain_TaxCalcResources$() {
   this.taxBands3$1 = null;
   this.periods4$1 = null;
   this.taxBands4$1 = null;
-  this.a$1 = null;
   this.taxYearBands$1 = null;
   this.rateLimit1$1 = null;
   this.rateLimit2$1 = null;
@@ -4317,7 +4316,7 @@ $c_Ldomain_TaxCalcResources$.prototype.init___ = (function() {
   var this$21 = $m_s_package$().BigDecimal__s_math_BigDecimal$();
   var jsx$20 = this$21.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(3000.0, this$21.defaultMathContext$1);
   var this$22 = $m_s_math_BigDecimal$();
-  this.taxBands2$1 = new $c_Ldomain_TaxBand().init___I__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(2, jsx$20, this$22.apply__I__Ljava_math_MathContext__s_math_BigDecimal(20, this$22.defaultMathContext$1), this.periods1$1);
+  this.taxBands2$1 = new $c_Ldomain_TaxBand().init___I__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(2, jsx$20, this$22.apply__I__Ljava_math_MathContext__s_math_BigDecimal(20, this$22.defaultMathContext$1), this.periods2$1);
   var jsx$29 = $m_sc_Seq$();
   var this$23 = $m_s_math_BigDecimal$();
   var jsx$28 = this$23.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(150000.0, this$23.defaultMathContext$1);
@@ -4340,7 +4339,7 @@ $c_Ldomain_TaxCalcResources$.prototype.init___ = (function() {
   var this$32 = $m_s_package$().BigDecimal__s_math_BigDecimal$();
   var jsx$30 = this$32.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(118000.0, this$32.defaultMathContext$1);
   var this$33 = $m_s_math_BigDecimal$();
-  this.taxBands3$1 = new $c_Ldomain_TaxBand().init___I__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(3, jsx$30, this$33.apply__I__Ljava_math_MathContext__s_math_BigDecimal(40, this$33.defaultMathContext$1), this.periods1$1);
+  this.taxBands3$1 = new $c_Ldomain_TaxBand().init___I__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(3, jsx$30, this$33.apply__I__Ljava_math_MathContext__s_math_BigDecimal(40, this$33.defaultMathContext$1), this.periods3$1);
   var jsx$39 = $m_sc_Seq$();
   var this$34 = $m_s_math_BigDecimal$();
   var jsx$38 = this$34.apply__I__Ljava_math_MathContext__s_math_BigDecimal((-1), this$34.defaultMathContext$1);
@@ -4363,14 +4362,13 @@ $c_Ldomain_TaxCalcResources$.prototype.init___ = (function() {
   var this$43 = $m_s_package$().BigDecimal__s_math_BigDecimal$();
   var jsx$40 = this$43.apply__I__Ljava_math_MathContext__s_math_BigDecimal((-1), this$43.defaultMathContext$1);
   var this$44 = $m_s_math_BigDecimal$();
-  this.taxBands4$1 = new $c_Ldomain_TaxBand().init___I__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(4, jsx$40, this$44.apply__I__Ljava_math_MathContext__s_math_BigDecimal(45, this$44.defaultMathContext$1), this.periods1$1);
+  this.taxBands4$1 = new $c_Ldomain_TaxBand().init___I__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(4, jsx$40, this$44.apply__I__Ljava_math_MathContext__s_math_BigDecimal(45, this$44.defaultMathContext$1), this.periods4$1);
   var jsx$43 = $m_sc_Seq$();
   var jsx$42 = $m_Ljava_time_LocalDate$().of__I__I__I__Ljava_time_LocalDate(2016, 4, 5);
   var this$45 = $m_s_package$().BigDecimal__s_math_BigDecimal$();
   var jsx$41 = this$45.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(100000.0, this$45.defaultMathContext$1);
   var this$46 = $m_s_package$().BigDecimal__s_math_BigDecimal$();
-  this.a$1 = $as_sc_Seq(jsx$43.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Ldomain_TaxBands().init___Ljava_time_LocalDate__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(jsx$42, jsx$41, this$46.apply__I__Ljava_math_MathContext__s_math_BigDecimal(10, this$46.defaultMathContext$1), $as_sc_Seq($m_sc_Seq$().apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.taxBands1$1, this.taxBands2$1, this.taxBands3$1, this.taxBands4$1]))))])));
-  this.taxYearBands$1 = new $c_Ldomain_TaxYearBands().init___sc_Seq(this.a$1);
+  this.taxYearBands$1 = new $c_Ldomain_TaxYearBands().init___sc_Seq($as_sc_Seq(jsx$43.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Ldomain_TaxBands().init___Ljava_time_LocalDate__s_math_BigDecimal__s_math_BigDecimal__sc_Seq(jsx$42, jsx$41, this$46.apply__I__Ljava_math_MathContext__s_math_BigDecimal(10, this$46.defaultMathContext$1), $as_sc_Seq($m_sc_Seq$().apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.taxBands1$1, this.taxBands2$1, this.taxBands3$1, this.taxBands4$1]))))]))));
   var this$47 = $m_s_math_BigDecimal$();
   var jsx$45 = this$47.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(112.0, this$47.defaultMathContext$1);
   var this$48 = $m_s_math_BigDecimal$();
@@ -6190,72 +6188,6 @@ function $m_Lservices_OptionFactory$() {
 $e.services = ($e.services || {});
 $e.services.OptionFactory = $m_Lservices_OptionFactory$;
 /** @constructor */
-function $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4() {
-  $c_O.call(this);
-  this.derive$macro$63$1 = null;
-  this.bitmap$0$1 = false
-}
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype = new $h_O();
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype.constructor = $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4;
-/** @constructor */
-function $h_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4() {
-  /*<skip>*/
-}
-$h_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype = $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype;
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype.derive$macro$63__Lupickle_Types$Writer = (function() {
-  return ((!this.bitmap$0$1) ? this.derive$macro$63$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$63$1)
-});
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype.init___Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1 = (function($$outer) {
-  return this
-});
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype.derive$macro$63$lzycompute__p1__Lupickle_Types$Writer = (function() {
-  if ((!this.bitmap$0$1)) {
-    this.derive$macro$63$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1().init___Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4(this));
-    this.bitmap$0$1 = true
-  };
-  return this.derive$macro$63$1
-});
-var $d_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4 = new $TypeData().initClass({
-  Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4: 0
-}, false, "services.TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4", {
-  Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4: 1,
-  O: 1
-});
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4.prototype.$classData = $d_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4;
-/** @constructor */
-function $c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3() {
-  $c_O.call(this);
-  this.derive$macro$49$1 = null;
-  this.bitmap$0$1 = false
-}
-$c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype = new $h_O();
-$c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype.constructor = $c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3;
-/** @constructor */
-function $h_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3() {
-  /*<skip>*/
-}
-$h_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype = $c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype;
-$c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype.init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1 = (function($$outer) {
-  return this
-});
-$c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype.derive$macro$49$lzycompute__p1__Lupickle_Types$Writer = (function() {
-  if ((!this.bitmap$0$1)) {
-    this.derive$macro$49$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1().init___Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3(this));
-    this.bitmap$0$1 = true
-  };
-  return this.derive$macro$49$1
-});
-$c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype.derive$macro$49__Lupickle_Types$Writer = (function() {
-  return ((!this.bitmap$0$1) ? this.derive$macro$49$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$49$1)
-});
-var $d_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3 = new $TypeData().initClass({
-  Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3: 0
-}, false, "services.TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3", {
-  Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3: 1,
-  O: 1
-});
-$c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3.prototype.$classData = $d_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3;
-/** @constructor */
 function $c_Lservices_TaxCalculatorService$$anon$1() {
   $c_O.call(this);
   this.derive$macro$1$1 = null;
@@ -6321,6 +6253,72 @@ var $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2 
   O: 1
 });
 $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.$classData = $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2;
+/** @constructor */
+function $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3() {
+  $c_O.call(this);
+  this.derive$macro$49$1 = null;
+  this.bitmap$0$1 = false
+}
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype = new $h_O();
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype.constructor = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3;
+/** @constructor */
+function $h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3() {
+  /*<skip>*/
+}
+$h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype;
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype.init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1 = (function($$outer) {
+  return this
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype.derive$macro$49$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$49$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1().init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$49$1
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype.derive$macro$49__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$49$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$49$1)
+});
+var $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3 = new $TypeData().initClass({
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3: 0
+}, false, "services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3", {
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3: 1,
+  O: 1
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3.prototype.$classData = $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3;
+/** @constructor */
+function $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4() {
+  $c_O.call(this);
+  this.derive$macro$63$1 = null;
+  this.bitmap$0$1 = false
+}
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype = new $h_O();
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype.constructor = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4;
+/** @constructor */
+function $h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4() {
+  /*<skip>*/
+}
+$h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype;
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype.derive$macro$63__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$63$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$63$1)
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype.init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1 = (function($$outer) {
+  return this
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype.derive$macro$63$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$63$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1().init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$63$1
+});
+var $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4 = new $TypeData().initClass({
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4: 0
+}, false, "services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4", {
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4: 1,
+  O: 1
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4.prototype.$classData = $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4;
 /** @constructor */
 function $c_Lservices_TaxCalculatorStartup$() {
   $c_O.call(this);
@@ -16970,80 +16968,30 @@ var $d_Ljava_math_RoundingMode = new $TypeData().initClass({
 });
 $c_Ljava_math_RoundingMode.prototype.$classData = $d_Ljava_math_RoundingMode;
 /** @constructor */
-function $c_Lservices_TaxCalculatorConfigException1() {
+function $c_Lservices_TaxCalculatorConfigException() {
   $c_jl_Exception.call(this)
 }
-$c_Lservices_TaxCalculatorConfigException1.prototype = new $h_jl_Exception();
-$c_Lservices_TaxCalculatorConfigException1.prototype.constructor = $c_Lservices_TaxCalculatorConfigException1;
+$c_Lservices_TaxCalculatorConfigException.prototype = new $h_jl_Exception();
+$c_Lservices_TaxCalculatorConfigException.prototype.constructor = $c_Lservices_TaxCalculatorConfigException;
 /** @constructor */
-function $h_Lservices_TaxCalculatorConfigException1() {
+function $h_Lservices_TaxCalculatorConfigException() {
   /*<skip>*/
 }
-$h_Lservices_TaxCalculatorConfigException1.prototype = $c_Lservices_TaxCalculatorConfigException1.prototype;
-$c_Lservices_TaxCalculatorConfigException1.prototype.init___T = (function(message) {
-  $c_jl_Throwable.prototype.init___T__jl_Throwable.call(this, null, null);
+$h_Lservices_TaxCalculatorConfigException.prototype = $c_Lservices_TaxCalculatorConfigException.prototype;
+$c_Lservices_TaxCalculatorConfigException.prototype.init___T = (function(message) {
+  $c_jl_Throwable.prototype.init___T__jl_Throwable.call(this, message, null);
   return this
 });
-var $d_Lservices_TaxCalculatorConfigException1 = new $TypeData().initClass({
-  Lservices_TaxCalculatorConfigException1: 0
-}, false, "services.TaxCalculatorConfigException1", {
-  Lservices_TaxCalculatorConfigException1: 1,
+var $d_Lservices_TaxCalculatorConfigException = new $TypeData().initClass({
+  Lservices_TaxCalculatorConfigException: 0
+}, false, "services.TaxCalculatorConfigException", {
+  Lservices_TaxCalculatorConfigException: 1,
   jl_Exception: 1,
   jl_Throwable: 1,
   O: 1,
   Ljava_io_Serializable: 1
 });
-$c_Lservices_TaxCalculatorConfigException1.prototype.$classData = $d_Lservices_TaxCalculatorConfigException1;
-/** @constructor */
-function $c_Lservices_TaxCalculatorConfigException2() {
-  $c_jl_Exception.call(this)
-}
-$c_Lservices_TaxCalculatorConfigException2.prototype = new $h_jl_Exception();
-$c_Lservices_TaxCalculatorConfigException2.prototype.constructor = $c_Lservices_TaxCalculatorConfigException2;
-/** @constructor */
-function $h_Lservices_TaxCalculatorConfigException2() {
-  /*<skip>*/
-}
-$h_Lservices_TaxCalculatorConfigException2.prototype = $c_Lservices_TaxCalculatorConfigException2.prototype;
-$c_Lservices_TaxCalculatorConfigException2.prototype.init___T = (function(message) {
-  $c_jl_Throwable.prototype.init___T__jl_Throwable.call(this, null, null);
-  return this
-});
-var $d_Lservices_TaxCalculatorConfigException2 = new $TypeData().initClass({
-  Lservices_TaxCalculatorConfigException2: 0
-}, false, "services.TaxCalculatorConfigException2", {
-  Lservices_TaxCalculatorConfigException2: 1,
-  jl_Exception: 1,
-  jl_Throwable: 1,
-  O: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lservices_TaxCalculatorConfigException2.prototype.$classData = $d_Lservices_TaxCalculatorConfigException2;
-/** @constructor */
-function $c_Lservices_TaxCalculatorConfigException4() {
-  $c_jl_Exception.call(this)
-}
-$c_Lservices_TaxCalculatorConfigException4.prototype = new $h_jl_Exception();
-$c_Lservices_TaxCalculatorConfigException4.prototype.constructor = $c_Lservices_TaxCalculatorConfigException4;
-/** @constructor */
-function $h_Lservices_TaxCalculatorConfigException4() {
-  /*<skip>*/
-}
-$h_Lservices_TaxCalculatorConfigException4.prototype = $c_Lservices_TaxCalculatorConfigException4.prototype;
-$c_Lservices_TaxCalculatorConfigException4.prototype.init___T = (function(message) {
-  $c_jl_Throwable.prototype.init___T__jl_Throwable.call(this, null, null);
-  return this
-});
-var $d_Lservices_TaxCalculatorConfigException4 = new $TypeData().initClass({
-  Lservices_TaxCalculatorConfigException4: 0
-}, false, "services.TaxCalculatorConfigException4", {
-  Lservices_TaxCalculatorConfigException4: 1,
-  jl_Exception: 1,
-  jl_Throwable: 1,
-  O: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lservices_TaxCalculatorConfigException4.prototype.$classData = $d_Lservices_TaxCalculatorConfigException4;
+$c_Lservices_TaxCalculatorConfigException.prototype.$classData = $d_Lservices_TaxCalculatorConfigException;
 function $is_T(obj) {
   return ((typeof obj) === "string")
 }
@@ -20265,138 +20213,6 @@ var $d_Lservices_RateResult = new $TypeData().initClass({
 });
 $c_Lservices_RateResult.prototype.$classData = $d_Lservices_RateResult;
 /** @constructor */
-function $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1() {
-  $c_sr_AbstractFunction0.call(this)
-}
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype.constructor = $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1;
-/** @constructor */
-function $h_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1() {
-  /*<skip>*/
-}
-$h_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype = $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype;
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype.apply__Lupickle_Types$Writer = (function() {
-  var this$13 = $m_Lupickle_default$();
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Ldomain_TaxCategory(x$0$2);
-    return $m_Ldomain_TaxCategory$().unapply__Ldomain_TaxCategory__s_Option(x$0)
-  }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["taxType", "total", "aggregation"]);
-  var len = $uI(xs.array$6.length);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
-  var len$1 = $uI(xs$1.array$6.length);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$12 = $m_Lupickle_default$();
-  var evidence$7 = $m_Lupickle_default$().StringRW$1;
-  var evidence$8 = $m_Lupickle_default$().BigDecimalRW$1;
-  var this$10 = $m_Lupickle_default$();
-  var v = $m_s_Predef$().singleton$und$less$colon$less$2;
-  var this$9 = new $c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4().init___Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1(this);
-  var w = this$9.derive$macro$63__Lupickle_Types$Writer();
-  var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
-  var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
-  var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
-  var evidence$9 = new $c_Lupickle_Types$Writer$$anon$3().init___Lupickle_Types$Writer$__F1__Lsourcecode_Enclosing(this$11, _write, src);
-  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$12, evidence$7, evidence$8, evidence$9));
-  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
-});
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype.init___Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3 = (function($$outer) {
-  return this
-});
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Writer()
-});
-var $d_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1 = new $TypeData().initClass({
-  Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1: 0
-}, false, "services.TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1", {
-  Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1.prototype.$classData = $d_Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1;
-/** @constructor */
-function $c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1() {
-  $c_sr_AbstractFunction0.call(this)
-}
-$c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype = new $h_sr_AbstractFunction0();
-$c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype.constructor = $c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1;
-/** @constructor */
-function $h_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1() {
-  /*<skip>*/
-}
-$h_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype = $c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype;
-$c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype.init___Lservices_TaxCalculatorService$$a$$$$6117ff3b7465d1a38b96d32cdcc09e$$$$onfun$derive$macro$49$1$$anon$4 = (function($$outer) {
-  return this
-});
-$c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype.apply__Lupickle_Types$Writer = (function() {
-  var this$10 = $m_Lupickle_default$();
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
-    var x$0 = $as_Ldomain_Aggregation(x$0$2);
-    return $m_Ldomain_Aggregation$().unapply__Ldomain_Aggregation__s_Option(x$0)
-  }));
-  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["percentage", "amount"]);
-  var len = $uI(xs.array$6.length);
-  var array = $newArrayObject($d_T.getArrayOf(), [len]);
-  var elem$1 = 0;
-  elem$1 = 0;
-  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
-  while (this$4.hasNext__Z()) {
-    var arg1 = this$4.next__O();
-    array.u[elem$1] = arg1;
-    elem$1 = ((1 + elem$1) | 0)
-  };
-  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
-  var len$1 = $uI(xs$1.array$6.length);
-  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
-  var elem$1$1 = 0;
-  elem$1$1 = 0;
-  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
-  while (this$8.hasNext__Z()) {
-    var arg1$1 = this$8.next__O();
-    array$1.u[elem$1$1] = arg1$1;
-    elem$1$1 = ((1 + elem$1$1) | 0)
-  };
-  var this$9 = $m_Lupickle_default$();
-  var evidence$3 = $m_Lupickle_default$().BigDecimalRW$1;
-  var evidence$4 = $m_Lupickle_default$().BigDecimalRW$1;
-  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
-  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$15)
-});
-$c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype.apply__O = (function() {
-  return this.apply__Lupickle_Types$Writer()
-});
-var $d_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1 = new $TypeData().initClass({
-  Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1: 0
-}, false, "services.TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1", {
-  Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1: 1,
-  sr_AbstractFunction0: 1,
-  O: 1,
-  F0: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1.prototype.$classData = $d_Lservices_TaxCalculatorService$$a$$$$e521dbe8e721e44cfad2e5d9ec62dd6$$$$onfun$derive$macro$63$1;
-/** @constructor */
 function $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1() {
   $c_sr_AbstractFunction0.call(this)
 }
@@ -20526,7 +20342,7 @@ $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$ano
   var evidence$61 = $s_Lupickle_Implicits$class__OptionW__Lupickle_Implicits__Lupickle_Types$Writer__Lupickle_Types$Writer(this$9, evidence$20);
   var this$11 = $m_Lupickle_default$();
   var v = $m_s_Predef$().singleton$und$less$colon$less$2;
-  var this$10 = new $c_Lservices_TaxCalculatorService$$a$$$$c4cffacf5b3cc36de81331bfc9ff43b3$$$$rive$macro$28$1$$anon$3().init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1(this);
+  var this$10 = new $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3().init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1(this);
   var w = this$10.derive$macro$49__Lupickle_Types$Writer();
   var this$12 = this$11.Aliases__Lupickle_Types$Aliases$().W$1;
   var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$11, v, w);
@@ -20554,6 +20370,138 @@ var $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$
   Ljava_io_Serializable: 1
 });
 $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1.prototype.$classData = $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1;
+/** @constructor */
+function $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype.constructor = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1;
+/** @constructor */
+function $h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1() {
+  /*<skip>*/
+}
+$h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype;
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$13 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Ldomain_TaxCategory(x$0$2);
+    return $m_Ldomain_TaxCategory$().unapply__Ldomain_TaxCategory__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["taxType", "total", "aggregation"]);
+  var len = $uI(xs.array$6.length);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6.length);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$12 = $m_Lupickle_default$();
+  var evidence$7 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $m_Lupickle_default$().BigDecimalRW$1;
+  var this$10 = $m_Lupickle_default$();
+  var v = $m_s_Predef$().singleton$und$less$colon$less$2;
+  var this$9 = new $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4().init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1(this);
+  var w = this$9.derive$macro$63__Lupickle_Types$Writer();
+  var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
+  var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
+  var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
+  var evidence$9 = new $c_Lupickle_Types$Writer$$anon$3().init___Lupickle_Types$Writer$__F1__Lsourcecode_Enclosing(this$11, _write, src);
+  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$12, evidence$7, evidence$8, evidence$9));
+  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype.init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3 = (function($$outer) {
+  return this
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1 = new $TypeData().initClass({
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1: 0
+}, false, "services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1", {
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1.prototype.$classData = $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1;
+/** @constructor */
+function $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype = new $h_sr_AbstractFunction0();
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype.constructor = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1;
+/** @constructor */
+function $h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1() {
+  /*<skip>*/
+}
+$h_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype = $c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype;
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Ldomain_Aggregation(x$0$2);
+    return $m_Ldomain_Aggregation$().unapply__Ldomain_Aggregation__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["percentage", "amount"]);
+  var len = $uI(xs.array$6.length);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var len$1 = $uI(xs$1.array$6.length);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$3 = $m_Lupickle_default$().BigDecimalRW$1;
+  var evidence$4 = $m_Lupickle_default$().BigDecimalRW$1;
+  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
+  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$15)
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype.init___Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4 = (function($$outer) {
+  return this
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1 = new $TypeData().initClass({
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1: 0
+}, false, "services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1", {
+  Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1.prototype.$classData = $d_Lservices_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$28$1$$anon$3$$anonfun$derive$macro$49$1$$anon$4$$anonfun$derive$macro$63$1;
 /** @constructor */
 function $c_Lupickle_Implicits$$anonfun$SeqishW$1() {
   $c_sr_AbstractFunction1.call(this);
@@ -27677,7 +27625,7 @@ $c_Lservices_ExcessPayCalculator.prototype.calculate__Lservices_ExcessPayRespons
         })
       })(this)));
       if (this$1.isEmpty__Z()) {
-        throw new $c_Lservices_TaxCalculatorConfigException4().init___T(new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Could not find tax band configured for band ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([(((-1) + this.taxBandId$1) | 0)])))
+        throw new $c_Lservices_TaxCalculatorConfigException().init___T(new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Could not find tax band configured for band ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([(((-1) + this.taxBandId$1) | 0)])))
       };
       var previousBand = $as_Ldomain_TaxBand(this$1.get__O());
       var this$3 = previousBand.periods$1.find__F1__s_Option(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(arg$outer$1) {
@@ -27689,7 +27637,7 @@ $c_Lservices_ExcessPayCalculator.prototype.calculate__Lservices_ExcessPayRespons
         })
       })(this)));
       if (this$3.isEmpty__Z()) {
-        throw new $c_Lservices_TaxCalculatorConfigException4().init___T(new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Could not find period calc configured for period ", " in tax band ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.payPeriod$1, (((-1) + this.taxBandId$1) | 0)])))
+        throw new $c_Lservices_TaxCalculatorConfigException().init___T(new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["Could not find period calc configured for period ", " in tax band ", ""])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.payPeriod$1, (((-1) + this.taxBandId$1) | 0)])))
       };
       var periodCalc = $as_Ldomain_PeriodCalc(this$3.get__O());
       var jsx$1 = periodCalc.threshold$1;
