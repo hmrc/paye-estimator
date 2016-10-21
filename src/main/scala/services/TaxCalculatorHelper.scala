@@ -17,14 +17,9 @@
 package services
 
 import java.time.LocalDate
-
 import domain._
 
-// TODO...JUST SUPPLY HTML + CSS! GENERATE JAR WITH MINI WEB-SERVER AND DISTRIBUTE! ! !
 
-
-
-// TODO...
 object TaxCalculatorStartup {
 
   val taxCalcData = Map("taxYearBands" -> populateTaxBands.getOrElse(None), "nicRateLimits" -> populateNIC.getOrElse(None))
@@ -33,7 +28,6 @@ object TaxCalculatorStartup {
 
   def populateNIC: Option[NICRateLimits] = Some(TaxCalcResources.nicRateLimits)
 }
-
 
 trait TaxCalculatorHelper {
 
@@ -78,20 +72,17 @@ trait TaxCalculatorHelper {
     taxCode matches ("([S]?[K]{1}[0-9]{1,4}){1}")
   }
 
-  // TODO...
-
-
   def loadTaxBands(): TaxYearBands = {
     TaxCalculatorStartup.taxCalcData.get("taxYearBands") match {
       case Some(taxYearBands: TaxYearBands) => taxYearBands
-      case _ => throw new TaxCalculatorConfigException1("Error, no tax bands configured")
+      case _ => throw new TaxCalculatorConfigException("Error, no tax bands configured")
     }
   }
 
   def loadNICRateLimits(): NICRateLimits = {
     TaxCalculatorStartup.taxCalcData.get("nicRateLimits") match {
       case Some(nicRateLimits: NICRateLimits) => nicRateLimits
-      case _ => throw new TaxCalculatorConfigException2("Error, no national insurance rates and limits configured")
+      case _ => throw new TaxCalculatorConfigException("Error, no national insurance rates and limits configured")
     }
   }
 
@@ -111,16 +102,14 @@ trait TaxCalculatorHelper {
     Option(getTaxBands(LocalDate.now()).taxBands.filter(_.band == band - 1).head.periods.filter(_.periodType.equals(payPeriod)).head.cumulativeMaxTax)
   }
 
-  // TODO. NEW FUNCTION!!! CHANGE TO PARTIAL FUNCTION!
   def resolveRateLimitByPeriod(rateLimit:RateLimit, period:String) = {
     period match {
-      case "annually" => rateLimit.annual
+      case "annual" => rateLimit.annual
       case "monthly" => rateLimit.monthly
       case "weekly" => rateLimit.weekly
     }
   }
 
-  //TODO...REMOVED REFLECTION!
   def rateLimit(limitType: String, payPeriod: String): PartialFunction[RateLimit, Money] = {
     case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) => {
       val limit: Money = Money((resolveRateLimitByPeriod(rateLimit,payPeriod)))

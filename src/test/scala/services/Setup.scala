@@ -33,7 +33,6 @@ package services
  */
 
 import java.time.LocalDate
-
 import domain.Money
 
 trait LivePAYETaxCalcServiceSuccess {
