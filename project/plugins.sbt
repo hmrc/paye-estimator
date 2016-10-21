@@ -1,9 +1,18 @@
-resolvers += Resolver.url("hmrc-sbt-plugin-releases", url("https://dl.bintray.com/hmrc/sbt-plugin-releases"))(Resolver.ivyStylePatterns)
+resolvers ++= Seq(Resolver.url("hmrc-sbt-plugin-releases", url("https://dl.bintray.com/hmrc/sbt-plugin-releases"))(Resolver.ivyStylePatterns),
+  "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/")
 
-resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"
-
-addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "1.4.0")
+//addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "1.4.0")
 
 addSbtPlugin("uk.gov.hmrc" % "sbt-git-versioning" % "0.9.0")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.12")
+
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.3")
+
+
+//TODO : revert comment sbt-auto-build & delete the below plugins once ScalaTest have fixed '-u' option for Scala-js
+addSbtPlugin("uk.gov.hmrc" % "sbt-settings" % "3.3.0")
+
+addSbtPlugin("de.heikoseeberger" % "sbt-header" % "1.6.0")
+
+addSbtPlugin("uk.gov.hmrc" % "sbt-git-versioning" % "0.9.0")
