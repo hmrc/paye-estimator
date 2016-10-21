@@ -37,7 +37,6 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
   val nicTaxCalculatorService: NICTaxCalculatorService
 
 // TODO...replace options and update package structure.
-
   @JSExport
   def calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
 
