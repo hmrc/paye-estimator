@@ -15,10 +15,6 @@ lazy val root = project.in(file("."))
       "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
       "org.pegdown" % "pegdown" % "1.6.0"
     ),
-    scalaJSStage in Global := FastOptStage,
-    jsDependencies += RuntimeDOM % "test"
-  )
-  .settings(
-    assemblyJarName in assembly := "paye-estimator.jar"
+    scalaJSStage in Global := FastOptStage
   )
   .settings(LocalTempBuildSettings.localDefaultSettings : _*)

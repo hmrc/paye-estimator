@@ -5,9 +5,7 @@ resolvers ++= Seq(Resolver.url("hmrc-sbt-plugin-releases", url("https://dl.bintr
 
 addSbtPlugin("uk.gov.hmrc" % "sbt-git-versioning" % "0.9.0")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.12")
-
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.3")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.13")
 
 
 //TODO : revert comment sbt-auto-build & delete the below plugins once ScalaTest have fixed '-u' option for Scala-js
