@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
@@ -68,7 +67,7 @@ trait TaxCalculatorHelper {
   }
 
   def isUnTaxedIncomeTaxCode(taxCode: String): Boolean = {
-    taxCode matches("([S]?[K]{1}[0-9]{1,4}){1}")
+    taxCode matches "([S]?[K]{1}[0-9]{1,4}){1}"
   }
 
   def loadTaxBands() : TaxYearBands = {
