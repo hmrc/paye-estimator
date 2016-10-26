@@ -27,7 +27,8 @@ stagingDirectory := (target.value / "scala-2.11")
 mappings in Universal ++= Seq((target.value / "scala-2.11" / s"${name.value}-opt.js", s"${name.value}.js"))
 
 val packageTgz = taskKey[File]("package-tgz")
-packageTgz := (baseDirectory in Compile).value / "target" / "universal" / (name.value + "-" + version.value + ".tgz")
+packageTgz := target.value / "universal" / (name.value + "-" + version.value + ".tgz")
+
 artifact in (Universal, packageTgz) ~= { (art:Artifact) => art.copy(`type` = "tgz", extension = "tgz") }
 addArtifact(artifact in (Universal, packageTgz), packageTgz in Universal)
 
