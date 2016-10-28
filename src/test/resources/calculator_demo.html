@@ -17,7 +17,7 @@ function calculate() {
     var taxCode = $('input[name="TaxCode"]').val();
     var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
     var payPeriod = $("#GrossPayType").val();
-    var hours = parseInt($('input[name="HourlyRate"]').val(), 10);
+    var hours = parseInt($('input[name="NumberOfHours"]').val(), 10);
 
     var result = uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
         isStatePensionAge,
@@ -50,7 +50,7 @@ function calculate() {
 
     <br>
     <div>
-        Gross Pay: <input type="number" name="GrossPay" value="0"><br>
+        Gross pay/Hourly rate: <input type="number" name="GrossPay" value="0"><br>
         <select id="GrossPayType">
             <option value="annual">Year</option>
             <option value="monthly">Month</option>
@@ -60,7 +60,7 @@ function calculate() {
 
     <br>
     <div>
-        Hourly rate: <input type="number" name="HourlyRate" value="-1"><br>
+        Number of hours: <input type="number" name="NumberOfHours" value="-1"><br>
     </div>
 
     <br>
