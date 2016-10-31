@@ -16,16 +16,16 @@ function calculate() {
     var taxYear = 2016;
     var taxCode = $('input[name="TaxCode"]').val();
     var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
-    var payPeriod = $("#GrossPayType").val();
-    var hours = parseInt($('input[name="NumberOfHours"]').val(), 10);
+    var grossPayType = $("#GrossPayType").val();
+    var numberOfHours = parseInt($('input[name="NumberOfHours"]').val(), 10);
 
     var result = uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
         isStatePensionAge,
         taxYear,
         taxCode,
         grossPayPence,
-        payPeriod,
-        hours);
+        grossPayType,
+        numberOfHours);
 
     document.querySelector('.results').innerHTML = result;
 }
