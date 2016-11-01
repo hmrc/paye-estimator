@@ -59,7 +59,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     }
 
     val calculatedTaxBreakdown = TaxBreakdown(updatedPayPeriod, grossPay.value, taxFreePay.value,
-      payeTax.taxablePay.value, calculateScottishElement(payeTax.payeTaxAmount, taxCode, LocalDate.now), taxCategories, totalDeductions,
+      payeTax.taxablePay.value, payeTax.additionalTaxablePay.value, calculateScottishElement(payeTax.taxablePay, taxCode, LocalDate.now), taxCategories, totalDeductions,
       (grossPay - totalDeductions).value)
 
     val taxBreakdown = derivePeriodTaxBreakdowns(LocalDate.now, payeTax.band, taxCode, calculatedTaxBreakdown, payeTax, nicTax, aggregation, isPensionAge)
@@ -125,9 +125,9 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
   private def deriveTaxBreakdown(date: LocalDate, bandId: Int, taxCode:String, grossPay: Money, payPeriod: String, nicTax: NICTaxResult, isMultiplier: Boolean, rhs: Int, payeAggregation: Seq[Aggregation], isStatePensionAge: Boolean): TaxBreakdown = {
 
     val updatedGrossPay = performIsMultiplyFunction(grossPay, isMultiplier, rhs)
-    val updatedTaxablePay = TaxablePayCalculator(date, removeScottishElement(taxCode), payPeriod, updatedGrossPay).calculate().result
+    val updatedTaxablePay = TaxablePayCalculator(date, removeScottishElement(taxCode), payPeriod, updatedGrossPay).calculate()
     val payeTotal = Money(payeAggregation.foldLeft(BigDecimal(0.0))(if(isMultiplier) _ + _.amount.setScale(2, RoundingMode.HALF_UP)*rhs
-                                                                    else _ + _.amount.setScale(2, RoundingMode.HALF_UP)/rhs), 2, true)
+    else _ + _.amount.setScale(2, RoundingMode.HALF_UP)/rhs), 2, true)
 
     val employeeNICAggregation = nicTax.employeeNIC.collect(NICAggregationFunc(isMultiplier, rhs))
 
@@ -136,15 +136,15 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     val nicTaxCategories = NICTaxCategoryBuilder(isStatePensionAge, NICTaxResult(nicTax.employeeNICBandRate,employeeNICAggregation, employerNICAggregation)).build().taxCategories
     val taxCategories = Seq(TaxCategory(taxType = "incomeTax", payeTotal.value, derivePAYEAggregation(isMultiplier, rhs, payeAggregation)))++nicTaxCategories
 
-    val taxFreePay = updatedGrossPay > updatedTaxablePay match {
-      case true => Money(updatedGrossPay-(updatedTaxablePay), 2, true)
+    val taxFreePay = updatedGrossPay > updatedTaxablePay.result match {
+      case true => Money(updatedGrossPay-(updatedTaxablePay.result), 2, true)
       case false => Money(0)
     }
 
     val totalDeductions = taxCategories.collect(TotalDeductionsFunc).foldLeft(BigDecimal(0.0))(_ + _)
     TaxBreakdown(payPeriod, updatedGrossPay.value, taxFreePay.value,
-                 updatedTaxablePay.value, calculateScottishElement(Money(payeTotal, 2, true), taxCode, date),
-                 taxCategories, totalDeductions,(updatedGrossPay - totalDeductions).value)
+      updatedTaxablePay.result.value, updatedTaxablePay.additionalTaxablePay.value, calculateScottishElement(updatedTaxablePay.result, taxCode, date),
+      taxCategories, totalDeductions,(updatedGrossPay - totalDeductions).value)
   }
 
   private def derivePAYEAggregation(isMultiplier: Boolean, rhs: Int, payeAggregation: Seq[Aggregation]): Seq[Aggregation] = {
