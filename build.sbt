@@ -23,8 +23,6 @@ libraryDependencies ++= Seq(
 //scalaJSStage in Global := FastOptStage
 scalaJSStage in Global := FullOptStage
 
-//crossVersion := ScalaJSCrossVersion.binary
-
 topLevelDirectory := None
 
 stagingDirectory := (target.value / "scala-2.11")
@@ -42,20 +40,3 @@ publish <<= publish dependsOn (packageZipTarball in Universal)
 publishM2 <<= publishM2 dependsOn (packageZipTarball in Universal)
 
 publishLocal <<= publishLocal dependsOn (packageZipTarball in Universal)
-
-
-val scalaJSVersion = ScalaJSVersions.current
-val scalaJSIsSnapshotVersion = ScalaJSVersions.currentIsSnapshot
-val scalaJSBinaryVersion = ScalaJSCrossVersion.currentBinaryVersion
-
-
-//lazy val foo = crossProject.in(file(".")).
-//  settings(
-//        // other settings
-//  ).
-//  jvmSettings(
-//        libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.4.3"
-//  ).
-//  jsSettings(
-//        libraryDependencies += "com.lihaoyi" %%% "scalatags" % "0.4.3"
-//  )
