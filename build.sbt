@@ -20,8 +20,7 @@ libraryDependencies ++= Seq(
       "org.pegdown" % "pegdown" % "1.6.0"
     )
 
-//scalaJSStage in Global := FastOptStage
-scalaJSStage in Global := FullOptStage
+scalaJSStage in Global := FastOptStage
 
 topLevelDirectory := None
 
