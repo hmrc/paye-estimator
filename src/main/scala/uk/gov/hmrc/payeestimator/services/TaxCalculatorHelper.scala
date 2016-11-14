@@ -96,21 +96,13 @@ trait TaxCalculatorHelper {
     rateLimits.last
   }
 
-  def getPreviousBandMaxTaxAmount(payPeriod: String, band: Int): Option[BigDecimal] = {
-    Option(getTaxBands(LocalDate.now()).taxBands.filter(_.band == band-1).head.periods.filter(_.periodType.equals(payPeriod)).head.cumulativeMaxTax)
+  def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] = {
+    Option(getTaxBands(LocalDate.now()).taxBands.filter(_.band == band-1).head.period.cumulativeMaxTax)
   }
 
-  def resolveRateLimitByPeriod(rateLimit:RateLimit, period:String) = {
-    period match {
-      case "annual" => rateLimit.annual
-      case "monthly" => rateLimit.monthly
-      case "weekly" => rateLimit.weekly
-    }
-  }
-
-  def rateLimit(limitType: String, payPeriod: String): PartialFunction[RateLimit, Money] = {
+  def rateLimit(limitType: String): PartialFunction[RateLimit, Money] = {
     case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) => {
-      Money(resolveRateLimitByPeriod(rateLimit, payPeriod))
+      Money(rateLimit.limit)
     }
   }
 

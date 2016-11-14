@@ -32,7 +32,7 @@ trait Builder {
   }
 }
 
-case class PAYEAggregateBuilder(taxCode: String, date: LocalDate, bandId: Int, payPeriod: String, payeTaxAmount: Money) extends Builder with TaxCalculatorHelper {
+case class PAYEAggregateBuilder(taxCode: String, date: LocalDate, bandId: Int, payeTaxAmount: Money) extends Builder with TaxCalculatorHelper {
 
   val taxbands = getTaxBands(date)
 
@@ -58,13 +58,11 @@ case class PAYEAggregateBuilder(taxCode: String, date: LocalDate, bandId: Int, p
   }
 
   private def previousBandMaxTaxFunction() : PartialFunction[TaxBand, BigDecimal] = {
-    case taxBand => taxBand.periods.filter(_.periodType.equals(payPeriod)).head.maxTax
+    case taxBand => taxBand.period.maxTax
   }
 
   private def createPAYEAggregation(taxBand: TaxBand): Aggregation = {
-    val periodCalc = taxBand.periods.filter(_.periodType.equals(payPeriod)).head
-    val amount = Money(periodCalc.maxTax, 2, true)
-    Aggregation(taxBand.rate, amount.value)
+    Aggregation(taxBand.rate, Money(taxBand.period.maxTax, 2, true).value)
   }
 
   private def appendAggregate(result: AggregationBuildResult): AggregationBuildResult = {

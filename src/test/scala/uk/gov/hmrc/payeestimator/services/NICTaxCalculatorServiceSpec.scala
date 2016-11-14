@@ -42,74 +42,29 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 //    }
   }
 
-    "NICTaxCalculatorService.calculateEmployeeNIC " should {
-      //TODO relook at this when Nick B has updated spreadsheet
-//      "should calculate the annual rate at the monthly rate" in new LiveNICTaxCalcServiceSuccess {
-//        val rates = service.getRateLimits(LocalDate.now)
-//        val result = service.calculateEmployeeNIC(Money(100000.00), "annual", rates)
-//        result.size shouldBe 2
-//        result.map{
-//          aggregation => aggregation.percentage.intValue() match {
-//            case 12 => aggregation.amount shouldBe BigDecimal(4191.84)
-//            case 2 => aggregation.amount shouldBe BigDecimal(1140.12)
-//          }
-//        }
-////      }
-//      "should calculate at the monthly rate" in new LiveNICTaxCalcServiceSuccess {
-//        val rates = service.getRateLimits(LocalDate.now)
-//        val result = service.calculateEmployeeNIC(Money(8333.33), "monthly", rates)
-//        result.size shouldBe 2
-//        result.map{
-//          aggregation => aggregation.percentage.intValue() match {
-//            case 12 => aggregation.amount shouldBe BigDecimal(349.32)
-//            case 2 => aggregation.amount shouldBe BigDecimal(95.01)
-//          }
-//        }
-//      }
-//      "should calculate at the weekly rate" in new LiveNICTaxCalcServiceSuccess {
-//        val rates = service.getRateLimits(LocalDate.now)
-//        val result = service.calculateEmployeeNIC(Money(1923.08), "weekly", rates)
-//        result.size shouldBe 2
-//        result.map{
-//          aggregation => aggregation.percentage.intValue() match {
-//            case 12 => aggregation.amount shouldBe BigDecimal(80.64)
-//            case 2 => aggregation.amount shouldBe BigDecimal(21.92)
-//          }
-//        }
-//      }
+  "NICTaxCalculatorService.calculateEmployeeNIC " should {
+    "should calculate the annual rate" in new LiveNICTaxCalcServiceSuccess {
+      val rates = service.getRateLimits(LocalDate.now)
+      val result = service.calculateEmployeeNIC(Money(100000.00), rates).aggregation
+      result.size shouldBe 2
+      result.map{
+        aggregation => aggregation.percentage.intValue() match {
+          case 12 => aggregation.amount shouldBe BigDecimal(4192.80)
+          case 2 => aggregation.amount shouldBe BigDecimal(1140.00)
+        }
+      }
+    }
   }
 
   "NICTaxCalculatorService.calculateEmployerNIC " should {
-    //TODO relook at this when Nick B has updated spreadsheet
-    //    "should calculate the annual rate at the monthly rate" in new LiveNICTaxCalcServiceSuccess {
-    //      val rates = service.getRateLimits(LocalDate.now)
-    //      val result = service.calculateEmployerNIC(Money(100000.00), "annual", rates)
-    //      result.size shouldBe 1
-    //      result.map{
-    //        aggregation =>
-    //          aggregation.percentage shouldBe 13.8
-    //          aggregation.amount shouldBe BigDecimal(12680.52)
-    //        }
-    //      }
-    //    }
-    "should calculate at the monthly rate" in new LiveNICTaxCalcServiceSuccess {
+    "should calculate the annual rate" in new LiveNICTaxCalcServiceSuccess {
       val rates = service.getRateLimits(LocalDate.now)
-      val result = service.calculateEmployerNIC(Money(8333.33), "monthly", rates)
+      val result = service.calculateEmployerNIC(Money(100000.00), rates)
       result.size shouldBe 1
-      result.map {
+      result.map{
         aggregation =>
           aggregation.percentage shouldBe 13.8
-          aggregation.amount shouldBe BigDecimal(1056.71)
-      }
-    }
-    "should calculate at the weekly rate" in new LiveNICTaxCalcServiceSuccess {
-      val rates = service.getRateLimits(LocalDate.now)
-      val result = service.calculateEmployerNIC(Money(1923.08), "weekly", rates)
-      result.size shouldBe 1
-      result.map {
-        aggregation =>
-          aggregation.percentage shouldBe 13.8
-          aggregation.amount shouldBe BigDecimal(243.86)
+          aggregation.amount shouldBe BigDecimal(12680.54)
       }
     }
   }

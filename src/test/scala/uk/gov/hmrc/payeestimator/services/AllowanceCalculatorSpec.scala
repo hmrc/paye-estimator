@@ -23,58 +23,28 @@ class AllowanceCalculatorSpec extends WordSpecLike with Matchers {
 
   "AllowanceCalculator calculate " should {
     "should calculate a weekly allowance" in {
-      val result = AllowanceCalculator("1100T", "weekly").calculate().result
-      result.size shouldBe 1
-      result.map{ allowance =>
-        allowance._2.allowance.value shouldBe 211.73
-        allowance._2.quotient.value  shouldBe 192.32
-        allowance._2.remainder.value shouldBe 19.41
-      }
-    }
-    "should calculate a monthly allowance" in {
-      val result = AllowanceCalculator("1100T", "monthly").calculate().result
-      result.size shouldBe 1
-      result.map{ allowance =>
-        allowance._2.allowance.value shouldBe 917.43
-        allowance._2.quotient.value  shouldBe 833.34
-        allowance._2.remainder.value shouldBe 84.09
-      }
-    }
-    "should calculate a annual allowance" in {
-      val result = AllowanceCalculator("1100T", "annual").calculate().result
-      result.size shouldBe 1
-      result.map{ allowance =>
-        allowance._2.allowance.value shouldBe 11009.00
-        allowance._2.quotient.value  shouldBe 0.00
-        allowance._2.remainder.value shouldBe 0.00
-      }
+      val result = AllowanceCalculator("1100T").calculate().result
+      result.allowance.value shouldBe 11009.00
+      result.quotient.value  shouldBe 0
+      result.remainder.value shouldBe 0
     }
     "should calculate a zero allowance with ZERO taxCode" in {
-      val result = AllowanceCalculator("ZERO", "annual").calculate().result
-      result.size shouldBe 3
-      result.map{ allowance =>
-        allowance._2.allowance.value shouldBe 0.00
-        allowance._2.quotient.value  shouldBe 0.00
-        allowance._2.remainder.value shouldBe 0.00
-      }
+      val result = AllowanceCalculator("ZERO").calculate().result
+      result.allowance.value shouldBe 0.00
+      result.quotient.value  shouldBe 0.00
+      result.remainder.value shouldBe 0.00
     }
     "should calculate a zero allowance with K0" in {
-      val result = AllowanceCalculator("K0", "weekly").calculate().result
-      result.size shouldBe 3
-      result.map{ allowance =>
-        allowance._2.allowance.value shouldBe 0.00
-        allowance._2.quotient.value  shouldBe 0.00
-        allowance._2.remainder.value shouldBe 0.00
-      }
+      val result = AllowanceCalculator("K0").calculate().result
+      result.allowance.value shouldBe 0.00
+      result.quotient.value  shouldBe 0.00
+      result.remainder.value shouldBe 0.00
     }
     "should calculate a zero allowance with 0L" in {
-      val result = AllowanceCalculator("0L", "monthly").calculate().result
-      result.size shouldBe 3
-      result.map{ allowance =>
-        allowance._2.allowance.value shouldBe 0.00
-        allowance._2.quotient.value  shouldBe 0.00
-        allowance._2.remainder.value shouldBe 0.00
-      }
+      val result = AllowanceCalculator("0L").calculate().result
+      result.allowance.value shouldBe 0.00
+      result.quotient.value  shouldBe 0.00
+      result.remainder.value shouldBe 0.00
     }
   }
 }

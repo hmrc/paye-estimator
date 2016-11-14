@@ -46,9 +46,15 @@ trait LiveNICTaxCalcServiceSuccess {
   }
 }
 
+trait LiveTaxCalcServiceSuccess {
+  val service = new TaxCalculatorService {
+    override val nicTaxCalculatorService: NICTaxCalculatorService = new NICTaxCalculatorService {}
+    override val payeTaxCalculatorService: PAYETaxCalculatorService = new PAYETaxCalculatorService {}
+  }
+}
+
 trait ExcessPayCalculatorSetup {
   val taxCode:String
-  val payPeriod: String
   val date: LocalDate
   val taxablePay: Money
   val bandId: Int
