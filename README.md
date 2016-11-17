@@ -5,6 +5,23 @@
 
 A basic PAYE tax estimation calculator JavaScript library
 
+Description
+-----------
+
+The scalaJS library is used to generate the JavaScript, code enhancements must be made to the Scala implementation of the tax-calculator, to regenerate the Javascript simply use the sbt command ```fastOptJS```.
+
+Requirements
+------------
+
+The following function is exposed by the JavaScript library.
+
+API
+---
+
+| *Supported Methods* | *Description* |
+|----|----|
+| ```uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int)``` | Calculates income tax and national insurance contributions  [More...](docs/calculate-tax.md) |
+
 
 ### License
 
