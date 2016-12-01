@@ -1,7 +1,3 @@
-import org.scalajs.core.ir.ScalaJSVersions
-import org.scalajs.sbtplugin.ScalaJSCrossVersion
-import org.scalajs.sbtplugin.Stage.FullOpt
-
 enablePlugins(SbtGitVersioning, ScalaJSPlugin, UniversalPlugin)
 
 name := "paye-estimator"
