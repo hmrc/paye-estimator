@@ -20,6 +20,13 @@ scalaJSStage in Global := FastOptStage
 
 topLevelDirectory := None
 
+// generate commit.mf file for non-standard builds (see https://github.com/hmrc/releaser#additional-filesnon-standard-artefacts)
+resourceGenerators in Compile <+= Def.task {
+      val commitMf = target.value / "commit.mf"
+      IO.write(commitMf, CommitMF().toString)
+      Seq(commitMf)
+}
+
 stagingDirectory := (target.value / "scala-2.11")
 
 mappings in Universal ++= Seq((target.value / "scala-2.11" / s"${name.value}-opt.js", s"${name.value}.js"))
