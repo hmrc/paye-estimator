@@ -21,21 +21,21 @@ import uk.gov.hmrc.payeestimator.domain.{NICRateLimit, Aggregation, NICTaxResult
 
 trait NICTaxCalculatorService extends TaxCalculatorHelper {
 
-  def calculateNICTax(isStatePensionAge: Boolean, grossPay: Money, payPeriod: String): NICTaxResult = {
+  def calculateNICTax(isStatePensionAge: Boolean, grossPay: Money): NICTaxResult = {
     isStatePensionAge match {
       case false => {
         val rateLimits = getRateLimits(LocalDate.now)
-        val employeeNICResult = calculateEmployeeNIC(grossPay, payPeriod, rateLimits)
-        NICTaxResult(employeeNICResult.nicBandRate, employeeNICResult.aggregation,calculateEmployerNIC(grossPay, payPeriod, rateLimits))
+        val employeeNICResult = calculateEmployeeNIC(grossPay, rateLimits)
+        NICTaxResult(employeeNICResult.nicBandRate, employeeNICResult.aggregation,calculateEmployerNIC(grossPay, rateLimits))
       }
       case true => NICTaxResult(BigDecimal(0),Seq(), Seq())
     }
   }
 
-  def calculateEmployeeNIC(grossPay: Money, payPeriod: String, nicRateLimit: NICRateLimit): EmployeeNICResult = {
-    val rate1 = EmployeeRateCalculator(LocalDate.now, grossPay, payPeriod, 1).calculate().result
-    val rate3 = EmployeeRateCalculator(LocalDate.now, grossPay, payPeriod, 3).calculate().result
-    val rate4 = EmployeeRateCalculator(LocalDate.now, grossPay, payPeriod, 4).calculate().result
+  def calculateEmployeeNIC(grossPay: Money, nicRateLimit: NICRateLimit): EmployeeNICResult = {
+    val rate1 = EmployeeRateCalculator(LocalDate.now, grossPay, 1).calculate().result
+    val rate3 = EmployeeRateCalculator(LocalDate.now, grossPay, 3).calculate().result
+    val rate4 = EmployeeRateCalculator(LocalDate.now, grossPay, 4).calculate().result
     val result = Seq(Aggregation(rate1.percentage, rate1.amount + rate3.amount), rate4).filter(_.amount > BigDecimal(0))
     val nicBandRate = result.size > 0 match {
       case true => result.last.percentage
@@ -44,9 +44,9 @@ trait NICTaxCalculatorService extends TaxCalculatorHelper {
     EmployeeNICResult(result,nicBandRate)
   }
 
-  def calculateEmployerNIC(grossPay: Money, payPeriod: String, nicRateLimit: NICRateLimit): Seq[Aggregation] = {
-    val rate2 = EmployerRateCalculator(LocalDate.now, grossPay, payPeriod, 2).calculate().result
-    val rate3 = EmployerRateCalculator(LocalDate.now, grossPay, payPeriod, 3).calculate().result
+  def calculateEmployerNIC(grossPay: Money, nicRateLimit: NICRateLimit): Seq[Aggregation] = {
+    val rate2 = EmployerRateCalculator(LocalDate.now, grossPay, 2).calculate().result
+    val rate3 = EmployerRateCalculator(LocalDate.now, grossPay, 3).calculate().result
     Seq(Aggregation(rate2.percentage, rate2.amount + rate3.amount))
   }
 }

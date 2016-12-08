@@ -31,7 +31,7 @@ trait Calculator {
 
 class TaxCalculatorConfigException(message:String) extends Exception(message)
 
-case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int, payPeriod: String, taxablePay: Money) extends Calculator with TaxCalculatorHelper {
+case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int, taxablePay: Money) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): ExcessPayResponse = {
     val taxBands = getTaxBands(date)
@@ -40,8 +40,7 @@ case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int
         case true => applyResponse(true, taxablePay)
         case false => {
           val previousBand = taxBands.taxBands.find(_.band == taxBandId - 1).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
-          val periodCalc = previousBand.periods.find(_.periodType.equals(payPeriod)).getOrElse(throw new TaxCalculatorConfigException(s"Could not find period calc configured for period $payPeriod in tax band ${taxBandId - 1}"))
-          applyResponse(true, Money(periodCalc.threshold.-(taxablePay.value.intValue()).abs))
+          applyResponse(true, Money(previousBand.period.threshold.-(taxablePay.value.intValue()).abs))
         }
       }
     }
@@ -53,53 +52,44 @@ case class ExcessPayCalculator(taxCode: String, date: LocalDate, taxBandId : Int
   }
 }
 
-case class AllowanceCalculator(taxCode: String, payPeriod: String) extends Calculator with TaxCalculatorHelper{
+case class AllowanceCalculator(taxCode: String) extends Calculator with TaxCalculatorHelper{
 
   override def calculate(): AllowanceResponse = {
-    taxCode match{
-      case "ZERO" | "K0" | "0L" => applyResponse(true,Seq("weekly" -> ZeroAllowance(), "monthly" -> ZeroAllowance(), "annual" -> ZeroAllowance()))
-      case _ => {
-        val taxCodeNumber = BigDecimal(splitTaxCode(taxCode).toDouble)
-        val seedData = PAYEAllowanceSeedData(taxCodeNumber)
-        val response = payPeriod match {
-          case "weekly" => Seq("weekly" -> WeeklyAllowance(seedData))
-          case "monthly" => Seq("monthly" -> MonthlyAllowance(seedData))
-          case "annual" => Seq("annual" -> AnnualAllowance(taxCode, taxCodeNumber))
-
-        }
-        applyResponse(true,response)
-      }
+    taxCode match {
+      case "ZERO" | "K0" | "0L" => applyResponse(true, ZeroAllowance())
+      case _ => applyResponse(true, AnnualAllowance(taxCode, BigDecimal(splitTaxCode(taxCode).toDouble)))
     }
   }
 
-  def applyResponse(success: Boolean, allowances: Seq[(String, Allowance)]): AllowanceResponse = {
-    AllowanceResponse(success, allowances)
+  def applyResponse(success: Boolean, allowance: Allowance): AllowanceResponse = {
+    AllowanceResponse(success, allowance)
   }
 }
 
-case class TaxablePayCalculator(date: LocalDate, taxCode: String, payPeriod: String, grossPay: Money) extends Calculator with TaxCalculatorHelper{
+case class TaxablePayCalculator(date: LocalDate, taxCode: String, grossPay: Money) extends Calculator with TaxCalculatorHelper{
 
   override def calculate(): TaxablePayResponse = {
 
-    val taperingDeductionCalc = AnnualTaperingDeductionCalculator(removeScottishElement(taxCode), date, payPeriod, grossPay).calculate()
+    val taperingDeductionCalc = AnnualTaperingDeductionCalculator(removeScottishElement(taxCode), date, grossPay).calculate()
     val updatedTaxCode = taperingDeductionCalc.result
 
-    val taxablePay: Seq[Money] = isBasicRateTaxCode(taxCode) match {
-      case true   => Seq(grossPay)
+    val taxablePay: Money = isBasicRateTaxCode(taxCode) match {
+      case true   => grossPay
       case false  => {
         isTaxableCode(taxCode) match {
           case true   => {
-            for {
-              allowance <- AllowanceCalculator(updatedTaxCode, payPeriod).calculate().result.filter(_._1.equals(payPeriod))
-            } yield (if(isUnTaxedIncomeTaxCode(taxCode)) Money(grossPay+allowance._2.allowance) else Money(grossPay-allowance._2.allowance))
+            val allowance = AllowanceCalculator(updatedTaxCode).calculate().result
+            if(isUnTaxedIncomeTaxCode(taxCode))
+              Money(grossPay+allowance.allowance)
+            else Money(grossPay-allowance.allowance)
           }
-          case false   => Seq(Money(0))
+          case false  => Money(0)
         }
       }
     }
 
-    val additionalTaxablePay = if(isUnTaxedIncomeTaxCode(taxCode)) taxablePay.head - grossPay else Money(0)
-    applyResponse(true, taxablePay.head, taperingDeductionCalc.isTapered, additionalTaxablePay)
+    val additionalTaxablePay = if(isUnTaxedIncomeTaxCode(taxCode)) taxablePay - grossPay else Money(0)
+    applyResponse(true, taxablePay, taperingDeductionCalc.isTapered, additionalTaxablePay)
   }
 
   def applyResponse(success: Boolean, taxablePay: Money, isTapered: Boolean, additionalTaxablePay: Money): TaxablePayResponse = {
@@ -108,7 +98,7 @@ case class TaxablePayCalculator(date: LocalDate, taxCode: String, payPeriod: Str
   }
 }
 
-case class TaxBandCalculator(taxCode: String, date: LocalDate, payPeriod: String, taxablePay: Money) extends Calculator with TaxCalculatorHelper{
+case class TaxBandCalculator(taxCode: String, date: LocalDate, taxablePay: Money) extends Calculator with TaxCalculatorHelper{
 
   override def calculate(): TaxBandResponse = {
     val taxBand = isBasicRateTaxCode(taxCode) match {
@@ -120,7 +110,7 @@ case class TaxBandCalculator(taxCode: String, date: LocalDate, payPeriod: String
         }
       }
       case false => {
-        val taxBands = getTaxBands(date).taxBands.collect(taxBandFilterFunc(payPeriod, taxablePay))
+        val taxBands = getTaxBands(date).taxBands.collect(taxBandFilterFunc(taxablePay))
         !taxBands.isEmpty match {
           case true => taxBands.head
           case false => getTaxBands(date).taxBands.last
@@ -134,16 +124,12 @@ case class TaxBandCalculator(taxCode: String, date: LocalDate, payPeriod: String
     TaxBandResponse(success, taxBand)
   }
 
-  private def taxBandFilterFunc(periodType: String, taxablePay: Money): PartialFunction[TaxBand, TaxBand] = {
-    case taxBand: TaxBand  if isPeriodValid(periodType, taxBand.periods, taxablePay) => taxBand
-  }
-
-  private def isPeriodValid(periodType: String, periodCalcs: Seq[PeriodCalc], taxablePay: Money) : Boolean = {
-    !periodCalcs.find(_.periodType.equals(periodType)).filter((_.threshold.>(taxablePay.value))).isEmpty
+  private def taxBandFilterFunc(taxablePay: Money): PartialFunction[TaxBand, TaxBand] = {
+    case taxBand: TaxBand  if taxBand.period.threshold > taxablePay.value => taxBand
   }
 }
 
-case class NICRateCalculator(payPeriod: String, rate: BigDecimal, amount: Money) extends Calculator {
+case class NICRateCalculator(rate: BigDecimal, amount: Money) extends Calculator {
 
   override def calculate(): NICRateCalculatorResponse = {
     applyResponse(true, Money((amount.value * (rate / 100)) - 0.001, 2, true))
@@ -154,41 +140,41 @@ case class NICRateCalculator(payPeriod: String, rate: BigDecimal, amount: Money)
   }
 }
 
-case class EmployeeRateCalculator(date: LocalDate, grossPay: Money, payPeriod: String, limitId: Int) extends Calculator with TaxCalculatorHelper {
+case class EmployeeRateCalculator(date: LocalDate, grossPay: Money, limitId: Int) extends Calculator with TaxCalculatorHelper {
 
   val nicRateLimit = getRateLimits(date)
-  val rate = nicRateLimit.employeeRate.collect(rateLimit(s"$limitId", payPeriod)).head.value
+  val rate = nicRateLimit.employeeRate.collect(rateLimit(s"$limitId")).head.value
   override def calculate(): RateCalculatorResponse = {
-    if(grossPay <= nicRateLimit.threshold.collect(rateLimit("primary", payPeriod)).head){
+    if(grossPay <= nicRateLimit.threshold.collect(rateLimit("primary")).head){
       applyResponse(true, zeroRate.aggregation)
     }
     else {
       val result = limitId match {
         case 1 => {
-          grossPay > nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head match {
-            case true => RateResult(nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head,
-              nicRateLimit.threshold.collect(rateLimit("primary", payPeriod)).head, rate, payPeriod)
-            case false => grossPay <= nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head  &&
-              grossPay > nicRateLimit.threshold.collect(rateLimit("primary", payPeriod)).head match {
-              case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("primary", payPeriod)).head, rate, payPeriod)
+          grossPay > nicRateLimit.threshold.collect(rateLimit("secondary")).head match {
+            case true => RateResult(nicRateLimit.threshold.collect(rateLimit("secondary")).head,
+              nicRateLimit.threshold.collect(rateLimit("primary")).head, rate)
+            case false => grossPay <= nicRateLimit.threshold.collect(rateLimit("secondary")).head  &&
+              grossPay > nicRateLimit.threshold.collect(rateLimit("primary")).head match {
+              case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("primary")).head, rate)
               case false => zeroRate
             }
           }
         }
         case 3 => {
-          grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head match {
-            case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head,
-              nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
-            case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head &&
-              grossPay > nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head match {
-              case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
+          grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
+            case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper")).head,
+              nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
+            case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper")).head &&
+              grossPay > nicRateLimit.threshold.collect(rateLimit("secondary")).head match {
+              case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
               case false => zeroRate
             }
           }
         }
         case 4 => {
-          grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head match {
-            case true => RateResult(grossPay, nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head, rate, payPeriod)
+          grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
+            case true => RateResult(grossPay, nicRateLimit.earningLimit.collect(rateLimit("upper")).head, rate)
             case false => zeroRate
           }
         }
@@ -201,29 +187,29 @@ case class EmployeeRateCalculator(date: LocalDate, grossPay: Money, payPeriod: S
     RateCalculatorResponse(success, aggregation)
   }
 
-  private def zeroRate = RateResult(Money(0), Money(0), rate, payPeriod)
+  private def zeroRate = RateResult(Money(0), Money(0), rate)
 }
 
-case class EmployerRateCalculator(date: LocalDate, grossPay: Money, payPeriod: String, limitId: Int) extends Calculator with TaxCalculatorHelper {
+case class EmployerRateCalculator(date: LocalDate, grossPay: Money, limitId: Int) extends Calculator with TaxCalculatorHelper {
   val nicRateLimit = getRateLimits(date)
-  val rate = nicRateLimit.employerRate.collect(rateLimit(s"$limitId", payPeriod)).head.value
+  val rate = nicRateLimit.employerRate.collect(rateLimit(s"$limitId")).head.value
 
   override def calculate(): RateCalculatorResponse = {
     val result = limitId match {
       case 2 => {
-        grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head match {
-          case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head,
-            nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
-          case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head &&
-            grossPay >  nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head match {
-            case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary", payPeriod)).head, rate, payPeriod)
+        grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
+          case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper")).head,
+            nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
+          case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper")).head &&
+            grossPay >  nicRateLimit.threshold.collect(rateLimit("secondary")).head match {
+            case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
             case false => zeroRate
           }
         }
       }
       case 3 => {
-        grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head match {
-          case true => RateResult(grossPay, nicRateLimit.earningLimit.collect(rateLimit("upper", payPeriod)).head, rate, payPeriod)
+        grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
+          case true => RateResult(grossPay, nicRateLimit.earningLimit.collect(rateLimit("upper")).head, rate)
           case false => zeroRate
         }
       }
@@ -235,26 +221,20 @@ case class EmployerRateCalculator(date: LocalDate, grossPay: Money, payPeriod: S
     RateCalculatorResponse(success, aggregation)
   }
 
-  private def zeroRate = RateResult(Money(0), Money(0), rate, payPeriod)
+  private def zeroRate = RateResult(Money(0), Money(0), rate)
 }
 
-case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, payPeriod: String, grossPay: Money) extends Calculator with TaxCalculatorHelper{
+case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, grossPay: Money) extends Calculator with TaxCalculatorHelper{
 
   override def calculate(): TaperingResponse = {
     val annualIncomeThreshold = getTaxBands(date).annualIncomeThreshold
     isEmergencyTaxCode(taxCode) match {
       case false => applyResponse(true, taxCode, false)
       case true  => {
-        val annualIncome = grossPay * (payPeriod match {
-          case "annual" => BigDecimal(1)
-          case "monthly" => BigDecimal(12)
-          case "weekly" => BigDecimal(52)
-          case _ => throw new TaxCalculatorConfigException(s"Pay period ${payPeriod} is not valid")
-        })
-        (annualIncome > annualIncomeThreshold) match {
+        (grossPay > annualIncomeThreshold) match {
           case false => applyResponse(true, taxCode, false)
           case true => {
-            val taperingDeduction = Money(((annualIncome.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, true)
+            val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, true)
             val taxCodeNumber = Money(BigDecimal(splitTaxCode(taxCode).toInt), 2, true)
             (taperingDeduction < taxCodeNumber) match {
               case false => applyResponse(true, "ZERO", true)
@@ -272,7 +252,7 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, p
 }
 
 
-case class RateResult(lhs: Money, rhs: Money, rate: BigDecimal, payPeriod: String) {
-  val amount = NICRateCalculator(payPeriod, rate, lhs-rhs).calculate().result.value
+case class RateResult(lhs: Money, rhs: Money, rate: BigDecimal) {
+  val amount = NICRateCalculator(rate, lhs-rhs).calculate().result.value
   val aggregation = Aggregation(rate, amount)
 }
