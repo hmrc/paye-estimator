@@ -30,16 +30,8 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
       val date = LocalDate.of(2016, 9, 21)
       val result: NICRateLimit = service.getRateLimits(date)
-      result.fromDate shouldBe LocalDate.of(2016,4,5)
+      result.fromDate shouldBe LocalDate.of(2016, 4, 5)
     }
-
-// TODO...REMOVE!!!???
-//    "return the correct nic rates and limits for a 2017" in new LiveNICTaxCalcServiceSuccess {
-//
-//      val date = LocalDate.of(2017, 8, 22)
-//      val result: NICRateLimit = service.getRateLimits(date)
-//      result.fromDate shouldBe LocalDate.of(2017,4,5)
-//    }
   }
 
   "NICTaxCalculatorService.calculateEmployeeNIC " should {

@@ -85,13 +85,10 @@ case class PAYEAggregateBuilder(taxCode: String, date: LocalDate, bandId: Int, p
 case class NICTaxCategoryBuilder(isStatePensionAge: Boolean, taxResult: NICTaxResult) extends Builder {
 
   override def build(): TaxCategoryBuildResult = {
-    isStatePensionAge match {
-      case false => {
-        TaxCategoryBuildResult(Seq(TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
-          TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC)))
-      }
-      case true => TaxCategoryBuildResult(Seq())
-    }
+        TaxCategoryBuildResult(Seq(
+          TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
+          TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC))
+        )
   }
 }
 
