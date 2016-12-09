@@ -65,3 +65,7 @@ trait ExcessPayCalculatorFullTaxableAmountSetup extends ExcessPayCalculatorSetup
   override val bandId: Int = 1
   override val taxablePay: Money = Money(BigDecimal.valueOf(60000.00))
 }
+
+trait LiveGovernmentSpendingReceiptingServiceSuccess {
+  val service = LiveGovernmentSpendingReceiptingService
+}
