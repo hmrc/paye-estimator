@@ -1067,6 +1067,33 @@ function $s_Luk_gov_hmrc_payeestimator_services_Builder$class__calculateAggregat
     return this$2.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(0.0, this$2.defaultMathContext$1)
   }
 }
+function $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__getGovernmentSpendingData__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__T($$this) {
+  var spendingData = $m_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$();
+  var spendingDataResponse = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse().init___T__s_math_BigDecimal__sc_Seq(spendingData.receiptsYear$1, spendingData.totalGovernmentReceipts$1, spendingData.governmentSpending$1);
+  return $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__buildSpendingResponse__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__T($$this, spendingDataResponse)
+}
+function $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__getGovernmentReceiptingData__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__T($$this) {
+  var receiptingData = $m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$();
+  var receiptingDataResponse = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse().init___T__sc_Seq(receiptingData.year$1, receiptingData.governmentReceipting$1);
+  var result = $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__buildReceiptingResponse__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__T($$this, receiptingDataResponse);
+  return result
+}
+function $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__buildReceiptingResponse__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__T($$this, governmentReceiptData) {
+  var this$3 = $m_Lupickle_default$();
+  $m_Lupickle_default$();
+  var indent = 0;
+  var this$2 = new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService($$this);
+  var evidence$1 = this$2.derive$macro$1__Lupickle_Types$Writer();
+  return $s_Lupickle_Types$class__write__Lupickle_Types__O__I__Lupickle_Types$Writer__T(this$3, governmentReceiptData, indent, evidence$1)
+}
+function $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__buildSpendingResponse__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__T($$this, governmentSpendingData) {
+  var this$3 = $m_Lupickle_default$();
+  $m_Lupickle_default$();
+  var indent = 0;
+  var this$2 = new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService($$this);
+  var evidence$1 = this$2.derive$macro$22__Lupickle_Types$Writer();
+  return $s_Lupickle_Types$class__write__Lupickle_Types__O__I__Lupickle_Types$Writer__T(this$3, governmentSpendingData, indent, evidence$1)
+}
 function $s_Luk_gov_hmrc_payeestimator_services_NICTaxCalculatorService$class__calculateEmployerNIC__Luk_gov_hmrc_payeestimator_services_NICTaxCalculatorService__Luk_gov_hmrc_payeestimator_domain_Money__Luk_gov_hmrc_payeestimator_domain_NICRateLimit__sc_Seq($$this, grossPay, nicRateLimit) {
   var rate2 = new $c_Luk_gov_hmrc_payeestimator_services_EmployerRateCalculator().init___Ljava_time_LocalDate__Luk_gov_hmrc_payeestimator_domain_Money__I($m_Ljava_time_LocalDate$().now__Ljava_time_LocalDate(), grossPay, 2).calculate__Luk_gov_hmrc_payeestimator_services_RateCalculatorResponse().result$1;
   var rate3 = new $c_Luk_gov_hmrc_payeestimator_services_EmployerRateCalculator().init___Ljava_time_LocalDate__Luk_gov_hmrc_payeestimator_domain_Money__I($m_Ljava_time_LocalDate$().now__Ljava_time_LocalDate(), grossPay, 3).calculate__Luk_gov_hmrc_payeestimator_services_RateCalculatorResponse().result$1;
@@ -1497,7 +1524,7 @@ function $s_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$class__buil
   $m_Lupickle_default$();
   var indent = 0;
   var this$2 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService($$this);
-  var evidence$1 = this$2.derive$macro$1__Lupickle_Types$Writer();
+  var evidence$1 = this$2.derive$macro$9__Lupickle_Types$Writer();
   return $s_Lupickle_Types$class__write__Lupickle_Types__O__I__Lupickle_Types$Writer__T(this$3, taxCalc, indent, evidence$1)
 }
 function $s_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$class__derivePeriodTaxBreakdowns__p0__Luk_gov_hmrc_payeestimator_services_TaxCalculatorService__Ljava_time_LocalDate__I__T__Luk_gov_hmrc_payeestimator_domain_TaxBreakdown__Luk_gov_hmrc_payeestimator_domain_PAYETaxResult__Luk_gov_hmrc_payeestimator_domain_NICTaxResult__sc_Seq__Z__sc_Seq($$this, date, bandId, taxCode, taxBreakdown, payeTax, nicTax, payeAggregation, isStatePensionAge) {
@@ -5779,6 +5806,140 @@ function $h_Lsourcecode_SourceValue() {
 }
 $h_Lsourcecode_SourceValue.prototype = $c_Lsourcecode_SourceValue.prototype;
 /** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$() {
+  $c_O.call(this);
+  this.year$1 = null;
+  this.governmentReceipting$1 = null
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$.prototype.init___ = (function() {
+  $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$ = this;
+  this.year$1 = "2016";
+  var jsx$8 = $m_sc_Seq$();
+  var this$1 = $m_s_math_BigDecimal$();
+  var jsx$7 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("Income Tax", this$1.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.64E11, this$1.defaultMathContext$1));
+  var this$2 = $m_s_math_BigDecimal$();
+  var jsx$6 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("National Insurance", this$2.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.1E11, this$2.defaultMathContext$1));
+  var this$3 = $m_s_math_BigDecimal$();
+  var jsx$5 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("Excise Duties", this$3.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(4.7E10, this$3.defaultMathContext$1));
+  var this$4 = $m_s_math_BigDecimal$();
+  var jsx$4 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("Corporation Tax", this$4.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(4.3E10, this$4.defaultMathContext$1));
+  var this$5 = $m_s_math_BigDecimal$();
+  var jsx$3 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("VAT", this$5.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.11E11, this$5.defaultMathContext$1));
+  var this$6 = $m_s_math_BigDecimal$();
+  var jsx$2 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("Business Rates", this$6.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(2.7E10, this$6.defaultMathContext$1));
+  var this$7 = $m_s_math_BigDecimal$();
+  var jsx$1 = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("Council Tax", this$7.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(2.8E10, this$7.defaultMathContext$1));
+  var this$8 = $m_s_math_BigDecimal$();
+  this.governmentReceipting$1 = $as_sc_Seq(jsx$8.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([jsx$7, jsx$6, jsx$5, jsx$4, jsx$3, jsx$2, jsx$1, new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal("Other", this$8.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.24E11, this$8.defaultMathContext$1))])));
+  return this
+});
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentReceiptData$", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$: 1,
+  O: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$;
+var $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$)) {
+    $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$ = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$
+}
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$() {
+  $c_O.call(this);
+  this.receiptsYear$1 = null;
+  this.totalGovernmentReceipts$1 = null;
+  this.governmentSpending$1 = null
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype.init___ = (function() {
+  $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$ = this;
+  this.receiptsYear$1 = "2014-15";
+  var jsx$1 = $as_sc_TraversableOnce($m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptData$().governmentReceipting$1.filter__F1__O(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(receipt$2) {
+    var receipt = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(receipt$2);
+    var thiz = receipt.receiptSource$1;
+    if (($as_T(thiz.toLowerCase()) === $as_T("Income Tax".toLowerCase()))) {
+      return true
+    } else {
+      var thiz$1 = receipt.receiptSource$1;
+      return ($as_T(thiz$1.toLowerCase()) === $as_T("National Insurance".toLowerCase()))
+    }
+  }))));
+  var this$7 = $m_s_math_BigDecimal$();
+  var mc = $m_Ljava_math_MathContext$().DECIMAL64$1;
+  this.totalGovernmentReceipts$1 = $as_s_math_BigDecimal(jsx$1.foldLeft__O__F2__O(this$7.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(0.0, mc), new $c_sjsr_AnonFunction2().init___sjs_js_Function2((function(x$1$2, x$2$2) {
+    var x$1 = $as_s_math_BigDecimal(x$1$2);
+    var x$2 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(x$2$2);
+    return x$1.$$plus__s_math_BigDecimal__s_math_BigDecimal(x$2.amount$1)
+  }))));
+  var jsx$15 = $m_sc_Seq$();
+  var this$8 = $m_s_math_BigDecimal$();
+  var mc$1 = $m_Ljava_math_MathContext$().DECIMAL64$1;
+  var jsx$14 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Welfare", this$8.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(25.3, mc$1));
+  var this$9 = $m_s_math_BigDecimal$();
+  var jsx$13 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Health", this$9.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(19.9, this$9.defaultMathContext$1));
+  var this$10 = $m_s_math_BigDecimal$();
+  var jsx$12 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("State Pensions", this$10.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(12.8, this$10.defaultMathContext$1));
+  var this$11 = $m_s_math_BigDecimal$();
+  var jsx$11 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Defence", this$11.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(5.4, this$11.defaultMathContext$1));
+  var this$12 = $m_s_math_BigDecimal$();
+  var jsx$10 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("National Debt Interest", this$12.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(5.0, this$12.defaultMathContext$1));
+  var this$13 = $m_s_math_BigDecimal$();
+  var jsx$9 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Public order & safety", this$13.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(4.4, this$13.defaultMathContext$1));
+  var this$14 = $m_s_math_BigDecimal$();
+  var jsx$8 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Transport", this$14.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(3.0, this$14.defaultMathContext$1));
+  var this$15 = $m_s_math_BigDecimal$();
+  var jsx$7 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Business and Industry", this$15.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(2.7, this$15.defaultMathContext$1));
+  var this$16 = $m_s_math_BigDecimal$();
+  var jsx$6 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Government Administration", this$16.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(2.0, this$16.defaultMathContext$1));
+  var this$17 = $m_s_math_BigDecimal$();
+  var jsx$5 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Culture e.g. sports, libraries, museums", this$17.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.8, this$17.defaultMathContext$1));
+  var this$18 = $m_s_math_BigDecimal$();
+  var jsx$4 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Environment", this$18.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.7, this$18.defaultMathContext$1));
+  var this$19 = $m_s_math_BigDecimal$();
+  var jsx$3 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Housing and Utilities", this$19.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.6, this$19.defaultMathContext$1));
+  var this$20 = $m_s_math_BigDecimal$();
+  var jsx$2 = this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("Overseas Aid", this$20.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(1.3, this$20.defaultMathContext$1));
+  var this$21 = $m_s_math_BigDecimal$();
+  this.governmentSpending$1 = $as_sc_Seq(jsx$15.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([jsx$14, jsx$13, jsx$12, jsx$11, jsx$10, jsx$9, jsx$8, jsx$7, jsx$6, jsx$5, jsx$4, jsx$3, jsx$2, this.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending("UK contribution to the EU budget", this$21.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(0.6, this$21.defaultMathContext$1))])));
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype.createGovernmentSpending__T__s_math_BigDecimal__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending = (function(description, percentage) {
+  var jsx$1 = this.totalGovernmentReceipts$1;
+  var this$1 = $m_s_math_BigDecimal$();
+  return new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending().init___T__s_math_BigDecimal__s_math_BigDecimal(description, percentage, jsx$1.$$times__s_math_BigDecimal__s_math_BigDecimal(percentage.$$div__s_math_BigDecimal__s_math_BigDecimal(this$1.apply__I__Ljava_math_MathContext__s_math_BigDecimal(100, this$1.defaultMathContext$1))).setScale__I__s_Enumeration$Value__s_math_BigDecimal(2, $m_s_math_BigDecimal$RoundingMode$().HALF$undUP$2))
+});
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentSpendingData$", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$: 1,
+  O: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$;
+var $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$)) {
+    $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$ = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingData$
+}
+/** @constructor */
 function $c_Luk_gov_hmrc_payeestimator_domain_Money() {
   $c_O.call(this);
   this.amount$1 = null;
@@ -5994,6 +6155,138 @@ function $m_Luk_gov_hmrc_payeestimator_domain_TaxCalcResources$() {
   return $n_Luk_gov_hmrc_payeestimator_domain_TaxCalcResources$
 }
 /** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1() {
+  $c_O.call(this);
+  this.derive$macro$1$1 = null;
+  this.bitmap$0$1 = false
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype.derive$macro$1$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$1$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$1$1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype.derive$macro$1__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$1$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$1$1)
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService$$anon$1", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1: 1,
+  O: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2() {
+  $c_O.call(this);
+  this.derive$macro$12$1 = null;
+  this.bitmap$0$1 = false
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.derive$macro$12__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$12$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$12$1)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.derive$macro$12$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$12$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$12$1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1 = (function($$outer) {
+  return this
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2: 1,
+  O: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3() {
+  $c_O.call(this);
+  this.derive$macro$22$1 = null;
+  this.bitmap$0$1 = false
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype.derive$macro$22__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$22$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$22$1)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype.derive$macro$22$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$22$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$22$1
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService$$anon$3", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3: 1,
+  O: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4() {
+  $c_O.call(this);
+  this.derive$macro$36$1 = null;
+  this.bitmap$0$1 = false
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1 = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype.derive$macro$36__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$36$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$36$1)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype.derive$macro$36$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$36$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$36$1
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4: 1,
+  O: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4;
+/** @constructor */
 function $c_Luk_gov_hmrc_payeestimator_services_OptionFactory$() {
   $c_O.call(this)
 }
@@ -6041,75 +6334,75 @@ $e.uk.gov.hmrc.payeestimator = ($e.uk.gov.hmrc.payeestimator || {});
 $e.uk.gov.hmrc.payeestimator.services = ($e.uk.gov.hmrc.payeestimator.services || {});
 $e.uk.gov.hmrc.payeestimator.services.OptionFactory = $m_Luk_gov_hmrc_payeestimator_services_OptionFactory$;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4() {
   $c_O.call(this);
-  this.derive$macro$60$1 = null;
+  this.derive$macro$68$1 = null;
   this.bitmap$0$1 = false
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype = new $h_O();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1 = (function($$outer) {
-  return this
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype.derive$macro$68__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$68$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$68$1)
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype.derive$macro$60$lzycompute__p1__Lupickle_Types$Writer = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype.derive$macro$68$lzycompute__p1__Lupickle_Types$Writer = (function() {
   if ((!this.bitmap$0$1)) {
-    this.derive$macro$60$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4(this));
+    this.derive$macro$68$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4(this));
     this.bitmap$0$1 = true
   };
-  return this.derive$macro$60$1
+  return this.derive$macro$68$1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype.derive$macro$60__Lupickle_Types$Writer = (function() {
-  return ((!this.bitmap$0$1) ? this.derive$macro$60$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$60$1)
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1 = (function($$outer) {
+  return this
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4: 1,
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4: 1,
   O: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3() {
   $c_O.call(this);
-  this.derive$macro$46$1 = null;
+  this.derive$macro$54$1 = null;
   this.bitmap$0$1 = false
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype = new $h_O();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype.derive$macro$46$lzycompute__p1__Lupickle_Types$Writer = (function() {
-  if ((!this.bitmap$0$1)) {
-    this.derive$macro$46$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3(this));
-    this.bitmap$0$1 = true
-  };
-  return this.derive$macro$46$1
-});
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1 = (function($$outer) {
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1 = (function($$outer) {
   return this
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype.derive$macro$46__Lupickle_Types$Writer = (function() {
-  return ((!this.bitmap$0$1) ? this.derive$macro$46$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$46$1)
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype.derive$macro$54__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$54$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$54$1)
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3: 1,
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype.derive$macro$54$lzycompute__p1__Lupickle_Types$Writer = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.derive$macro$54$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3(this));
+    this.bitmap$0$1 = true
+  };
+  return this.derive$macro$54$1
+});
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3: 1,
   O: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3;
 /** @constructor */
 function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1() {
   $c_O.call(this);
-  this.derive$macro$1$1 = null;
+  this.derive$macro$9$1 = null;
   this.bitmap$0$1 = false
 }
 $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype = new $h_O();
@@ -6119,18 +6412,18 @@ function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1() {
   /*<skip>*/
 }
 $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype.derive$macro$1$lzycompute__p1__Lupickle_Types$Writer = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype.derive$macro$9$lzycompute__p1__Lupickle_Types$Writer = (function() {
   if ((!this.bitmap$0$1)) {
-    this.derive$macro$1$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1(this));
+    this.derive$macro$9$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1(this));
     this.bitmap$0$1 = true
   };
-  return this.derive$macro$1$1
+  return this.derive$macro$9$1
 });
 $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService = (function($$outer) {
   return this
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype.derive$macro$1__Lupickle_Types$Writer = (function() {
-  return ((!this.bitmap$0$1) ? this.derive$macro$1$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$1$1)
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype.derive$macro$9__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$9$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$9$1)
 });
 var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1 = new $TypeData().initClass({
   Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1: 0
@@ -6140,38 +6433,38 @@ var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1 = new $T
 });
 $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2() {
   $c_O.call(this);
-  this.derive$macro$26$1 = null;
+  this.derive$macro$34$1 = null;
   this.bitmap$0$1 = false
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype = new $h_O();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.derive$macro$26__Lupickle_Types$Writer = (function() {
-  return ((!this.bitmap$0$1) ? this.derive$macro$26$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$26$1)
-});
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1 = (function($$outer) {
-  return this
-});
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.derive$macro$26$lzycompute__p1__Lupickle_Types$Writer = (function() {
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype.derive$macro$34$lzycompute__p1__Lupickle_Types$Writer = (function() {
   if ((!this.bitmap$0$1)) {
-    this.derive$macro$26$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2(this));
+    this.derive$macro$34$1 = new $c_Lupickle_Types$Knot$Writer().init___Lupickle_Types$Knot$__F0($m_Lupickle_default$().Knot__Lupickle_Types$Knot$(), new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2(this));
     this.bitmap$0$1 = true
   };
-  return this.derive$macro$26$1
+  return this.derive$macro$34$1
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2: 1,
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1 = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype.derive$macro$34__Lupickle_Types$Writer = (function() {
+  return ((!this.bitmap$0$1) ? this.derive$macro$34$lzycompute__p1__Lupickle_Types$Writer() : this.derive$macro$34$1)
+});
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2: 1,
   O: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2;
 /** @constructor */
 function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorStartup$() {
   $c_O.call(this);
@@ -8857,6 +9150,67 @@ var $d_Luk_gov_hmrc_payeestimator_domain_ZeroAllowance = new $TypeData().initCla
   Luk_gov_hmrc_payeestimator_domain_Allowance: 1
 });
 $c_Luk_gov_hmrc_payeestimator_domain_ZeroAllowance.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_ZeroAllowance;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$() {
+  $c_O.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype = $c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.init___ = (function() {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.$$js$exported$meth$getGovernmentSpendingData__O = (function() {
+  return $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__getGovernmentSpendingData__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__T(this)
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.$$js$exported$meth$buildSpendingResponse__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__O = (function(governmentSpendingData) {
+  return $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__buildSpendingResponse__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__T(this, governmentSpendingData)
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.$$js$exported$meth$getGovernmentReceiptingData__O = (function() {
+  return $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__getGovernmentReceiptingData__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__T(this)
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.$$js$exported$meth$buildReceiptingResponse__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__O = (function(governmentReceiptData) {
+  return $s_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$class__buildReceiptingResponse__Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__T(this, governmentReceiptData)
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.buildSpendingResponse = (function(arg$1) {
+  var prep0 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(arg$1);
+  return this.$$js$exported$meth$buildSpendingResponse__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__O(prep0)
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.buildReceiptingResponse = (function(arg$1) {
+  var prep0 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(arg$1);
+  return this.$$js$exported$meth$buildReceiptingResponse__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__O(prep0)
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.getGovernmentSpendingData = (function() {
+  return this.$$js$exported$meth$getGovernmentSpendingData__O()
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.getGovernmentReceiptingData = (function() {
+  return this.$$js$exported$meth$getGovernmentReceiptingData__O()
+});
+var $d_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$: 0
+}, false, "uk.gov.hmrc.payeestimator.services.LiveGovernmentSpendingReceiptingService$", {
+  Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$: 1,
+  O: 1,
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$;
+var $n_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$)) {
+    $n_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$ = new $c_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$
+}
+$e.uk = ($e.uk || {});
+$e.uk.gov = ($e.uk.gov || {});
+$e.uk.gov.hmrc = ($e.uk.gov.hmrc || {});
+$e.uk.gov.hmrc.payeestimator = ($e.uk.gov.hmrc.payeestimator || {});
+$e.uk.gov.hmrc.payeestimator.services = ($e.uk.gov.hmrc.payeestimator.services || {});
+$e.uk.gov.hmrc.payeestimator.services.LiveGovernmentSpendingReceiptingService = $m_Luk_gov_hmrc_payeestimator_services_LiveGovernmentSpendingReceiptingService$;
 /** @constructor */
 function $c_Lupickle_Types$Reader$$anon$4() {
   $c_O.call(this);
@@ -18133,6 +18487,546 @@ function $m_Luk_gov_hmrc_payeestimator_domain_Aggregation$() {
   return $n_Luk_gov_hmrc_payeestimator_domain_Aggregation$
 }
 /** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt() {
+  $c_O.call(this);
+  this.receiptSource$1 = null;
+  this.amount$1 = null
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.productPrefix__T = (function() {
+  return "GovernmentReceipt"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(x$1)) {
+    var GovernmentReceipt$1 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(x$1);
+    if ((this.receiptSource$1 === GovernmentReceipt$1.receiptSource$1)) {
+      var x = this.amount$1;
+      var x$2 = GovernmentReceipt$1.amount$1;
+      return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.receiptSource$1;
+      break
+    }
+    case 1: {
+      return this.amount$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.init___T__s_math_BigDecimal = (function(receiptSource, amount) {
+  this.receiptSource$1 = receiptSource;
+  this.amount$1 = amount;
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt)))
+}
+function $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(obj) {
+  return (($is_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "uk.gov.hmrc.payeestimator.domain.GovernmentReceipt"))
+}
+function $isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt)))
+}
+function $asArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(obj, depth) {
+  return (($isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Luk.gov.hmrc.payeestimator.domain.GovernmentReceipt;", depth))
+}
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentReceipt", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt: 1,
+  O: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$() {
+  $c_sr_AbstractFunction2.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype = new $h_sr_AbstractFunction2();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype.init___ = (function() {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype.toString__T = (function() {
+  return "GovernmentReceipt"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype.apply__O__O__O = (function(v1, v2) {
+  var receiptSource = $as_T(v1);
+  var amount = $as_s_math_BigDecimal(v2);
+  return new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt().init___T__s_math_BigDecimal(receiptSource, amount)
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype.unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt__s_Option = (function(x$0) {
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.receiptSource$1, x$0.amount$1)))
+});
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentReceipt$", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$: 1,
+  sr_AbstractFunction2: 1,
+  O: 1,
+  F2: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$;
+var $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$)) {
+    $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$ = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$
+}
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse() {
+  $c_O.call(this);
+  this.year$1 = null;
+  this.governmentReceipting$1 = null
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.init___T__sc_Seq = (function(year, governmentReceipting) {
+  this.year$1 = year;
+  this.governmentReceipting$1 = governmentReceipting;
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.productPrefix__T = (function() {
+  return "GovernmentReceiptDataResponse"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(x$1)) {
+    var GovernmentReceiptDataResponse$1 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(x$1);
+    if ((this.year$1 === GovernmentReceiptDataResponse$1.year$1)) {
+      var x = this.governmentReceipting$1;
+      var x$2 = GovernmentReceiptDataResponse$1.governmentReceipting$1;
+      return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.year$1;
+      break
+    }
+    case 1: {
+      return this.governmentReceipting$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse)))
+}
+function $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(obj) {
+  return (($is_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "uk.gov.hmrc.payeestimator.domain.GovernmentReceiptDataResponse"))
+}
+function $isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse)))
+}
+function $asArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(obj, depth) {
+  return (($isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Luk.gov.hmrc.payeestimator.domain.GovernmentReceiptDataResponse;", depth))
+}
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentReceiptDataResponse", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse: 1,
+  O: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$() {
+  $c_sr_AbstractFunction2.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype = new $h_sr_AbstractFunction2();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype.init___ = (function() {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype.unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__s_Option = (function(x$0) {
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T2().init___O__O(x$0.year$1, x$0.governmentReceipting$1)))
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype.toString__T = (function() {
+  return "GovernmentReceiptDataResponse"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype.apply__O__O__O = (function(v1, v2) {
+  var year = $as_T(v1);
+  var governmentReceipting = $as_sc_Seq(v2);
+  return new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse().init___T__sc_Seq(year, governmentReceipting)
+});
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentReceiptDataResponse$", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$: 1,
+  sr_AbstractFunction2: 1,
+  O: 1,
+  F2: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$;
+var $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$)) {
+    $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$ = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$
+}
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending() {
+  $c_O.call(this);
+  this.category$1 = null;
+  this.percentage$1 = null;
+  this.spendingCategoryAmount$1 = null
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.productPrefix__T = (function() {
+  return "GovernmentSpending"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.productArity__I = (function() {
+  return 3
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(x$1)) {
+    var GovernmentSpending$1 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(x$1);
+    if ((this.category$1 === GovernmentSpending$1.category$1)) {
+      var x = this.percentage$1;
+      var x$2 = GovernmentSpending$1.percentage$1;
+      var jsx$1 = ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$3 = this.spendingCategoryAmount$1;
+      var x$4 = GovernmentSpending$1.spendingCategoryAmount$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.category$1;
+      break
+    }
+    case 1: {
+      return this.percentage$1;
+      break
+    }
+    case 2: {
+      return this.spendingCategoryAmount$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.init___T__s_math_BigDecimal__s_math_BigDecimal = (function(category, percentage, spendingCategoryAmount) {
+  this.category$1 = category;
+  this.percentage$1 = percentage;
+  this.spendingCategoryAmount$1 = spendingCategoryAmount;
+  return this
+});
+function $is_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentSpending)))
+}
+function $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(obj) {
+  return (($is_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "uk.gov.hmrc.payeestimator.domain.GovernmentSpending"))
+}
+function $isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentSpending)))
+}
+function $asArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(obj, depth) {
+  return (($isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Luk.gov.hmrc.payeestimator.domain.GovernmentSpending;", depth))
+}
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpending: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentSpending", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpending: 1,
+  O: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$() {
+  $c_sr_AbstractFunction3.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype = new $h_sr_AbstractFunction3();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype.init___ = (function() {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype.unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending__s_Option = (function(x$0) {
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.category$1, x$0.percentage$1, x$0.spendingCategoryAmount$1)))
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype.toString__T = (function() {
+  return "GovernmentSpending"
+});
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentSpending$", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$: 1,
+  sr_AbstractFunction3: 1,
+  O: 1,
+  F3: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$;
+var $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$)) {
+    $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$ = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$
+}
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse() {
+  $c_O.call(this);
+  this.receiptsYear$1 = null;
+  this.totalGovernmentReceipts$1 = null;
+  this.governmentSpending$1 = null
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype = new $h_O();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.productPrefix__T = (function() {
+  return "GovernmentSpendingDataResponse"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.productArity__I = (function() {
+  return 3
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(x$1)) {
+    var GovernmentSpendingDataResponse$1 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(x$1);
+    if ((this.receiptsYear$1 === GovernmentSpendingDataResponse$1.receiptsYear$1)) {
+      var x = this.totalGovernmentReceipts$1;
+      var x$2 = GovernmentSpendingDataResponse$1.totalGovernmentReceipts$1;
+      var jsx$1 = ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$3 = this.governmentSpending$1;
+      var x$4 = GovernmentSpendingDataResponse$1.governmentSpending$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.receiptsYear$1;
+      break
+    }
+    case 1: {
+      return this.totalGovernmentReceipts$1;
+      break
+    }
+    case 2: {
+      return this.governmentSpending$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.init___T__s_math_BigDecimal__sc_Seq = (function(receiptsYear, totalGovernmentReceipts, governmentSpending) {
+  this.receiptsYear$1 = receiptsYear;
+  this.totalGovernmentReceipts$1 = totalGovernmentReceipts;
+  this.governmentSpending$1 = governmentSpending;
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse)))
+}
+function $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(obj) {
+  return (($is_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "uk.gov.hmrc.payeestimator.domain.GovernmentSpendingDataResponse"))
+}
+function $isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse)))
+}
+function $asArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(obj, depth) {
+  return (($isArrayOf_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Luk.gov.hmrc.payeestimator.domain.GovernmentSpendingDataResponse;", depth))
+}
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentSpendingDataResponse", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse: 1,
+  O: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$() {
+  $c_sr_AbstractFunction3.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype = new $h_sr_AbstractFunction3();
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype = $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype;
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype.init___ = (function() {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype.toString__T = (function() {
+  return "GovernmentSpendingDataResponse"
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype.unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__s_Option = (function(x$0) {
+  return ((x$0 === null) ? $m_s_None$() : new $c_s_Some().init___O(new $c_T3().init___O__O__O(x$0.receiptsYear$1, x$0.totalGovernmentReceipts$1, x$0.governmentSpending$1)))
+});
+var $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$ = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$: 0
+}, false, "uk.gov.hmrc.payeestimator.domain.GovernmentSpendingDataResponse$", {
+  Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$: 1,
+  sr_AbstractFunction3: 1,
+  O: 1,
+  F3: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$;
+var $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$ = (void 0);
+function $m_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$() {
+  if ((!$n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$)) {
+    $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$ = new $c_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$().init___()
+  };
+  return $n_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$
+}
+/** @constructor */
 function $c_Luk_gov_hmrc_payeestimator_domain_NICRateLimit() {
   $c_O.call(this);
   this.fromDate$1 = null;
@@ -19761,6 +20655,270 @@ var $d_Luk_gov_hmrc_payeestimator_services_EmployeeNICResult = new $TypeData().i
 });
 $c_Luk_gov_hmrc_payeestimator_services_EmployeeNICResult.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_EmployeeNICResult;
 /** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending(x$0$2);
+    return $m_Luk_gov_hmrc_payeestimator_domain_GovernmentSpending$().unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentSpending__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["category", "percentage", "spendingCategoryAmount"]);
+  var len = $uI(xs.array$6.length);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6.length);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$7 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $m_Lupickle_default$().BigDecimalRW$1;
+  var evidence$9 = $m_Lupickle_default$().BigDecimalRW$1;
+  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$9, evidence$7, evidence$8, evidence$9));
+  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$15)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4 = (function($$outer) {
+  return this
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$be65a4c35c33d78740ac4bb8dc81b899$$$$onfun$derive$macro$36$1;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$10 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt(x$0$2);
+    return $m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt$().unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentReceipt__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["receiptSource", "amount"]);
+  var len = $uI(xs.array$6.length);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var len$1 = $uI(xs$1.array$6.length);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$9 = $m_Lupickle_default$();
+  var evidence$3 = $m_Lupickle_default$().StringRW$1;
+  var evidence$4 = $m_Lupickle_default$().BigDecimalRW$1;
+  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
+  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$15)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2 = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingRecei$$$$de13236134e96c86886d393eed3052c5$$$$onfun$derive$macro$12$1;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$13 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse(x$0$2);
+    return $m_Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse$().unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentReceiptDataResponse__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["year", "governmentReceipting"]);
+  var len = $uI(xs.array$6.length);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null]);
+  var len$1 = $uI(xs$1.array$6.length);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$12 = $m_Lupickle_default$();
+  var evidence$3 = $m_Lupickle_default$().StringRW$1;
+  var this$10 = $m_Lupickle_default$();
+  var v = $m_s_Predef$().singleton$und$less$colon$less$2;
+  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1$$anon$2().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1(this);
+  var w = this$9.derive$macro$12__Lupickle_Types$Writer();
+  var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
+  var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
+  var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
+  var evidence$4 = new $c_Lupickle_Types$Writer$$anon$3().init___Lupickle_Types$Writer$__F1__Lsourcecode_Enclosing(this$11, _write, src);
+  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$12, evidence$3, evidence$4));
+  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1 = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$1$$anonfun$derive$macro$1$1;
+/** @constructor */
+function $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1() {
+  $c_sr_AbstractFunction0.call(this)
+}
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1;
+/** @constructor */
+function $h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1() {
+  /*<skip>*/
+}
+$h_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype.init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3 = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype.apply__Lupickle_Types$Writer = (function() {
+  var this$13 = $m_Lupickle_default$();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
+    var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse(x$0$2);
+    return $m_Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse$().unapply__Luk_gov_hmrc_payeestimator_domain_GovernmentSpendingDataResponse__s_Option(x$0)
+  }));
+  var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array(["receiptsYear", "totalGovernmentReceipts", "governmentSpending"]);
+  var len = $uI(xs.array$6.length);
+  var array = $newArrayObject($d_T.getArrayOf(), [len]);
+  var elem$1 = 0;
+  elem$1 = 0;
+  var this$4 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs, 0, $uI(xs.array$6.length));
+  while (this$4.hasNext__Z()) {
+    var arg1 = this$4.next__O();
+    array.u[elem$1] = arg1;
+    elem$1 = ((1 + elem$1) | 0)
+  };
+  var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([null, null, null]);
+  var len$1 = $uI(xs$1.array$6.length);
+  var array$1 = $newArrayObject($d_Lupickle_Js$Value.getArrayOf(), [len$1]);
+  var elem$1$1 = 0;
+  elem$1$1 = 0;
+  var this$8 = new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I(xs$1, 0, $uI(xs$1.array$6.length));
+  while (this$8.hasNext__Z()) {
+    var arg1$1 = this$8.next__O();
+    array$1.u[elem$1$1] = arg1$1;
+    elem$1$1 = ((1 + elem$1$1) | 0)
+  };
+  var this$12 = $m_Lupickle_default$();
+  var evidence$7 = $m_Lupickle_default$().StringRW$1;
+  var evidence$8 = $m_Lupickle_default$().BigDecimalRW$1;
+  var this$10 = $m_Lupickle_default$();
+  var v = $m_s_Predef$().singleton$und$less$colon$less$2;
+  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1$$anon$4().init___Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1(this);
+  var w = this$9.derive$macro$36__Lupickle_Types$Writer();
+  var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
+  var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
+  var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
+  var evidence$9 = new $c_Lupickle_Types$Writer$$anon$3().init___Lupickle_Types$Writer$__F1__Lsourcecode_Enclosing(this$11, _write, src);
+  var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$12, evidence$7, evidence$8, evidence$9));
+  return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype.apply__O = (function() {
+  return this.apply__Lupickle_Types$Writer()
+});
+var $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1", {
+  Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1: 1,
+  sr_AbstractFunction0: 1,
+  O: 1,
+  F0: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_GovernmentSpendingReceiptingService$$anon$3$$anonfun$derive$macro$22$1;
+/** @constructor */
 function $c_Luk_gov_hmrc_payeestimator_services_RateResult() {
   $c_O.call(this);
   this.lhs$1 = null;
@@ -19859,17 +21017,17 @@ var $d_Luk_gov_hmrc_payeestimator_services_RateResult = new $TypeData().initClas
 });
 $c_Luk_gov_hmrc_payeestimator_services_RateResult.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_RateResult;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype = new $h_sr_AbstractFunction0();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$10 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
     var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_Aggregation(x$0$2);
@@ -19903,38 +21061,35 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f
   var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple2W__Lupickle_Generated__O__O__O(this$9, evidence$3, evidence$4));
   return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$10, f, array, array$1, evidence$15)
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4 = (function($$outer) {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4 = (function($$outer) {
   return this
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype.apply__O = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1: 1,
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$648bb01230667f37fefd25f569926ac$$$$onfun$derive$macro$60$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$1b2ec7e56a2edb1f8f28e0ebc07711$$$$onfun$derive$macro$68$1;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype = new $h_sr_AbstractFunction0();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3 = (function($$outer) {
-  return this
-});
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$13 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
     var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_TaxCategory(x$0$2);
@@ -19967,8 +21122,8 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8a
   var evidence$8 = $m_Lupickle_default$().BigDecimalRW$1;
   var this$10 = $m_Lupickle_default$();
   var v = $m_s_Predef$().singleton$und$less$colon$less$2;
-  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$4dfdffbac3c0dd58bcc427c805548$$$$rive$macro$46$1$$anon$4().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1(this);
-  var w = this$9.derive$macro$60__Lupickle_Types$Writer();
+  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$2b614d294765b6abb6a5ff6d5bb198b6$$$$rive$macro$54$1$$anon$4().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1(this);
+  var w = this$9.derive$macro$68__Lupickle_Types$Writer();
   var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
   var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
   var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
@@ -19976,35 +21131,38 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8a
   var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple3W__Lupickle_Generated__O__O__O__O(this$12, evidence$7, evidence$8, evidence$9));
   return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype.apply__O = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1: 1,
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3 = (function($$outer) {
+  return this
+});
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$e893367a1f5b8abe67c99f3bebcf534$$$$onfun$derive$macro$46$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$eb103d34a7c9c35d4ca5cbd5a9d234e$$$$onfun$derive$macro$54$1;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype = new $h_sr_AbstractFunction0();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1 = (function($$outer) {
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1 = (function($$outer) {
   return this
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$13 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
     var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_TaxCalc(x$0$2);
@@ -20044,8 +21202,8 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$der
   var evidence$99 = $m_Lupickle_default$().BooleanRW$1;
   var this$10 = $m_Lupickle_default$();
   var v = $m_s_Predef$().singleton$und$less$colon$less$2;
-  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1(this);
-  var w = this$9.derive$macro$26__Lupickle_Types$Writer();
+  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1(this);
+  var w = this$9.derive$macro$34__Lupickle_Types$Writer();
   var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
   var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
   var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
@@ -20053,35 +21211,32 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$der
   var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple10W__Lupickle_Generated__O__O__O__O__O__O__O__O__O__O__O(this$12, evidence$91, evidence$92, evidence$93, evidence$94, evidence$95, evidence$96, evidence$97, evidence$98, evidence$99, evidence$100));
   return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype.apply__O = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1: 1,
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1;
 /** @constructor */
-function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1() {
+function $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1() {
   $c_sr_AbstractFunction0.call(this)
 }
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype = new $h_sr_AbstractFunction0();
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype = new $h_sr_AbstractFunction0();
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype.constructor = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1;
 /** @constructor */
-function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1() {
+function $h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1() {
   /*<skip>*/
 }
-$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype;
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2 = (function($$outer) {
-  return this
-});
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype.apply__Lupickle_Types$Writer = (function() {
+$h_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype = $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype.apply__Lupickle_Types$Writer = (function() {
   var this$13 = $m_Lupickle_default$();
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(x$0$2) {
     var x$0 = $as_Luk_gov_hmrc_payeestimator_domain_TaxBreakdown(x$0$2);
@@ -20118,8 +21273,8 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$der
   var evidence$78 = $m_Lupickle_default$().BigDecimalRW$1;
   var this$10 = $m_Lupickle_default$();
   var v = $m_s_Predef$().singleton$und$less$colon$less$2;
-  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$57a2ac7e73c49a4828a9e610f1be16f0$$$$rive$macro$26$1$$anon$3().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1(this);
-  var w = this$9.derive$macro$46__Lupickle_Types$Writer();
+  var this$9 = new $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$a$$$$c5fca642780355790c2d84b1414bc1$$$$rive$macro$34$1$$anon$3().init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1(this);
+  var w = this$9.derive$macro$54__Lupickle_Types$Writer();
   var this$11 = this$10.Aliases__Lupickle_Types$Aliases$().W$1;
   var _write = new $c_Lupickle_Implicits$$anonfun$SeqishW$1().init___Lupickle_Implicits__s_Predef$$less$colon$less__Lupickle_Types$Writer(this$10, v, w);
   var src = new $c_Lsourcecode_Enclosing().init___T("upickle.Implicits#SeqishW");
@@ -20129,20 +21284,23 @@ $c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$der
   var evidence$15 = $as_Lupickle_Types$Writer($s_Lupickle_Generated$class__Tuple9W__Lupickle_Generated__O__O__O__O__O__O__O__O__O__O(this$12, evidence$73, evidence$74, evidence$75, evidence$76, evidence$77, evidence$78, evidence$79, evidence$80, evidence$81));
   return $s_Lupickle_Implicits$class__CaseW__Lupickle_Implicits__F1__AT__ALupickle_Js$Value__Lupickle_Types$Writer__Lupickle_Types$Writer(this$13, f, array, array$1, evidence$15)
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype.apply__O = (function() {
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype.init___Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2 = (function($$outer) {
+  return this
+});
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype.apply__O = (function() {
   return this.apply__Lupickle_Types$Writer()
 });
-var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1 = new $TypeData().initClass({
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1: 0
-}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1", {
-  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1: 1,
+var $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1 = new $TypeData().initClass({
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1: 0
+}, false, "uk.gov.hmrc.payeestimator.services.TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1", {
+  Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1: 1,
   sr_AbstractFunction0: 1,
   O: 1,
   F0: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$1$1$$anon$2$$anonfun$derive$macro$26$1;
+$c_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1.prototype.$classData = $d_Luk_gov_hmrc_payeestimator_services_TaxCalculatorService$$anon$1$$anonfun$derive$macro$9$1$$anon$2$$anonfun$derive$macro$34$1;
 /** @constructor */
 function $c_Lupickle_Implicits$$anonfun$SeqishW$1() {
   $c_sr_AbstractFunction1.call(this);
@@ -23260,18 +24418,11 @@ $c_Luk_gov_hmrc_payeestimator_services_NICTaxCategoryBuilder.prototype.toString_
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
 $c_Luk_gov_hmrc_payeestimator_services_NICTaxCategoryBuilder.prototype.build__Luk_gov_hmrc_payeestimator_services_TaxCategoryBuildResult = (function() {
-  var x1 = this.isStatePensionAge$1;
-  if ((x1 === false)) {
-    var jsx$2 = $m_sc_Seq$();
-    var aggregation = this.taxResult$1.employeeNIC$1;
-    var jsx$1 = new $c_Luk_gov_hmrc_payeestimator_domain_TaxCategory().init___T__s_math_BigDecimal__sc_Seq("employeeNationalInsurance", $s_Luk_gov_hmrc_payeestimator_services_Builder$class__calculateAggregationTotal__Luk_gov_hmrc_payeestimator_services_Builder__sc_Seq__s_math_BigDecimal(this, aggregation), this.taxResult$1.employeeNIC$1);
-    var aggregation$1 = this.taxResult$1.employerNIC$1;
-    return new $c_Luk_gov_hmrc_payeestimator_services_TaxCategoryBuildResult().init___sc_Seq($as_sc_Seq(jsx$2.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([jsx$1, new $c_Luk_gov_hmrc_payeestimator_domain_TaxCategory().init___T__s_math_BigDecimal__sc_Seq("employerNationalInsurance", $s_Luk_gov_hmrc_payeestimator_services_Builder$class__calculateAggregationTotal__Luk_gov_hmrc_payeestimator_services_Builder__sc_Seq__s_math_BigDecimal(this, aggregation$1), this.taxResult$1.employerNIC$1)]))))
-  } else if ((x1 === true)) {
-    return new $c_Luk_gov_hmrc_payeestimator_services_TaxCategoryBuildResult().init___sc_Seq($as_sc_Seq($m_sc_Seq$().apply__sc_Seq__sc_GenTraversable($m_sci_Nil$())))
-  } else {
-    throw new $c_s_MatchError().init___O(x1)
-  }
+  var jsx$2 = $m_sc_Seq$();
+  var aggregation = this.taxResult$1.employeeNIC$1;
+  var jsx$1 = new $c_Luk_gov_hmrc_payeestimator_domain_TaxCategory().init___T__s_math_BigDecimal__sc_Seq("employeeNationalInsurance", $s_Luk_gov_hmrc_payeestimator_services_Builder$class__calculateAggregationTotal__Luk_gov_hmrc_payeestimator_services_Builder__sc_Seq__s_math_BigDecimal(this, aggregation), this.taxResult$1.employeeNIC$1);
+  var aggregation$1 = this.taxResult$1.employerNIC$1;
+  return new $c_Luk_gov_hmrc_payeestimator_services_TaxCategoryBuildResult().init___sc_Seq($as_sc_Seq(jsx$2.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([jsx$1, new $c_Luk_gov_hmrc_payeestimator_domain_TaxCategory().init___T__s_math_BigDecimal__sc_Seq("employerNationalInsurance", $s_Luk_gov_hmrc_payeestimator_services_Builder$class__calculateAggregationTotal__Luk_gov_hmrc_payeestimator_services_Builder__sc_Seq__s_math_BigDecimal(this, aggregation$1), this.taxResult$1.employerNIC$1)]))))
 });
 $c_Luk_gov_hmrc_payeestimator_services_NICTaxCategoryBuilder.prototype.init___Z__Luk_gov_hmrc_payeestimator_domain_NICTaxResult = (function(isStatePensionAge, taxResult) {
   this.isStatePensionAge$1 = isStatePensionAge;
