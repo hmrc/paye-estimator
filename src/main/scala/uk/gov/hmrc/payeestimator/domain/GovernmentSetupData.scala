@@ -2,7 +2,7 @@ package uk.gov.hmrc.payeestimator.domain
 
 import scala.math.BigDecimal
 
-case class GovernmentReceipt(receiptSource: String ,amount: BigDecimal)
+case class GovernmentReceipt(receiptSource: String, amount: BigDecimal)
 
 case class GovernmentSpending(category: String, percentage: BigDecimal, val totalGovernmentReceipt: BigDecimal) {
     val spendingCategoryAmount = totalGovernmentReceipt * (percentage / 100)
@@ -13,15 +13,14 @@ case class GovernmentReceiptDataResponse(year: String, governmentReceipting: Seq
 object GovernmentReceiptData {
 
   val year = "2016"
-  val tx1 = new GovernmentReceipt("Income Tax",BigDecimal(164.00))
-  val governmentReceipting = Seq(GovernmentReceipt("Income Tax",BigDecimal(164.00)),
-                                 GovernmentReceipt("National Insurance",BigDecimal(110.00)),
-                                 GovernmentReceipt("Excise Duties",BigDecimal(470.00)),
-                                 GovernmentReceipt("Corporation Tax",BigDecimal(430.00)),
-                                 GovernmentReceipt("VAT",BigDecimal(111.00)),
-                                 GovernmentReceipt("Business Rates",BigDecimal(270.00)),
-                                 GovernmentReceipt("Council Tax",BigDecimal(280.00)),
-                                 GovernmentReceipt("Other",BigDecimal(124.00)))
+  val governmentReceipting = Seq(GovernmentReceipt("Income Tax"        ,BigDecimal(164000000000.00)),
+                                 GovernmentReceipt("National Insurance",BigDecimal(110000000000.00)),
+                                 GovernmentReceipt("Excise Duties"     ,BigDecimal(47000000000.00)),
+                                 GovernmentReceipt("Corporation Tax"   ,BigDecimal(43000000000.00)),
+                                 GovernmentReceipt("VAT"               ,BigDecimal(111000000000.00)),
+                                 GovernmentReceipt("Business Rates"    ,BigDecimal(27000000000.00)),
+                                 GovernmentReceipt("Council Tax"       ,BigDecimal(28000000000.00)),
+                                 GovernmentReceipt("Other"             ,BigDecimal(124000000000.00)))
 }
 
 object GovernmentSpendingData {
