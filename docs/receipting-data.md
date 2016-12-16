@@ -3,7 +3,7 @@ receipting-data
 
 * **URL**
 
-  `uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService().getGovernmentReceiptingData()`
+  `uk.gov.hmrc.payeestimator.services.LiveGovernmentSpendingReceiptingService().getGovernmentReceiptingData()`
 
 * **Method:**
   

@@ -3,7 +3,7 @@ spending-data
 
 * **URL**
 
-  `uk.gov.hmrc.payeestimator.services.GovernmentSpendingReceiptingService().getGovernmentSpendingData()`
+  `uk.gov.hmrc.payeestimator.services.LiveGovernmentSpendingReceiptingService().getGovernmentSpendingData()`
 
 * **Method:**
   

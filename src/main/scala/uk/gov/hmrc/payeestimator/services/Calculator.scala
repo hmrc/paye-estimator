@@ -17,7 +17,10 @@
 package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
+
 import uk.gov.hmrc.payeestimator.domain._
+
+import scala.math
 
 trait Calculator {
 
@@ -248,6 +251,21 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, g
 
   def applyResponse(success: Boolean, taxCode: String, isTapered: Boolean): TaperingResponse = {
     TaperingResponse(success, taxCode, isTapered)
+  }
+}
+
+case class MaxRateCalculator(payeAmount: Money, date: LocalDate, grossPay: Money) extends Calculator with TaxCalculatorHelper{
+
+  override def calculate(): MaxRateCalculatorResponse = {
+    val maxRate = grossPay * Money(getTaxBands(date).maxRate, 2, true)
+    (payeAmount > maxRate) match {
+      case true => applyResponse(true, maxRate, true)
+      case false => applyResponse(true, Money(BigDecimal(-1)), false)
+    }
+  }
+
+  def applyResponse(success: Boolean, result: Money, isMaxRate: Boolean): MaxRateCalculatorResponse = {
+    MaxRateCalculatorResponse(success, result)
   }
 }
 
