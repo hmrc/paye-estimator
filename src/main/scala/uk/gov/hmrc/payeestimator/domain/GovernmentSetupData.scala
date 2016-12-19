@@ -11,31 +11,32 @@ case class GovernmentSpending(category: String, percentage: BigDecimal, spending
 
 case class GovernmentReceiptDataResponse(year: String, governmentReceipting: Seq[GovernmentReceipt])
 
-object GovernmentReceiptData {
+object GovernmentReceiptData extends MoneyFormatting {
 
-  val year = "2016"
-  val governmentReceipting = Seq(GovernmentReceipt("Income Tax"        ,BigDecimal(164000000000.00)),
-                                 GovernmentReceipt("National Insurance",BigDecimal(110000000000.00)),
-                                 GovernmentReceipt("Excise Duties"     ,BigDecimal(47000000000.00)),
-                                 GovernmentReceipt("Corporation Tax"   ,BigDecimal(43000000000.00)),
-                                 GovernmentReceipt("VAT"               ,BigDecimal(111000000000.00)),
-                                 GovernmentReceipt("Business Rates"    ,BigDecimal(27000000000.00)),
-                                 GovernmentReceipt("Council Tax"       ,BigDecimal(28000000000.00)),
-                                 GovernmentReceipt("Other"             ,BigDecimal(124000000000.00)))
+  val year = "2014-15"
+  val governmentReceipting = Seq(GovernmentReceipt("Income Tax"        ,format(BigDecimal(164000000000.00))),
+                                 GovernmentReceipt("National Insurance",format(BigDecimal(110000000000.00))),
+                                 GovernmentReceipt("Excise Duties"     ,format(BigDecimal(47000000000.00))),
+                                 GovernmentReceipt("Corporation Tax"   ,format(BigDecimal(43000000000.00))),
+                                 GovernmentReceipt("VAT"               ,format(BigDecimal(111000000000.00))),
+                                 GovernmentReceipt("Business Rates"    ,format(BigDecimal(27000000000.00))),
+                                 GovernmentReceipt("Council Tax"       ,format(BigDecimal(28000000000.00))),
+                                 GovernmentReceipt("Other"             ,format(BigDecimal(124000000000.00))))
 }
 
-object GovernmentSpendingData {
+object GovernmentSpendingData extends MoneyFormatting {
 
-  val receiptsYear = "2014-15"
+  val year = "2016"
   val totalGovernmentReceipts = GovernmentReceiptData.governmentReceipting.filter(
                                 receipt => {
                                   receipt.receiptSource.equalsIgnoreCase("Income Tax") ||
                                   receipt.receiptSource.equalsIgnoreCase("National Insurance")
                                 }).foldLeft(BigDecimal(0.0, MathContext.DECIMAL64))(_ + _.amount)
 
-  val governmentSpending = Seq(createGovernmentSpending("Welfare",BigDecimal(25.30, MathContext.DECIMAL64)),
+  val governmentSpending = Seq(createGovernmentSpending("Welfare",BigDecimal(25.30)),
                                createGovernmentSpending("Health",BigDecimal(19.90)),
                                createGovernmentSpending("State Pensions",BigDecimal(12.80)),
+                               createGovernmentSpending("Education",BigDecimal(12.50)),
                                createGovernmentSpending("Defence",BigDecimal(5.40)),
                                createGovernmentSpending("National Debt Interest",BigDecimal(5.00)),
                                createGovernmentSpending("Public order & safety",BigDecimal(4.40)),
@@ -49,9 +50,16 @@ object GovernmentSpendingData {
                                createGovernmentSpending("UK contribution to the EU budget",BigDecimal(0.60)))
 
   def createGovernmentSpending(description: String, percentage: BigDecimal) : GovernmentSpending = {
-    GovernmentSpending(description, percentage, (totalGovernmentReceipts*(percentage/100)).setScale(2, RoundingMode.HALF_UP))
+    GovernmentSpending(description, percentage, format(totalGovernmentReceipts*(percentage/100)))
   }
 
 }
 
-case class GovernmentSpendingDataResponse(receiptsYear: String, totalGovernmentReceipts: BigDecimal, governmentSpending: Seq[GovernmentSpending])
+case class GovernmentSpendingDataResponse(year: String, totalGovernmentReceipts: BigDecimal, governmentSpending: Seq[GovernmentSpending])
+
+trait MoneyFormatting {
+
+  def format(amount: BigDecimal): BigDecimal = {
+    amount.setScale(2, RoundingMode.HALF_UP)
+  }
+}

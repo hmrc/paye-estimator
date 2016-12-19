@@ -41,7 +41,6 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
     "return weekly tax calc response using tapering with emergency taxcode input" in new LiveTaxCalcServiceSuccess {
       val result = service.calculateTax(false.toString, 2016, "SK1100", 221200, "weekly", -1)
-      println(result)
       result shouldBe TaxCalculatorTestData.tapering_emergency_code_response
     }
 

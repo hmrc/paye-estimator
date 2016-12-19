@@ -16,8 +16,8 @@ spending-data
 
 ```String
 {
-  "receiptsYear": "2014-15",
-  "totalGovernmentReceipts": "274000000000",
+  "year": "2016",
+  "totalGovernmentReceipts": "274000000000.00",
   "governmentSpending": [
     {
       "category": "Welfare",
@@ -33,6 +33,11 @@ spending-data
       "category": "State Pensions",
       "percentage": "12.8",
       "spendingCategoryAmount": "35072000000.00"
+    },
+    {
+      "category": "Education",
+      "percentage": "12.5",
+      "spendingCategoryAmount": "34250000000.00"
     },
     {
       "category": "Defence",
