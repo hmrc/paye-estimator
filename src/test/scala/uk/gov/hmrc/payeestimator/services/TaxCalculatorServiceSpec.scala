@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, WordSpecLike}
 
 class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
-  "LiveTaxCalculatorController calculate tax for 2016 tax year" should {
+  "LiveTaxCalculatorService calculate tax for 2016 tax year" should {
     "return a annual TaxCalc response" in new LiveTaxCalcServiceSuccess {
       val result = service.calculateTax("false", 2016, "1100T", 1000008, "annual", -1)
       result shouldBe TaxCalculatorTestData.taxCalculator_2016_response
