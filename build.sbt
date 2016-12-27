@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
       Dependencies.scalajsTime.value,
       Dependencies.scalajsJson.value,
       Dependencies.tests.scalajsenvs,
-      "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
+      "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
       "org.pegdown" % "pegdown" % "1.6.0"
     )
 
