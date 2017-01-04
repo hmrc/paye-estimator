@@ -9,8 +9,9 @@ scalaVersion := "2.11.8"
 crossScalaVersions := Seq("2.11.8")
 
 libraryDependencies ++= Seq(
-      Dependencies.scalajsTime.value,
-      Dependencies.scalajsJson.value,
+      Dependencies.scalajsJTime.value,
+      Dependencies.upickle.value,
+      Dependencies.slogging.value,
       Dependencies.tests.scalajsenvs,
       "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
       "org.pegdown" % "pegdown" % "1.6.0"
@@ -19,6 +20,10 @@ libraryDependencies ++= Seq(
 scalaJSStage in Global := FastOptStage
 
 topLevelDirectory := None
+
+//omit logging statements from the generated code
+scalacOptions += "-Xmacro-settings:slogging.disable"
+
 
 // generate commit.mf file for non-standard builds (see https://github.com/hmrc/releaser#additional-filesnon-standard-artefacts)
 resourceGenerators in Compile <+= Def.task {
@@ -34,6 +39,7 @@ artifact in (Compile, commitMfTask) ~= { (art:Artifact) =>
 }
 addArtifact(artifact in (Compile, commitMfTask), commitMfTask in Compile)
 
+//publish the compile JS in a tar
 stagingDirectory := (target.value / "scala-2.11")
 
 mappings in Universal ++= Seq((target.value / "scala-2.11" / s"${name.value}-opt.js", s"${name.value}.js"))
