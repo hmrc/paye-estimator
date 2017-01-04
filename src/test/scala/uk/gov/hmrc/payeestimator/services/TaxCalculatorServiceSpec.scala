@@ -49,6 +49,11 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
         service.calculateTax("false", 2016, "SK1100", 1999999999, "annual", -1)
       }
     }
+
+    "max tax rate should kick in when the paye amount is greater than 50% of annual salary" in new LiveTaxCalcServiceSuccess {
+      val result = service.calculateTax(false.toString, 2016, "K4000", 1000000, "annual", -1)
+      result shouldBe TaxCalculatorTestData.max_tax_response
+    }
   }
 
 }

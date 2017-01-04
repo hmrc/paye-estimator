@@ -39,6 +39,7 @@ calculate-tax
   "hours": 40,
   "averageAnnualTaxRate": 37.99,
   "marginalTaxRate": 42,
+  "maxTaxRate":"0.5"
   "payeBand": 40,
   "employeeNICBand": 2,
   "tapered": true,
@@ -49,6 +50,7 @@ calculate-tax
       "taxFreePay": 3809,
       "taxablePay": 110591,
       "scottishElement": 3783.64,
+      "maxTaxAmount":"-1",
       "taxCategories": [
         {
           "taxType": "incomeTax",
@@ -102,6 +104,7 @@ calculate-tax
       "taxFreePay": 317.5,
       "taxablePay": 9215.83,
       "scottishElement": 315.3,
+      "maxTaxAmount":"-1",
       "taxCategories": [
         {
           "taxType": "incomeTax",
@@ -155,6 +158,7 @@ calculate-tax
       "taxFreePay": 73.25,
       "taxablePay": 2126.75,
       "scottishElement": 72.76,
+      "maxTaxAmount":"-1",
       "taxCategories": [
         {
           "taxType": "incomeTax",
@@ -214,3 +218,4 @@ Please take note of the optional values in the response.
     * The `payPerHour` and `hours` values will be available if the service call is made for an hourly calculation.
     * Under the `taxCategories` the `taxType=[employeeNationalInsurance|employerNationalInsurance]` will not be calculated if the `isStatePensionAge=true`.
     * The `scottishElement` will only be calculated if the tax code is a valid scottish tax code.
+    * The `maxTaxAmount` is populated if the income tax total exceeds the gross pay amount * max tax rate, and will impact the calculation of totalDeductions by replacing the income tax total amount.
