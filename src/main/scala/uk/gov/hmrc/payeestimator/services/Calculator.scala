@@ -254,22 +254,6 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, g
   }
 }
 
-case class MaxRateCalculator(payeAmount: Money, date: LocalDate, grossPay: Money) extends Calculator with TaxCalculatorHelper{
-
-  override def calculate(): MaxRateCalculatorResponse = {
-    val maxRate = grossPay * Money(getTaxBands(date).maxRate, 2, true)
-    (payeAmount > maxRate) match {
-      case true => applyResponse(true, maxRate, true)
-      case false => applyResponse(true, Money(BigDecimal(-1)), false)
-    }
-  }
-
-  def applyResponse(success: Boolean, result: Money, isMaxRate: Boolean): MaxRateCalculatorResponse = {
-    MaxRateCalculatorResponse(success, result)
-  }
-}
-
-
 case class RateResult(lhs: Money, rhs: Money, rate: BigDecimal) {
   val amount = NICRateCalculator(rate, lhs-rhs).calculate().result.value
   val aggregation = Aggregation(rate, amount)

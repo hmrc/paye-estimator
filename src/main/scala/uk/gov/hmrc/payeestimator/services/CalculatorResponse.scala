@@ -36,5 +36,3 @@ case class NICRateCalculatorResponse(override val success: Boolean, override val
 case class RateCalculatorResponse(override val success: Boolean, override val result: Aggregation) extends CalculatorResponse
 
 case class TaperingResponse(override val success: Boolean, override val result: String, isTapered: Boolean) extends CalculatorResponse
-
-case class MaxRateCalculatorResponse(override val success: Boolean, override val result: Money) extends CalculatorResponse

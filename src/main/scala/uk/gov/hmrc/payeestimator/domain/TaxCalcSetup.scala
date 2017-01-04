@@ -21,7 +21,7 @@ import java.time.LocalDate
 
 case class TaxYearBands(taxYearBands: Seq[TaxBands])
 
-case class TaxBands(fromDate: LocalDate, annualIncomeThreshold: BigDecimal, scottishRate: BigDecimal, maxRate: BigDecimal, taxBands: Seq[TaxBand])
+case class TaxBands(fromDate: LocalDate, annualIncomeThreshold: BigDecimal, scottishRate: BigDecimal,taxBands: Seq[TaxBand])
 
 case class TaxBand(band: Int, bandwidth: BigDecimal, rate: BigDecimal, period: PeriodCalc)
 
@@ -41,7 +41,7 @@ object TaxCalcResources {
   val taxBands4 = TaxBand(4, BigDecimal(-1), 45, PeriodCalc( "annual", -1, -1, -1))
 
   val taxYearBands = TaxYearBands( Seq(
-    TaxBands(LocalDate.of(2016,4,5), BigDecimal(100000.00), BigDecimal(10), BigDecimal(0.50),
+    TaxBands(LocalDate.of(2016,4,5), BigDecimal(100000.00), BigDecimal(10),
       Seq(taxBands1,taxBands2,taxBands3,taxBands4))
   ))
 

@@ -23,9 +23,9 @@ case class PAYETaxResult(taxablePay: Money, excessPay: Money, finalBandTaxedAmou
 case class NICTaxResult(employeeNICBandRate: BigDecimal, employeeNIC: Seq[Aggregation], employerNIC: Seq[Aggregation])
 
 case class TaxCalc(statePensionAge: Boolean, taxCode: String, payPerHour: BigDecimal, hours: Int, averageAnnualTaxRate: BigDecimal,
-                   marginalTaxRate: BigDecimal, maxTaxRate: BigDecimal, payeBand: BigDecimal, employeeNICBand: BigDecimal, tapered: Boolean, taxBreakdown: Seq[TaxBreakdown])
+                   marginalTaxRate: BigDecimal, payeBand: BigDecimal, employeeNICBand: BigDecimal, tapered: Boolean, taxBreakdown: Seq[TaxBreakdown])
 
-case class TaxBreakdown(period: String, grossPay: BigDecimal, taxFreePay: BigDecimal, taxablePay: BigDecimal, additionalTaxablePay: BigDecimal, scottishElement: BigDecimal, maxTaxAmount: BigDecimal,
+case class TaxBreakdown(period: String, grossPay: BigDecimal, taxFreePay: BigDecimal, taxablePay: BigDecimal, additionalTaxablePay: BigDecimal, scottishElement: BigDecimal,
                         taxCategories: Seq[TaxCategory], totalDeductions: BigDecimal, takeHomePay: BigDecimal)
 
 
