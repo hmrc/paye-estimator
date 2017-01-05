@@ -10,7 +10,7 @@ trait GovernmentSpendingReceiptingService {
   @JSExport
   def getGovernmentReceiptingData(): String = {
     val receiptingData = GovernmentReceiptData
-    val receiptingDataResponse = GovernmentReceiptDataResponse(receiptingData.year, receiptingData.governmentReceipting)
+    val receiptingDataResponse = GovernmentReceiptDataResponse(receiptingData.year, receiptingData.governmentReceipting, receiptingData.totalGovernmentReceipts)
     val result = buildReceiptingResponse(receiptingDataResponse)
     result
   }

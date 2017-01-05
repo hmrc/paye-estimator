@@ -50,6 +50,7 @@ receipting-data
       "receiptSource": "Other",
       "amount": "124000000000.00"
     }
-  ]
+  ],
+  "totalGovernmentReceipts": "654000000000.00"
 }
 ```

@@ -9,7 +9,7 @@ case class GovernmentReceipt(receiptSource: String, amount: BigDecimal)
 
 case class GovernmentSpending(category: String, percentage: BigDecimal, spendingCategoryAmount: BigDecimal)
 
-case class GovernmentReceiptDataResponse(year: String, governmentReceipting: Seq[GovernmentReceipt])
+case class GovernmentReceiptDataResponse(year: String, governmentReceipting: Seq[GovernmentReceipt], totalGovernmentReceipts: BigDecimal)
 
 object GovernmentReceiptData extends MoneyFormatting {
 
@@ -22,6 +22,9 @@ object GovernmentReceiptData extends MoneyFormatting {
                                  GovernmentReceipt("Business Rates"    ,format(BigDecimal(27000000000.00))),
                                  GovernmentReceipt("Council Tax"       ,format(BigDecimal(28000000000.00))),
                                  GovernmentReceipt("Other"             ,format(BigDecimal(124000000000.00))))
+
+  val totalGovernmentReceipts = governmentReceipting.foldLeft(BigDecimal(0.0, MathContext.DECIMAL64))(_ + _.amount)
+
 }
 
 object GovernmentSpendingData extends MoneyFormatting {
