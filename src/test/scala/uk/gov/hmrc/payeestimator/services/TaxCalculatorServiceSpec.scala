@@ -1,6 +1,7 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain.TaxBreakdown
 
 class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
@@ -56,4 +57,58 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
     }
   }
 
+  "LiveTaxCalculatorService annualiseGrossPay" should {
+    "convert 12345600 to its Pound Value if the payPeriod is 'annual'" in new LiveTaxCalcServiceSuccess {
+      val result = service.annualiseGrossPay(12345600, None, "annual")
+      result.value shouldBe BigDecimal(123456.00)
+    }
+
+    "multiply 12345600 by 12 and convert to its Pound Value if the payPeriod is 'monthly'" in new LiveTaxCalcServiceSuccess {
+      val result = service.annualiseGrossPay(12345600, None, "monthly")
+      result.value shouldBe BigDecimal(12345600 * 12 / 100)
+    }
+
+    "multiply 12345600 by 52 and convert to its Pound Value if the payPeriod is 'weekly'" in new LiveTaxCalcServiceSuccess {
+      val result = service.annualiseGrossPay(12345600, None, "weekly")
+      result.value shouldBe BigDecimal(12345600*52/100)
+    }
+
+    "throw an exception when the amount exceeds 999999999 regardless of the pay period" in new LiveTaxCalcServiceSuccess {
+      intercept[Exception] {
+        service.annualiseGrossPay(1999999999, None, "weekly")
+      }
+      intercept[Exception] {
+        service.annualiseGrossPay(1999999999, None, "monthly")
+      }
+      intercept[Exception] {
+        service.annualiseGrossPay(1999999999, None, "annual")
+      }
+    }
+  }
+
+  "LiveTaxCalculatorService convertToBoolean" should {
+    "convert String value to its boolean equivalent" in new LiveTaxCalcServiceSuccess {
+      service.convertToBoolean("true") shouldBe true
+      service.convertToBoolean("TRUE") shouldBe true
+      service.convertToBoolean("false") shouldBe false
+      service.convertToBoolean("FALSE") shouldBe false
+      intercept[Exception] {
+        service.convertToBoolean("notA_Boolean_String")
+      }
+    }
+  }
+
+  "LiveTaxCalculatorService calculateAverageAnnualTaxRate" should {
+    "calculate the average annual tax rate" in new LiveTaxCalcServiceSuccess {
+
+      val tbWeek = Option(TaxBreakdown("weekly",grossPay = BigDecimal(1000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), Seq(), totalDeductions = BigDecimal(200.00), BigDecimal(0)))
+      val tbMonth = Option(TaxBreakdown("monthly",grossPay = BigDecimal(7000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), Seq(), totalDeductions = BigDecimal(2000.00), BigDecimal(0)))
+      val tbAnnual = Option(TaxBreakdown("annual",grossPay = BigDecimal(60000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), Seq(), totalDeductions = BigDecimal(24000.00), BigDecimal(0)))
+
+      service.calculateAverageAnnualTaxRate(tbWeek).value shouldBe BigDecimal(20.00)
+      service.calculateAverageAnnualTaxRate(tbMonth).value shouldBe BigDecimal(28.57)
+      service.calculateAverageAnnualTaxRate(tbAnnual).value shouldBe BigDecimal(40.00)
+      service.calculateAverageAnnualTaxRate(None).value shouldBe BigDecimal(0.00)
+    }
+  }
 }

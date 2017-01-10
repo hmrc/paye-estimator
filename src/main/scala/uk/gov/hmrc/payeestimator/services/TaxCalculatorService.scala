@@ -52,7 +52,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     val maxTax = MaxRateCalculator(payeTax.payeTaxAmount, LocalDate.now, grossPay).calculate().result
     val aggregation = PAYEAggregateBuilder(updatedTaxCode, LocalDate.now, payeTax.band, payeTax.payeTaxAmount).build().aggregation
 
-    val nicTaxCategories = NICTaxCategoryBuilder(isPensionAge, nicTax).build().taxCategories
+    val nicTaxCategories = NICTaxCategoryBuilder(nicTax).build().taxCategories
     val taxCategories = Seq(TaxCategory(taxType = "incomeTax", payeTax.payeTaxAmount.value, aggregation)) ++ nicTaxCategories
     val totalDeductions = taxCategories.collect(TotalDeductionsFunc(maxTax.value)).foldLeft(BigDecimal(0.0))(_ + _)
 
@@ -138,7 +138,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
     val employerNICAggregation = nicTax.employerNIC.collect(NICAggregationFunc(rhs))
 
-    val nicTaxCategories = NICTaxCategoryBuilder(isStatePensionAge, NICTaxResult(nicTax.employeeNICBandRate,employeeNICAggregation, employerNICAggregation)).build().taxCategories
+    val nicTaxCategories = NICTaxCategoryBuilder(NICTaxResult(nicTax.employeeNICBandRate,employeeNICAggregation, employerNICAggregation)).build().taxCategories
     val taxCategories = Seq(TaxCategory(taxType = "incomeTax", payeTotal.value, derivePAYEAggregation(rhs, payeAggregation)))++nicTaxCategories
 
     val taxFreePay = updatedGrossPay > updatedTaxablePay match {

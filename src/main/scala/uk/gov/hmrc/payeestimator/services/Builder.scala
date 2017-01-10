@@ -82,7 +82,7 @@ case class PAYEAggregateBuilder(taxCode: String, date: LocalDate, bandId: Int, p
   }
 }
 
-case class NICTaxCategoryBuilder(isStatePensionAge: Boolean, taxResult: NICTaxResult) extends Builder {
+case class NICTaxCategoryBuilder(taxResult: NICTaxResult) extends Builder {
 
   override def build(): TaxCategoryBuildResult = {
         TaxCategoryBuildResult(Seq(

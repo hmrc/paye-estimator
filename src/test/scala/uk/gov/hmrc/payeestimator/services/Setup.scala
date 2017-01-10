@@ -69,3 +69,7 @@ trait ExcessPayCalculatorFullTaxableAmountSetup extends ExcessPayCalculatorSetup
 trait LiveGovernmentSpendingReceiptingServiceSuccess {
   val service = LiveGovernmentSpendingReceiptingService
 }
+
+trait TaxCalculatorHelperSetup {
+  val helper = new TaxCalculatorHelper {}
+}
