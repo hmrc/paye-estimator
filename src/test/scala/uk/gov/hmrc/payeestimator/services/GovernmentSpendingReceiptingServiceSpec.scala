@@ -7,7 +7,6 @@ class GovernmentSpendingReceiptingServiceSpec extends WordSpecLike with Matchers
   "LiveGovernmentSpendingReceiptingService getGovernmentReceiptingData " should {
     "return a valid GovernmentReceiptingDataResponse" in new LiveGovernmentSpendingReceiptingServiceSuccess {
       val result = service.getGovernmentReceiptingData()
-      println(result)
       result shouldBe GovernmentSpendingReceiptingTestData.government_receipting_data_response
     }
   }

@@ -21,6 +21,7 @@ import java.time.LocalDate
 import uk.gov.hmrc.payeestimator.domain._
 
 import scala.math
+import scala.math.BigDecimal.RoundingMode
 
 trait Calculator {
 
@@ -257,7 +258,7 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, date: LocalDate, g
 case class MaxRateCalculator(payeAmount: Money, date: LocalDate, grossPay: Money) extends Calculator with TaxCalculatorHelper{
 
   override def calculate(): MaxRateCalculatorResponse = {
-    val maxRate = grossPay * Money(getTaxBands(date).maxRate, 2, true)
+    val maxRate = Money((grossPay.value * getTaxBands(date).maxRate).setScale(2, RoundingMode.DOWN),2,false)
     (payeAmount > maxRate) match {
       case true => applyResponse(true, maxRate, true)
       case false => applyResponse(true, Money(BigDecimal(-1)), false)
