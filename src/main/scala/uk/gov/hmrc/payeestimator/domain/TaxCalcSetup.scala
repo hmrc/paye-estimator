@@ -41,7 +41,7 @@ object TaxCalcResources {
   val taxBands4 = TaxBand(4, BigDecimal(-1), 45, PeriodCalc( "annual", -1, -1, -1))
 
   val taxYearBands = TaxYearBands( Seq(
-    TaxBands(LocalDate.of(2016,4,5), BigDecimal(100000.00), BigDecimal(10), BigDecimal(0.50),
+    TaxBands(LocalDate.of(2016,4,5), BigDecimal(100000.00), BigDecimal(10), BigDecimal(50),
       Seq(taxBands1,taxBands2,taxBands3,taxBands4))
   ))
 

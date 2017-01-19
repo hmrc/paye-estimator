@@ -39,7 +39,7 @@ calculate-tax
   "hours": 40,
   "averageAnnualTaxRate": 37.99,
   "marginalTaxRate": 42,
-  "maxTaxRate":"0.5"
+  "maxTaxRate":"50"
   "payeBand": 40,
   "employeeNICBand": 2,
   "tapered": true,
