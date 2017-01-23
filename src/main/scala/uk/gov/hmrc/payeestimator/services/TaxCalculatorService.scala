@@ -40,7 +40,12 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
   @JSExport
   def calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
+    val taxCalResult = buildTaxCalc(isStatePensionAge, taxYear, taxCode, grossPayPence, payPeriod, hoursIn)
+    write(taxCalResult)
+  }
 
+  def buildTaxCalc(isStatePensionAge: String, taxYear: Int, taxCode: String,
+                   grossPayPence: Int, payPeriod: String, hoursIn: Int): TaxCalc = {
     val hours = if (hoursIn > 0) Some(hoursIn) else None
     val isPensionAge = convertToBoolean(isStatePensionAge)
     val updatedPayPeriod = if (hours.getOrElse(-1) > 0) "annual" else payPeriod
@@ -69,9 +74,8 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
     val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
 
-    val taxCalResult = TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, payeTax.bandRate + nicTax.employeeNICBandRate, getTaxBands(LocalDate.now()).maxRate,payeTax.bandRate, nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
+    TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, payeTax.bandRate + nicTax.employeeNICBandRate, getTaxBands(LocalDate.now()).maxRate,payeTax.bandRate, nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
 
-    buildResponse(taxCalResult)
   }
 
   def annualiseGrossPay(grossPayPence: Long, hours: Option[Int], payPeriod: String) = {
@@ -90,9 +94,6 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       case false => grossPay
     }
   }
-
-  @JSExport
-  def buildResponse(taxCalc:TaxCalc) = write(taxCalc)
 
   def convertToBoolean(isStatePensionAge: String): Boolean = {
     isStatePensionAge.toLowerCase() match {
