@@ -8,25 +8,21 @@ import scala.scalajs.js.annotation.JSExport
 trait GovernmentSpendingReceiptingService {
 
   @JSExport
-  def getGovernmentReceiptingData(): String = {
-    val receiptingData = GovernmentReceiptData
-    val receiptingDataResponse = GovernmentReceiptDataResponse(receiptingData.year, receiptingData.governmentReceipting, receiptingData.totalGovernmentReceipts)
-    val result = buildReceiptingResponse(receiptingDataResponse)
-    result
+  def getGovernmentReceiptingData(): String = write(buildGovernmentReceiptingData)
+
+  def buildGovernmentReceiptingData: GovernmentReceiptDataResponse = {
+    import GovernmentReceiptData._
+    GovernmentReceiptDataResponse(year, governmentReceipting, totalGovernmentReceipts)
   }
 
   @JSExport
-  def getGovernmentSpendingData(): String = {
-    val spendingData = GovernmentSpendingData
-    val spendingDataResponse = GovernmentSpendingDataResponse(spendingData.year, spendingData.totalGovernmentReceipts, spendingData.governmentSpending)
-    buildSpendingResponse(spendingDataResponse)
+  def getGovernmentSpendingData(): String = write(buildGovernmentSpendingData)
+
+  def buildGovernmentSpendingData: GovernmentSpendingDataResponse = {
+    import GovernmentSpendingData._
+    GovernmentSpendingDataResponse(year, totalGovernmentReceipts, governmentSpending)
   }
 
-  @JSExport
-  def buildReceiptingResponse(governmentReceiptData:GovernmentReceiptDataResponse) = write(governmentReceiptData)
-
-  @JSExport
-  def buildSpendingResponse(governmentSpendingData:GovernmentSpendingDataResponse) = write(governmentSpendingData)
 }
 
 @JSExport
