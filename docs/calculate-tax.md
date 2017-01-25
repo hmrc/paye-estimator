@@ -23,10 +23,9 @@ calculate-tax
    The grossPay value is a pence value, example £100.55 should be represented as 10055.
    * `payPeriod=[String]`
    The payPeriod accepted values are 'weekly', 'monthly' and 'annual'.
-   * `journeyId=[String]`
-   `hours=[Integer]`
+   * `hoursIn=[Integer]` 
    Hours to be supplied when tax calculation to be performed on an hourly rate. The hourly rate will be supplied as the grossPay. 
-
+   
 * **Success Response:**
 
     **Content:** 
