@@ -8,8 +8,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
   "LiveTaxCalculatorService calculate tax for 2016 tax year" should {
     "return a annual TaxCalc response" in new LiveTaxCalcServiceSuccess {
       val result = service.calculateTax("false", date, "1100T", 1000008, "annual", -1)
-//      result shouldBe TaxCalculatorTestData.taxCalculator_2016_response
-      result shouldBe TaxCalculatorTestData.no_NIC_Contribution_section_response
+      result shouldBe TaxCalculatorTestData.taxCalculator_2016_response
     }
     "return a annual TaxCalc response with zero value National Insurance Contributions Section" in new LiveTaxCalcServiceSuccess {
       val result = service.calculateTax("true", date, "1100T", 1000008, "annual", -1)

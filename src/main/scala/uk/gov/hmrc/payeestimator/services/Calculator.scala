@@ -232,25 +232,21 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, grossPay: Money, t
     val annualIncomeThreshold = taxCalcResource.taxBands.annualIncomeThreshold
 
     isEmergencyTaxCode(taxCode, taxCalcResource) match {
-      case false => applyResponse(true, taxCode, false)
+      case false => TaperingResponse(true, taxCode, false)
       case true => {
         (grossPay > annualIncomeThreshold) match {
-          case false => applyResponse(true, taxCode, false)
+          case false => TaperingResponse(true, taxCode, false)
           case true => {
             val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, true)
             val taxCodeNumber = Money(BigDecimal(splitTaxCode(taxCode).toInt), 2, true)
             (taperingDeduction < taxCodeNumber) match {
-              case false => applyResponse(true, "ZERO", true)
-              case true => applyResponse(true, s"${(taxCodeNumber - taperingDeduction).value}L", true)
+              case false => TaperingResponse(true, "ZERO", true)
+              case true => TaperingResponse(true, s"${(taxCodeNumber - taperingDeduction).value}L", true)
             }
           }
         }
       }
     }
-  }
-
-  def applyResponse(success: Boolean, taxCode: String, isTapered: Boolean): TaperingResponse = {
-    TaperingResponse(success, taxCode, isTapered)
   }
 }
 
