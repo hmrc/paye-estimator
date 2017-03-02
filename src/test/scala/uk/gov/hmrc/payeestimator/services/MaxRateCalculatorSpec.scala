@@ -16,21 +16,19 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
 
   "MaxRateCalculator calculate " should {
     "should calculate the max rate to be applied for PAYE, max rate applies" in  {
-      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), LocalDate.now, Money(BigDecimal(10000.00))).calculate().result
+      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), Money(BigDecimal(10000.00)), TaxYear_2016_2017).calculate().result
       result.value shouldBe 5000.00
     }
 
     "should calculate the max rate to be applied for PAYE, NO max rate applies here" in  {
-      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), LocalDate.now, Money(BigDecimal(20000.00))).calculate().result
+      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), Money(BigDecimal(20000.00)), TaxYear_2016_2017).calculate().result
       result.value shouldBe -1
     }
   }

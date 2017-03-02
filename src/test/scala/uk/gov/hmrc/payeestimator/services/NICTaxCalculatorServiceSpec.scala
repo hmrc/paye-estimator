@@ -16,28 +16,16 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{NICRateLimit, NICRateLimits, Money}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 import scala.math.BigDecimal
 
 class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
-  "NICTaxCalculatorService.getNICRateLimits " should {
-    "return the correct nic rates and limits for a 2016" in new LiveNICTaxCalcServiceSuccess {
-
-      val date = LocalDate.of(2016, 9, 21)
-      val result: NICRateLimit = service.getRateLimits(date)
-      result.fromDate shouldBe LocalDate.of(2016, 4, 5)
-    }
-  }
-
   "NICTaxCalculatorService.calculateEmployeeNIC " should {
     "should calculate the annual rate" in new LiveNICTaxCalcServiceSuccess {
-      val rates = service.getRateLimits(LocalDate.now)
-      val result = service.calculateEmployeeNIC(Money(100000.00), rates).aggregation
+      val result = service.calculateEmployeeNIC(Money(100000.00), TaxYear_2016_2017).aggregation
       result.size shouldBe 2
       result.map{
         aggregation => aggregation.percentage.intValue() match {
@@ -50,8 +38,7 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
   "NICTaxCalculatorService.calculateEmployerNIC " should {
     "should calculate the annual rate" in new LiveNICTaxCalcServiceSuccess {
-      val rates = service.getRateLimits(LocalDate.now)
-      val result = service.calculateEmployerNIC(Money(100000.00), rates)
+      val result = service.calculateEmployerNIC(Money(100000.00), TaxYear_2016_2017)
       result.size shouldBe 1
       result.map{
         aggregation =>

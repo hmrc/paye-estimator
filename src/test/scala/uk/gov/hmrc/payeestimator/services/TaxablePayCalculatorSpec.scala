@@ -19,13 +19,13 @@ package uk.gov.hmrc.payeestimator.services
 import java.time.LocalDate
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class TaxablePayCalculatorSpec extends WordSpecLike with Matchers {
 
   "TaxablePayCalculator calculate " should {
     "calculate annual taxable pay" in {
-      val result = TaxablePayCalculator(LocalDate.now,"1100T", Money(BigDecimal(35002.32))).calculate().result
+      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2016_2017).calculate().result
       result.value shouldBe 23993.32
     }
   }

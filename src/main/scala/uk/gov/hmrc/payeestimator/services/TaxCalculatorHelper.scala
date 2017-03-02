@@ -18,22 +18,22 @@ package uk.gov.hmrc.payeestimator.services
 import java.time.LocalDate
 import uk.gov.hmrc.payeestimator.domain._
 
-object TaxCalculatorStartup {
-
-  val taxCalcData = Map("taxYearBands" -> populateTaxBands.getOrElse(None), "nicRateLimits" -> populateNIC.getOrElse(None))
-
-  def populateTaxBands: Option[TaxYearBands] = Some(TaxCalcResources.taxYearBands)
-
-  def populateNIC: Option[NICRateLimits] = Some(TaxCalcResources.nicRateLimits)
-}
+//object TaxCalculatorStartup {
+//
+//  val taxCalcData = Map("taxBands" -> populateTaxBands.getOrElse(None), "nicRateLimits" -> populateNIC.getOrElse(None))
+//
+//  def populateTaxBands: Option[TaxBands] = Some(TaxYear_2016_2017.taxBands)
+//
+//  def populateNIC: Option[NICRateLimits] = Some(TaxYear_2016_2017.nicRateLimits)
+//}
 
 trait TaxCalculatorHelper {
 
-  def isValidTaxCode(taxCode: String): Boolean = {
+  def isValidTaxCode(taxCode: String, taxCalcResource:TaxCalcResource): Boolean = {
     isStandardTaxCode(taxCode) ||
       !isTaxableCode(taxCode) ||
       isBasicRateTaxCode(taxCode) ||
-      isEmergencyTaxCode(taxCode) ||
+      isEmergencyTaxCode(taxCode, taxCalcResource) ||
       isValidScottishTaxCode(taxCode) ||
       isUnTaxedIncomeTaxCode(taxCode)
   }
@@ -51,8 +51,8 @@ trait TaxCalculatorHelper {
       taxCode.matches("([D][0,1]){1}")
   }
 
-  def isEmergencyTaxCode(taxCode: String): Boolean = {
-    taxCode.matches("([1]{2}[0]{2}[L]{1}){1}")
+  def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean = {
+    taxCode.equalsIgnoreCase(taxCalcResource.emergencyTaxCode)
   }
 
   def isAdjustedTaxCode(taxCode: String): Boolean = {
@@ -70,36 +70,6 @@ trait TaxCalculatorHelper {
     taxCode matches "([S]?[K]{1}[0-9]{1,4}){1}"
   }
 
-  def loadTaxBands() : TaxYearBands = {
-    TaxCalculatorStartup.taxCalcData.get("taxYearBands") match {
-      case Some(taxYearBands: TaxYearBands) => taxYearBands
-      case _ => throw new TaxCalculatorConfigException("Error, no tax bands configured")
-    }
-  }
-
-  def loadNICRateLimits() : NICRateLimits = {
-    TaxCalculatorStartup.taxCalcData.get("nicRateLimits") match {
-      case Some(nicRateLimits: NICRateLimits) => nicRateLimits
-      case _ => throw new TaxCalculatorConfigException("Error, no national insurance rates and limits configured")
-    }
-  }
-
-  def getTaxBands(localDate: LocalDate) : TaxBands = {
-    val taxBands = loadTaxBands().taxYearBands.sortWith(_.fromDate.getYear < _.fromDate.getYear())
-      .filter(band => band.fromDate.isBefore(localDate) || band.fromDate.isEqual(localDate))
-    taxBands.last
-  }
-
-  def getRateLimits(localDate: LocalDate) : NICRateLimit = {
-    val rateLimits = loadNICRateLimits().rateLimits.sortWith(_.fromDate.getYear < _.fromDate.getYear())
-      .filter(rateLimit => rateLimit.fromDate.isBefore(localDate) || rateLimit.fromDate.isEqual(localDate))
-    rateLimits.last
-  }
-
-  def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] = {
-    Option(getTaxBands(LocalDate.now()).taxBands.filter(_.band == band-1).head.period.cumulativeMaxTax)
-  }
-
   def rateLimit(limitType: String): PartialFunction[RateLimit, Money] = {
     case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) => {
       Money(rateLimit.limit)
@@ -115,6 +85,12 @@ trait TaxCalculatorHelper {
         case false => taxCode.toUpperCase.stripPrefix("K")
       }
     else taxCode
+  }
+
+  def getPreviousTaxBand(taxCalcResource: TaxCalcResource, band:Int) = findTaxBand(taxCalcResource, band - 1)
+
+  def findTaxBand(taxCalcResource: TaxCalcResource, i: Int) = {
+    taxCalcResource.taxBands.taxBands.find(_.band == i)
   }
 
   def removeScottishElement(taxCode: String): String = {

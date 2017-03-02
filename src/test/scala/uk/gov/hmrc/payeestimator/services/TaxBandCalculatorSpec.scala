@@ -16,37 +16,36 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class TaxBandCalculatorSpec extends WordSpecLike with Matchers {
 
 
   "TaxBandCalculatorSpec.calculate " should {
-    "return annual taxBand 2" in {
-      val result = TaxBandCalculator("1100T", LocalDate.now, Money(BigDecimal(23993.32)) ).calculate().result
+
+    "return annual taxBand 2 in 2016/17" in {
+      val result = TaxBandCalculator("1100T", Money(BigDecimal(23993.32)), TaxYear_2016_2017).calculate().result
       result.band shouldBe 2
     }
     "return annual taxBand 3" in {
-      val result = TaxBandCalculator("1100T", LocalDate.now, Money(BigDecimal(58991.00)) ).calculate().result
+      val result = TaxBandCalculator("1100T", Money(BigDecimal(58991.00)), TaxYear_2016_2017).calculate().result
       result.band shouldBe 3
     }
     "return annual taxBand 4" in {
-      val result = TaxBandCalculator("1100T", LocalDate.now, Money(BigDecimal(188991.00)) ).calculate().result
+      val result = TaxBandCalculator("1100T", Money(BigDecimal(188991.00)), TaxYear_2016_2017).calculate().result
       result.band shouldBe 4
     }
     "return taxBand 2 for TaxCode BR regardless of the gross pay amount" in {
-      val result = TaxBandCalculator("BR", LocalDate.now, Money(BigDecimal(999999.99)) ).calculate().result
+      val result = TaxBandCalculator("BR", Money(BigDecimal(999999.99)), TaxYear_2016_2017).calculate().result
       result.band shouldBe 2
     }
     "return taxBand 3 for TaxCode D0 regardless of the gross pay amount" in {
-      val result = TaxBandCalculator("D0", LocalDate.now, Money(BigDecimal(10.99)) ).calculate().result
+      val result = TaxBandCalculator("D0", Money(BigDecimal(10.99)), TaxYear_2016_2017).calculate().result
       result.band shouldBe 3
     }
     "return taxBand 4 for TaxCode D1 regardless of the gross pay amount" in {
-      val result = TaxBandCalculator("D1", LocalDate.now, Money(BigDecimal(1.00)) ).calculate().result
+      val result = TaxBandCalculator("D1", Money(BigDecimal(1.00)), TaxYear_2016_2017).calculate().result
       result.band shouldBe 4
     }
   }

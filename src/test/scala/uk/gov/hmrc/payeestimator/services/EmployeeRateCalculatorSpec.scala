@@ -16,10 +16,8 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 import scala.math.BigDecimal
 
@@ -28,9 +26,9 @@ class EmployeeRateCalculatorSpec extends WordSpecLike with Matchers {
 
   "EmployeeRateCalculator.calculate " should {
     "should calculate the annual rates correctly" in {
-      val rate1 = EmployeeRateCalculator(LocalDate.now, Money(BigDecimal(100000.00)), 1).calculate().result
-      val rate3 = EmployeeRateCalculator(LocalDate.now, Money(BigDecimal(100000.00)), 3).calculate().result
-      val rate4 = EmployeeRateCalculator(LocalDate.now, Money(BigDecimal(100000.00)), 4).calculate().result
+      val rate1 = EmployeeRateCalculator( Money(BigDecimal(100000.00)), 1, TaxYear_2016_2017).calculate().result
+      val rate3 = EmployeeRateCalculator( Money(BigDecimal(100000.00)), 3, TaxYear_2016_2017).calculate().result
+      val rate4 = EmployeeRateCalculator( Money(BigDecimal(100000.00)), 4, TaxYear_2016_2017).calculate().result
 
       rate1.amount shouldBe 6.24
       rate1.percentage shouldBe 12

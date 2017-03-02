@@ -11,8 +11,8 @@ crossScalaVersions := Seq("2.11.8")
 libraryDependencies ++= Seq(
       Dependencies.scalajsTime.value,
       Dependencies.scalajsJson.value,
-      Dependencies.tests.scalajsenvs,
-      "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
+//      Dependencies.tests.scalajsenvs,
+      Dependencies.tests.scalatest,
       "org.pegdown" % "pegdown" % "1.6.0"
     )
 

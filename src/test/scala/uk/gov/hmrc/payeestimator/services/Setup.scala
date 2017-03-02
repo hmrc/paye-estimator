@@ -34,11 +34,13 @@ package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
 
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 trait LivePAYETaxCalcServiceSuccess {
   val service = new PAYETaxCalculatorService {
   }
+
+  val taxCalcResource2016 = TaxYear_2016_2017
 }
 
 trait LiveNICTaxCalcServiceSuccess {
@@ -51,6 +53,8 @@ trait LiveTaxCalcServiceSuccess {
     override val nicTaxCalculatorService: NICTaxCalculatorService = new NICTaxCalculatorService {}
     override val payeTaxCalculatorService: PAYETaxCalculatorService = new PAYETaxCalculatorService {}
   }
+
+  val date = LocalDate.now()
 }
 
 trait ExcessPayCalculatorSetup {

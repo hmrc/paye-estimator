@@ -1,6 +1,7 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain.{TaxYear_2016_2017, TaxYear_2017_2018}
 
 class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
 
@@ -31,11 +32,18 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
     }
   }
   "TaxCalculatorHelper isEmergencyTaxCode" should {
-    "return true is the tax code matches 1100L" in new TaxCalculatorHelperSetup {
-      helper.isEmergencyTaxCode("1100L") shouldBe true
-      helper.isEmergencyTaxCode("11100L") shouldBe false
-      helper.isEmergencyTaxCode("11000L") shouldBe false
-      helper.isEmergencyTaxCode("1100T") shouldBe false
+    "return true for 2016/17 if the tax code matches 1100L" in new TaxCalculatorHelperSetup {
+      helper.isEmergencyTaxCode("1100L", TaxYear_2016_2017) shouldBe true
+      helper.isEmergencyTaxCode("11100L", TaxYear_2016_2017) shouldBe false
+      helper.isEmergencyTaxCode("11000L", TaxYear_2016_2017) shouldBe false
+      helper.isEmergencyTaxCode("1100T", TaxYear_2016_2017) shouldBe false
+    }
+
+    "return true for 2017/18 if the tax code matches 1150L" in new TaxCalculatorHelperSetup {
+      helper.isEmergencyTaxCode("1150L", TaxYear_2017_2018) shouldBe true
+      helper.isEmergencyTaxCode("11100L", TaxYear_2017_2018) shouldBe false
+      helper.isEmergencyTaxCode("11000L", TaxYear_2017_2018) shouldBe false
+      helper.isEmergencyTaxCode("1100T", TaxYear_2017_2018) shouldBe false
     }
   }
   "TaxCalculatorHelper isAdjustedTaxCode" should {

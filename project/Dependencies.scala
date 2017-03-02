@@ -8,7 +8,8 @@ object Dependencies {
   val scalajsJson = Def.setting("com.lihaoyi" %%% "upickle" % "0.4.3")
 
   object tests {
-    val scalajsenvs = "org.scala-js" %% "scalajs-js-envs" % scalaJSVersion % "test"
+//    val scalajsenvs = "org.scala-js" %% "scalajs-js-envs" % scalaJSVersion % "test"
+    val scalatest = "org.scalatest" %% "scalatest" % "3.0.0" % "test"
   }
 
 }
