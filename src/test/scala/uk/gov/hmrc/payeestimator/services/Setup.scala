@@ -57,19 +57,6 @@ trait LiveTaxCalcServiceSuccess {
   val date = LocalDate.now()
 }
 
-trait ExcessPayCalculatorSetup {
-  val taxCode:String
-  val date: LocalDate
-  val taxablePay: Money
-  val bandId: Int
-}
-
-trait ExcessPayCalculatorFullTaxableAmountSetup extends ExcessPayCalculatorSetup {
-  override val date: LocalDate = LocalDate.now
-  override val bandId: Int = 1
-  override val taxablePay: Money = Money(BigDecimal.valueOf(60000.00))
-}
-
 trait LiveGovernmentSpendingReceiptingServiceSuccess {
   val service = LiveGovernmentSpendingReceiptingService
 }
