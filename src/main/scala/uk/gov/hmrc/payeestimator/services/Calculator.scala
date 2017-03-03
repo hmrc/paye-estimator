@@ -139,16 +139,32 @@ case class NICRateCalculator(rate: BigDecimal, amount: Money) extends Calculator
   }
 }
 
-case class EmployeeRateCalculator(grossPay: Money, limitId: Int, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
+trait EmployeeEmployerCalculations {
 
-  private val nicRateLimit = taxCalcResource.nicRateLimits
-  private def findEarningLimit(limit: String): Money = collectRateLimit(limit, nicRateLimit.earningLimit)
-  private def findThresholdLimit(limit: String): Money = collectRateLimit(limit, nicRateLimit.threshold)
-  private def collectRateLimit(limit: String, collection: Seq[RateLimit]) = collection.collect(rateLimit(limit)).head
-  private def zeroRate = RateResult(Money(0), Money(0), rate)
+  helper:TaxCalculatorHelper =>
 
-  private val primaryThresholdLimit = findThresholdLimit("primary")
-  private val rate = collectRateLimit(s"$limitId", nicRateLimit.employeeRate).value
+  def taxCalcResource : TaxCalcResource
+  def rate: BigDecimal
+  def grossPay : Money
+  val nicRateLimit: NICRateLimits = taxCalcResource.nicRateLimits
+  def findThresholdLimit(limit: String): Money = collectRateLimit(limit, nicRateLimit.threshold)
+  def collectRateLimit(limit: String, collection: Seq[RateLimit]) = collection.collect(rateLimit(limit)).head
+  lazy val upperEarningLimit: Money = collectRateLimit("upper", nicRateLimit.earningLimit)
+  lazy val primaryThresholdLimit = findThresholdLimit("primary")
+  lazy val secondaryThresholdLimit = findThresholdLimit("secondary")
+  def zeroRate = RateResult(Money(0), Money(0), rate)
+
+  def calculateRate(leftLimit: Money, rightLimit: Money) = {
+    if(grossPay > leftLimit) RateResult(leftLimit, rightLimit, rate)
+    else if(grossPay <= leftLimit && grossPay > rightLimit) RateResult(grossPay, rightLimit, rate)
+    else zeroRate
+  }
+}
+
+case class EmployeeRateCalculator(grossPay: Money, limitId: Int, taxCalcResource: TaxCalcResource)
+  extends Calculator with TaxCalculatorHelper with EmployeeEmployerCalculations {
+
+  override def rate: BigDecimal = collectRateLimit(s"$limitId", nicRateLimit.employeeRate).value
 
   override def calculate(): RateCalculatorResponse = {
     if (grossPay <= primaryThresholdLimit)
@@ -159,59 +175,27 @@ case class EmployeeRateCalculator(grossPay: Money, limitId: Int, taxCalcResource
 
   private def calculateAggregation: Aggregation = {
     (limitId match {
-      case 1 => calculateRateBand(findThresholdLimit("secondary"), primaryThresholdLimit)
-      case 3 => calculateRateBand(findEarningLimit("upper"), findThresholdLimit("secondary"))
-      case 4 => {
-        val upperEarningLimit = findEarningLimit("upper")
+      case 1 => calculateRate(secondaryThresholdLimit, primaryThresholdLimit)
+      case 3 => calculateRate(upperEarningLimit, secondaryThresholdLimit)
+      case 4 =>
         if (grossPay > upperEarningLimit) RateResult(grossPay, upperEarningLimit, rate) else zeroRate
-      }
     }).aggregation
-  }
-
-  private def calculateRateBand(leftLimit: Money, rightLimit: Money) = {
-    grossPay > leftLimit match {
-      case true => RateResult(leftLimit, rightLimit, rate)
-      case false => grossPay <= leftLimit && grossPay > rightLimit match {
-        case true => RateResult(grossPay, rightLimit, rate)
-        case false => zeroRate
-      }
-    }
   }
 }
 
-case class EmployerRateCalculator(grossPay: Money, limitId: Int, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
+case class EmployerRateCalculator(grossPay: Money, limitId: Int, taxCalcResource: TaxCalcResource)
+  extends Calculator with TaxCalculatorHelper with EmployeeEmployerCalculations{
 
-  val nicRateLimit = taxCalcResource.nicRateLimits
-  val rate = nicRateLimit.employerRate.collect(rateLimit(s"$limitId")).head.value
+  override def rate = collectRateLimit(s"$limitId", nicRateLimit.employerRate).value
+  override def calculate(): RateCalculatorResponse = RateCalculatorResponse(true, calculaeAggregation)
 
-  override def calculate(): RateCalculatorResponse = {
-    val result = limitId match {
-      case 2 => {
-        grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
-          case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper")).head,
-            nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
-          case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper")).head &&
-            grossPay > nicRateLimit.threshold.collect(rateLimit("secondary")).head match {
-            case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
-            case false => zeroRate
-          }
-        }
-      }
-      case 3 => {
-        grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
-          case true => RateResult(grossPay, nicRateLimit.earningLimit.collect(rateLimit("upper")).head, rate)
-          case false => zeroRate
-        }
-      }
-    }
-    applyResponse(true, result.aggregation)
+  private def calculaeAggregation = {
+    (limitId match {
+      case 2 => calculateRate(upperEarningLimit, secondaryThresholdLimit)
+      case 3 if grossPay > upperEarningLimit => RateResult(grossPay, upperEarningLimit, rate)
+      case 3 => zeroRate
+    }).aggregation
   }
-
-  def applyResponse(success: Boolean, aggregation: Aggregation): RateCalculatorResponse = {
-    RateCalculatorResponse(success, aggregation)
-  }
-
-  private def zeroRate = RateResult(Money(0), Money(0), rate)
 }
 
 case class AnnualTaperingDeductionCalculator(taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
