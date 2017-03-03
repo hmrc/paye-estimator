@@ -69,12 +69,11 @@ trait TaxCalculatorHelper {
   def splitTaxCode(taxCode: String): String = {
     if(isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode))
       taxCode.stripSuffix(taxCode.substring(taxCode.length - 1, taxCode.length))
-    else if(isUnTaxedIncomeTaxCode(taxCode))
-      taxCode.toUpperCase.contains("SK") match {
-        case true => taxCode.toUpperCase.stripPrefix("SK")
-        case false => taxCode.toUpperCase.stripPrefix("K")
-      }
-    else taxCode
+    else if(isUnTaxedIncomeTaxCode(taxCode) && (taxCode.toUpperCase.contains("S") || taxCode.toUpperCase.contains("K"))) {
+        taxCode.toUpperCase.stripPrefix("S").stripPrefix("K")
+    }
+    else
+      taxCode
   }
 
   def removeScottishElement(taxCode: String): String = {

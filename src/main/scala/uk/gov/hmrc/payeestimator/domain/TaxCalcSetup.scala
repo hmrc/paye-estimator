@@ -52,7 +52,7 @@ trait TaxCalcResource {
 
 object TaxCalcResourceBuilder {
 
-  def resources(isScottish: Boolean): Seq[TaxCalcResource] = Seq(new TaxYear_2016_2017(isScottish), new TaxYear_2017_2018(isScottish))
+  def resources(isScottish: Boolean): Seq[TaxCalcResource] = Seq(TaxYear_2016_2017(isScottish), TaxYear_2017_2018(isScottish))
 
   def resourceForDate(date:LocalDate, isScottish: Boolean) : TaxCalcResource = {
     resources(isScottish).find(_.applicableForDate(date)) getOrElse {
@@ -61,7 +61,7 @@ object TaxCalcResourceBuilder {
   }
 }
 
-class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
+case class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = if(isScottish) "S1150L" else "1150L"
   override val startDate: LocalDate = LocalDate.of(2017,4,6)
@@ -105,7 +105,7 @@ class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
   )
 }
 
-class TaxYear_2016_2017(val isScottish:Boolean) extends TaxCalcResource {
+case class TaxYear_2016_2017(val isScottish:Boolean) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = if (isScottish) "S1100L" else "1100L"
   override val startDate: LocalDate = LocalDate.of(2016,4,6)

@@ -71,7 +71,7 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
 
   override def calculate(): TaxablePayResponse = {
 
-    val taperingDeductionCalc = AnnualTaperingDeductionCalculator(removeScottishElement(taxCode), grossPay, taxCalcResource).calculate()
+    val taperingDeductionCalc = AnnualTaperingDeductionCalculator(taxCode, grossPay, taxCalcResource).calculate()
     val updatedTaxCode = taperingDeductionCalc.result
 
     val taxablePay: Money = isBasicRateTaxCode(taxCode) match {
