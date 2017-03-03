@@ -17,10 +17,10 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges}
 
 
-class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers {
+class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers  with TaxYearChanges{
 
   "PAYETaxCalculatorService.isValidTaxCode " should {
     "return true if pattern matches ([0-9]{1,4}[L-N,l-n,T,t,X,x]{1}){1}" in new LivePAYETaxCalcServiceSuccess {

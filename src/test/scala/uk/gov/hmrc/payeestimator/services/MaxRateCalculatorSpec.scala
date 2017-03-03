@@ -17,9 +17,9 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_2018}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
 
-class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
+class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChanges {
 
 
   import org.scalatest.prop.TableDrivenPropertyChecks._

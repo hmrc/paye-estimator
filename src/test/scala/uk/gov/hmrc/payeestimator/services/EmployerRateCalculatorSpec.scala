@@ -19,11 +19,11 @@ package uk.gov.hmrc.payeestimator.services
 import org.scalatest.prop.TableDrivenPropertyChecks.forAll
 import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_2018}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
 
 import scala.math.BigDecimal
 
-class EmployerRateCalculatorSpec extends WordSpecLike with Matchers {
+class EmployerRateCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
 
   val input = Table(

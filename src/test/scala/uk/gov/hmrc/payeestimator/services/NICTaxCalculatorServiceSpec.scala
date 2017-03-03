@@ -17,11 +17,11 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017}
 
 import scala.math.BigDecimal
 
-class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
+class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers  with TaxYearChanges {
 
   "NICTaxCalculatorService.calculateEmployeeNIC " should {
     "should calculate the annual rate" in new LiveNICTaxCalcServiceSuccess {
