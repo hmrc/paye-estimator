@@ -17,7 +17,7 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_2018}
 
 class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
 
@@ -27,7 +27,9 @@ class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
   val input = Table(
     ("payeAmount", "grossPay", "taxCalcResource", "taxYear", "expectedResult"),
     (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2016_2017, "2016/17", BigDecimal(5000.00)),
-    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, "2016/17", BigDecimal(-1))
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, "2016/17", BigDecimal(-1)),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2017_2018, "2017/18", BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, "2017/18", BigDecimal(-1))
   )
 
   s"MaxRateCalculator calculate() " should {
