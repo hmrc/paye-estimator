@@ -15,17 +15,7 @@
  */
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
 import uk.gov.hmrc.payeestimator.domain._
-
-//object TaxCalculatorStartup {
-//
-//  val taxCalcData = Map("taxBands" -> populateTaxBands.getOrElse(None), "nicRateLimits" -> populateNIC.getOrElse(None))
-//
-//  def populateTaxBands: Option[TaxBands] = Some(TaxYear_2016_2017.taxBands)
-//
-//  def populateNIC: Option[NICRateLimits] = Some(TaxYear_2016_2017.nicRateLimits)
-//}
 
 trait TaxCalculatorHelper {
 
@@ -85,12 +75,6 @@ trait TaxCalculatorHelper {
         case false => taxCode.toUpperCase.stripPrefix("K")
       }
     else taxCode
-  }
-
-  def getPreviousTaxBand(taxCalcResource: TaxCalcResource, band:Int) = findTaxBand(taxCalcResource, band - 1)
-
-  def findTaxBand(taxCalcResource: TaxCalcResource, i: Int) = {
-    taxCalcResource.taxBands.taxBands.find(_.band == i)
   }
 
   def removeScottishElement(taxCode: String): String = {

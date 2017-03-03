@@ -21,15 +21,25 @@ import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
 
-  "MaxRateCalculator calculate " should {
-    "should calculate the max rate to be applied for PAYE, max rate applies" in  {
-      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), Money(BigDecimal(10000.00)), TaxYear_2016_2017).calculate().result
-      result.value shouldBe 5000.00
-    }
 
-    "should calculate the max rate to be applied for PAYE, NO max rate applies here" in  {
-      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), Money(BigDecimal(20000.00)), TaxYear_2016_2017).calculate().result
-      result.value shouldBe -1
+  import org.scalatest.prop.TableDrivenPropertyChecks._
+
+  val input = Table(
+    ("payeAmount", "grossPay", "taxCalcResource", "taxYear", "expectedResult"),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2016_2017, "2016/17", BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, "2016/17", BigDecimal(-1))
+  )
+
+  s"MaxRateCalculator calculate() " should {
+    forAll(input) {
+
+      (payeAmount, grossPay, taxCalcResource, taxYear, expectedResult) =>
+
+        s"should return $expectedResult for taxYear[$taxYear], when paye[$payeAmount] and grossYear[$grossPay] " in {
+
+          val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
+          result.value shouldBe expectedResult
+        }
     }
   }
 }

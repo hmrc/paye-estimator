@@ -41,6 +41,11 @@ trait TaxCalcResource {
     (date.isEqual(startDate)  || date.isAfter(startDate)) &&
       (date.isBefore(endDate) || date.isEqual(endDate))
   }
+
+
+  def getPreviousTaxBand(band:Int) = findTaxBand(band - 1)
+
+  def findTaxBand(i: Int) = taxBands.taxBands.find(_.band == i)
 }
 
 object TaxCalcResourceBuilder {

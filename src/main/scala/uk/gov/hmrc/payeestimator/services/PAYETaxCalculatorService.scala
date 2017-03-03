@@ -16,8 +16,6 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxCalcResource}
 
 trait PAYETaxCalculatorService extends TaxCalculatorHelper {
@@ -26,7 +24,7 @@ trait PAYETaxCalculatorService extends TaxCalculatorHelper {
   def calculatePAYETax(taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource): PAYETaxResult = {
 
     def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] = {
-      getPreviousTaxBand(taxCalcResource, band).map(_.period.cumulativeMaxTax)
+      taxCalcResource.getPreviousTaxBand(band).map(_.period.cumulativeMaxTax)
     }
 
     if (!isValidTaxCode(taxCode, taxCalcResource)) throw new TaxCalculatorConfigException("Invalid Tax Code!")

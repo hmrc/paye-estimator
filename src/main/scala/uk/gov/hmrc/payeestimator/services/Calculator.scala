@@ -40,7 +40,7 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
       isBasicRateTaxCode(taxCode) match {
         case true => applyResponse(true, taxablePay)
         case false => {
-          val previousBand = getPreviousTaxBand(taxCalcResource, taxBandId).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
+          val previousBand = taxCalcResource.getPreviousTaxBand(taxBandId).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
           applyResponse(true, Money(previousBand.period.threshold.-(taxablePay.value.intValue()).abs))
         }
       }
@@ -104,9 +104,9 @@ case class TaxBandCalculator(taxCode: String, taxablePay: Money, taxCalcResource
   override def calculate(): TaxBandResponse = {
     val taxBand = if (isBasicRateTaxCode(taxCode)) {
       taxCode match {
-        case "BR" => findTaxBand(taxCalcResource, 2).head
-        case "D0" => findTaxBand(taxCalcResource, 3).head
-        case "D1" => findTaxBand(taxCalcResource, 4).head
+        case "BR" => taxCalcResource.findTaxBand(2).head
+        case "D0" => taxCalcResource.findTaxBand(3).head
+        case "D1" => taxCalcResource.findTaxBand(4).head
       }
     }
     else {
@@ -254,14 +254,10 @@ case class MaxRateCalculator(payeAmount: Money, grossPay: Money, taxCalcResource
 
   override def calculate(): MaxRateCalculatorResponse = {
     val maxRate = Money((grossPay.value * (taxCalcResource.taxBands.maxRate / BigDecimal(100))).setScale(2, RoundingMode.DOWN), 2, false)
-    (payeAmount > maxRate) match {
-      case true => applyResponse(true, maxRate, true)
-      case false => applyResponse(true, Money(BigDecimal(-1)), false)
-    }
-  }
 
-  def applyResponse(success: Boolean, result: Money, isMaxRate: Boolean): MaxRateCalculatorResponse = {
-    MaxRateCalculatorResponse(success, result)
+    MaxRateCalculatorResponse( true,
+      if(payeAmount > maxRate) maxRate else Money(BigDecimal(-1))
+    )
   }
 }
 
