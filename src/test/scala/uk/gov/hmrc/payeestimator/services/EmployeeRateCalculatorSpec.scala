@@ -16,26 +16,36 @@
 
 package uk.gov.hmrc.payeestimator.services
 
+import org.scalatest.prop.TableDrivenPropertyChecks.forAll
+import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_2018}
 
 import scala.math.BigDecimal
 
 class EmployeeRateCalculatorSpec extends WordSpecLike with Matchers {
 
+  val input = Table(
+    ("grossPay", "taxCalcResource", "limitId", "expectedAmount", "expectedPercentage"),
+      (BigDecimal(100000.00), TaxYear_2016_2017, 1, 6.24,    12),
+      (BigDecimal(100000.00), TaxYear_2016_2017, 3, 4186.56, 12),
+      (BigDecimal(100000.00), TaxYear_2016_2017, 4, 1140.00, 2),
+      (BigDecimal(100000.00), TaxYear_2017_2018, 1, 6.24,    12),
+      (BigDecimal(100000.00), TaxYear_2017_2018, 3, 4186.56, 12),
+      (BigDecimal(100000.00), TaxYear_2017_2018, 4, 1140.00, 2)
 
-  "EmployeeRateCalculator.calculate " should {
-    "should calculate the annual rates correctly" in {
-      val rate1 = EmployeeRateCalculator( Money(BigDecimal(100000.00)), 1, TaxYear_2016_2017).calculate().result
-      val rate3 = EmployeeRateCalculator( Money(BigDecimal(100000.00)), 3, TaxYear_2016_2017).calculate().result
-      val rate4 = EmployeeRateCalculator( Money(BigDecimal(100000.00)), 4, TaxYear_2016_2017).calculate().result
+  )
 
-      rate1.amount shouldBe 6.24
-      rate1.percentage shouldBe 12
-      rate3.amount shouldBe 4186.56
-      rate3.percentage shouldBe 12
-      rate4.amount shouldBe 1140.00
-      rate4.percentage shouldBe 2
+  s"EmployeeRateCalculator.calculate()" should {
+    forAll(input) {
+
+      (grossPay, taxCalcResource, limitId, expectedAmount, expectedPercentage) =>
+
+        s"calculate [$expectedAmount] in ${taxCalcResource.taxYear}, given grossPay[$grossPay], limitId[rate.$limitId]" in {
+          val rate = EmployeeRateCalculator( Money(grossPay), limitId, taxCalcResource).calculate().result
+          rate.amount shouldBe expectedAmount
+          rate.percentage shouldBe expectedPercentage
+        }
     }
   }
 }

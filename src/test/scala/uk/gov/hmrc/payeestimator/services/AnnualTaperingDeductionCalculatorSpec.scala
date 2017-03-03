@@ -9,13 +9,13 @@ class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers {
 
   val input = Table(
     ("taxCode", "grossPay", "taxCalcResource", "success", "isTapered", "result"),
-    ("11L", Money(100000), TaxYear_2016_2017, true, false,  "11L"    ),
-    ("1100L", Money(120000), TaxYear_2016_2017, true, true, "100.00L"),
-    ("1100L", Money(440000), TaxYear_2016_2017, true, true, "ZERO"   ),
+    ("11L",   Money(100000), TaxYear_2016_2017, true, false, "11L"    ),
+    ("1100L", Money(120000), TaxYear_2016_2017, true, true,  "100.00L"),
+    ("1100L", Money(440000), TaxYear_2016_2017, true, true,  "ZERO"   ),
     ("1100L", Money(100000), TaxYear_2016_2017, true, false, "1100L" ),
-    ("11L", Money(123000), TaxYear_2017_2018, true, false, "11L"     ),
-    ("1150L", Money(110000), TaxYear_2017_2018, true, true, "650.00L"),
-    ("1150L", Money(123000), TaxYear_2017_2018, true, true, "ZERO"   ),
+    ("11L",   Money(123000), TaxYear_2017_2018, true, false, "11L"     ),
+    ("1150L", Money(110000), TaxYear_2017_2018, true, true,  "650.00L"),
+    ("1150L", Money(123000), TaxYear_2017_2018, true, true,  "ZERO"   ),
     ("1150L", Money(100000), TaxYear_2017_2018, true, false, "1150L" )
   )
 

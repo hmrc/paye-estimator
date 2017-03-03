@@ -141,53 +141,42 @@ case class NICRateCalculator(rate: BigDecimal, amount: Money) extends Calculator
 
 case class EmployeeRateCalculator(grossPay: Money, limitId: Int, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
 
-  val nicRateLimit = taxCalcResource.nicRateLimits
-  val rate = nicRateLimit.employeeRate.collect(rateLimit(s"$limitId")).head.value
+  private val nicRateLimit = taxCalcResource.nicRateLimits
+  private def findEarningLimit(limit: String): Money = collectRateLimit(limit, nicRateLimit.earningLimit)
+  private def findThresholdLimit(limit: String): Money = collectRateLimit(limit, nicRateLimit.threshold)
+  private def collectRateLimit(limit: String, collection: Seq[RateLimit]) = collection.collect(rateLimit(limit)).head
+  private def zeroRate = RateResult(Money(0), Money(0), rate)
+
+  private val primaryThresholdLimit = findThresholdLimit("primary")
+  private val rate = collectRateLimit(s"$limitId", nicRateLimit.employeeRate).value
 
   override def calculate(): RateCalculatorResponse = {
-    if (grossPay <= nicRateLimit.threshold.collect(rateLimit("primary")).head) {
-      applyResponse(true, zeroRate.aggregation)
-    }
-    else {
-      val result = limitId match {
-        case 1 => {
-          grossPay > nicRateLimit.threshold.collect(rateLimit("secondary")).head match {
-            case true => RateResult(nicRateLimit.threshold.collect(rateLimit("secondary")).head,
-              nicRateLimit.threshold.collect(rateLimit("primary")).head, rate)
-            case false => grossPay <= nicRateLimit.threshold.collect(rateLimit("secondary")).head &&
-              grossPay > nicRateLimit.threshold.collect(rateLimit("primary")).head match {
-              case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("primary")).head, rate)
-              case false => zeroRate
-            }
-          }
-        }
-        case 3 => {
-          grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
-            case true => RateResult(nicRateLimit.earningLimit.collect(rateLimit("upper")).head,
-              nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
-            case false => grossPay <= nicRateLimit.earningLimit.collect(rateLimit("upper")).head &&
-              grossPay > nicRateLimit.threshold.collect(rateLimit("secondary")).head match {
-              case true => RateResult(grossPay, nicRateLimit.threshold.collect(rateLimit("secondary")).head, rate)
-              case false => zeroRate
-            }
-          }
-        }
-        case 4 => {
-          grossPay > nicRateLimit.earningLimit.collect(rateLimit("upper")).head match {
-            case true => RateResult(grossPay, nicRateLimit.earningLimit.collect(rateLimit("upper")).head, rate)
-            case false => zeroRate
-          }
-        }
+    if (grossPay <= primaryThresholdLimit)
+      RateCalculatorResponse(true, zeroRate.aggregation)
+    else
+      RateCalculatorResponse(true, calculateAggregation)
+  }
+
+  private def calculateAggregation: Aggregation = {
+    (limitId match {
+      case 1 => calculateRateBand(findThresholdLimit("secondary"), primaryThresholdLimit)
+      case 3 => calculateRateBand(findEarningLimit("upper"), findThresholdLimit("secondary"))
+      case 4 => {
+        val upperEarningLimit = findEarningLimit("upper")
+        if (grossPay > upperEarningLimit) RateResult(grossPay, upperEarningLimit, rate) else zeroRate
       }
-      applyResponse(true, result.aggregation)
+    }).aggregation
+  }
+
+  private def calculateRateBand(leftLimit: Money, rightLimit: Money) = {
+    grossPay > leftLimit match {
+      case true => RateResult(leftLimit, rightLimit, rate)
+      case false => grossPay <= leftLimit && grossPay > rightLimit match {
+        case true => RateResult(grossPay, rightLimit, rate)
+        case false => zeroRate
+      }
     }
   }
-
-  def applyResponse(success: Boolean, aggregation: Aggregation): RateCalculatorResponse = {
-    RateCalculatorResponse(success, aggregation)
-  }
-
-  private def zeroRate = RateResult(Money(0), Money(0), rate)
 }
 
 case class EmployerRateCalculator(grossPay: Money, limitId: Int, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {

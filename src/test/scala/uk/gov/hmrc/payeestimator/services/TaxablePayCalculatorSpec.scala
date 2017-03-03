@@ -16,8 +16,6 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
