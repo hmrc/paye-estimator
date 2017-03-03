@@ -36,6 +36,7 @@ trait TaxCalcResource {
   val startDate : LocalDate
   val endDate : LocalDate
   val nicRateLimits: NICRateLimits
+  val isScottish: Boolean
 
   def applicableForDate(date: LocalDate): Boolean = {
     (date.isEqual(startDate)  || date.isAfter(startDate)) &&
@@ -60,7 +61,7 @@ object TaxCalcResourceBuilder {
   }
 }
 
-class TaxYear_2017_2018(isScottish:Boolean) extends TaxCalcResource {
+class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = if(isScottish) "S1150L" else "1150L"
   override val startDate: LocalDate = LocalDate.of(2017,4,6)
@@ -104,7 +105,7 @@ class TaxYear_2017_2018(isScottish:Boolean) extends TaxCalcResource {
   )
 }
 
-class TaxYear_2016_2017(isScottish:Boolean) extends TaxCalcResource {
+class TaxYear_2016_2017(val isScottish:Boolean) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = if (isScottish) "S1100L" else "1100L"
   override val startDate: LocalDate = LocalDate.of(2016,4,6)

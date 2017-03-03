@@ -187,9 +187,9 @@ case class EmployerRateCalculator(grossPay: Money, limitId: Int, taxCalcResource
   extends Calculator with TaxCalculatorHelper with EmployeeEmployerCalculations{
 
   override def rate = collectRateLimit(s"$limitId", nicRateLimit.employerRate).value
-  override def calculate(): RateCalculatorResponse = RateCalculatorResponse(true, calculaeAggregation)
+  override def calculate(): RateCalculatorResponse = RateCalculatorResponse(true, calculateAggregation)
 
-  private def calculaeAggregation = {
+  private def calculateAggregation = {
     (limitId match {
       case 2 => calculateRate(upperEarningLimit, secondaryThresholdLimit)
       case 3 if grossPay > upperEarningLimit => RateResult(grossPay, upperEarningLimit, rate)
@@ -201,24 +201,19 @@ case class EmployerRateCalculator(grossPay: Money, limitId: Int, taxCalcResource
 case class AnnualTaperingDeductionCalculator(taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): TaperingResponse = {
-
     val annualIncomeThreshold = taxCalcResource.taxBands.annualIncomeThreshold
-
-    isEmergencyTaxCode(taxCode, taxCalcResource) match {
-      case false => TaperingResponse(true, taxCode, false)
-      case true => {
-        (grossPay > annualIncomeThreshold) match {
-          case false => TaperingResponse(true, taxCode, false)
-          case true => {
-            val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, true)
-            val taxCodeNumber = Money(BigDecimal(splitTaxCode(taxCode).toInt), 2, true)
-            (taperingDeduction < taxCodeNumber) match {
-              case false => TaperingResponse(true, "ZERO", true)
-              case true => TaperingResponse(true, s"${(taxCodeNumber - taperingDeduction).value}L", true)
-            }
-          }
-        }
+    if(isEmergencyTaxCode(taxCode, taxCalcResource) && grossPay > annualIncomeThreshold){
+      val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, true)
+      val taxCodeNumber = Money(BigDecimal(splitTaxCode(removeScottishElement(taxCode)).toInt), 2, true)
+      if (taperingDeduction < taxCodeNumber) {
+        TaperingResponse(true, s"${(taxCodeNumber - taperingDeduction).value}L", true)
       }
+      else {
+        TaperingResponse(true, "ZERO", true)
+      }
+    }
+    else {
+      TaperingResponse(true, taxCode, false)
     }
   }
 }
