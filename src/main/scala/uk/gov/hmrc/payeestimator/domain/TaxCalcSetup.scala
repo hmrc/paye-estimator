@@ -42,6 +42,7 @@ trait TaxCalcResource {
       (date.isBefore(endDate) || date.isEqual(endDate))
   }
 
+  def taxYear = s"${startDate.getYear} to ${endDate.getYear}"
 
   def getPreviousTaxBand(band:Int) = findTaxBand(band - 1)
 

@@ -8,22 +8,22 @@ class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers {
   import org.scalatest.prop.TableDrivenPropertyChecks._
 
   val input = Table(
-    ("taxCode", "grossPay", "taxCalcResource", "success", "isTapered", "result", "taxYear"),
-    ("11L", Money(100000), TaxYear_2016_2017, true, false, "11L", "2016/17"),
-    ("1100L", Money(120000), TaxYear_2016_2017, true, true, "100.00L", "2016/17"),
-    ("1100L", Money(440000), TaxYear_2016_2017, true, true, "ZERO", "2016/17"),
-    ("1100L", Money(100000), TaxYear_2016_2017, true, false, "1100L", "2016/17"),
-    ("11L", Money(123000), TaxYear_2017_2018, true, false, "11L", "2017/18"),
-    ("1150L", Money(110000), TaxYear_2017_2018, true, true, "650.00L", "2017/18"),
-    ("1150L", Money(123000), TaxYear_2017_2018, true, true, "ZERO", "2017/18"),
-    ("1150L", Money(100000), TaxYear_2017_2018, true, false, "1150L", "2017/18")
+    ("taxCode", "grossPay", "taxCalcResource", "success", "isTapered", "result"),
+    ("11L", Money(100000), TaxYear_2016_2017, true, false,  "11L"    ),
+    ("1100L", Money(120000), TaxYear_2016_2017, true, true, "100.00L"),
+    ("1100L", Money(440000), TaxYear_2016_2017, true, true, "ZERO"   ),
+    ("1100L", Money(100000), TaxYear_2016_2017, true, false, "1100L" ),
+    ("11L", Money(123000), TaxYear_2017_2018, true, false, "11L"     ),
+    ("1150L", Money(110000), TaxYear_2017_2018, true, true, "650.00L"),
+    ("1150L", Money(123000), TaxYear_2017_2018, true, true, "ZERO"   ),
+    ("1150L", Money(100000), TaxYear_2017_2018, true, false, "1150L" )
   )
 
   forAll(input) {
 
-    (taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource, success: Boolean, isTapered: Boolean, answer: String, taxYear:String) =>
+    (taxCode, grossPay, taxCalcResource, success, isTapered, answer) =>
 
-      s"AnnualTaperingDeductionCalculator calculate(taxCode[$taxCode], grossPay[${grossPay.value}], taxYear[$taxYear])" should {
+      s"AnnualTaperingDeductionCalculator calculate(taxCode[$taxCode], grossPay[${grossPay.value}], taxYear[${taxCalcResource.taxYear}])" should {
 
         s"return success[$success], isTapered[$isTapered], answer[$answer]" in {
 

@@ -23,21 +23,22 @@ import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 class ExcessPayCalculatorSpec extends WordSpecLike with Matchers {
 
   val input = Table(
-    ("taxCode",  "taxCalcResource", "bandId", "taxablePay", "taxYear", "expectedResult"),
-    ("1100T",  TaxYear_2016_2017, 1, Money(60000.00), "2016/17", Money(60000.00)),
-    ("BR1",    TaxYear_2016_2017, 1, Money(60000.00), "2016/17", Money(60000.00)),
-    ("D0",     TaxYear_2016_2017, 1, Money(60000.00), "2016/17", Money(60000.00)),
-    ("D1",     TaxYear_2016_2017, 1, Money(60000.00), "2016/17", Money(60000.00)),
-    ("1100T",  TaxYear_2016_2017, 2, Money(60000.00), "2016/17", Money(60000.00)),
-    ("1100T",  TaxYear_2016_2017, 3, Money(60000.00), "2016/17", Money(28000.00)),
-    ("1100T",  TaxYear_2016_2017, 4, Money(200000.00), "2016/17", Money(50000.00))
+    ("taxCode",  "taxCalcResource", "bandId", "taxablePay", "expectedResult"),
+    ("1100T",  TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("BR1",    TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("D0",     TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("D1",     TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("1100T",  TaxYear_2016_2017, 2, Money(60000.00), Money(60000.00)),
+    ("1100T",  TaxYear_2016_2017, 3, Money(60000.00), Money(28000.00)),
+    ("1100T",  TaxYear_2016_2017, 4, Money(200000.00), Money(50000.00))
   )
 
   "ExcessPayCalculator calculate()" should {
-    forAll(input) {
-      (taxCode,  taxCalcResource, bandId, taxablePay, taxYear, expectedResult) =>
 
-        s"In $taxYear for $taxCode calculate the excess pay to be ${expectedResult.value} " +
+    forAll(input) {
+      (taxCode,  taxCalcResource, bandId, taxablePay, expectedResult) =>
+
+        s"${taxCalcResource.taxYear} for $taxCode calculate the excess pay to be ${expectedResult.value} " +
           s"for a grossPay amount of ${taxablePay.value} when the applicable tax band is $bandId" in {
 
           val result = ExcessPayCalculator(taxCode, bandId, taxablePay, taxCalcResource).calculate().result

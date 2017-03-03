@@ -25,19 +25,19 @@ class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
   import org.scalatest.prop.TableDrivenPropertyChecks._
 
   val input = Table(
-    ("payeAmount", "grossPay", "taxCalcResource", "taxYear", "expectedResult"),
-    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2016_2017, "2016/17", BigDecimal(5000.00)),
-    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, "2016/17", BigDecimal(-1)),
-    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2017_2018, "2017/18", BigDecimal(5000.00)),
-    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, "2017/18", BigDecimal(-1))
+    ("payeAmount", "grossPay", "taxCalcResource", "expectedResult"),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2016_2017, BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, BigDecimal(-1)),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2017_2018, BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, BigDecimal(-1))
   )
 
   s"MaxRateCalculator calculate() " should {
     forAll(input) {
 
-      (payeAmount, grossPay, taxCalcResource, taxYear, expectedResult) =>
+      (payeAmount, grossPay, taxCalcResource, expectedResult) =>
 
-        s"should return $expectedResult for taxYear[$taxYear], when paye[$payeAmount] and grossYear[$grossPay] " in {
+        s"should return $expectedResult for taxYear[${taxCalcResource.taxYear}], when paye[$payeAmount] and grossYear[$grossPay] " in {
 
           val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
           result.value shouldBe expectedResult

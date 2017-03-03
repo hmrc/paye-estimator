@@ -35,21 +35,21 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
   }
 
   val input = Table(
-    ("taxCode",  "taxCalcResource", "expectedResult", "taxYear", "actualEmergencyTaxCode"),
-    ("1100L" , TaxYear_2016_2017, true,  "2016/17", "1100L"),
-    ("11000L", TaxYear_2016_2017, false, "2016/17", "1100L"),
-    ("11100L", TaxYear_2016_2017, false, "2016/17", "1100L"),
-    ("1100T" , TaxYear_2016_2017, false, "2016/17", "1100L"),
-    ("1150L" , TaxYear_2017_2018, true,  "2017/18", "1150L"),
-    ("11500L", TaxYear_2017_2018, false, "2017/18", "1150L"),
-    ("11150L", TaxYear_2017_2018, false, "2017/18", "1150L"),
-    ("1150T" , TaxYear_2017_2018, false, "2017/18", "1150L")
+    ("taxCode",  "taxCalcResource", "expectedResult", "actualEmergencyTaxCode"),
+    ("1100L" , TaxYear_2016_2017, true,  "1100L"),
+    ("11000L", TaxYear_2016_2017, false, "1100L"),
+    ("11100L", TaxYear_2016_2017, false, "1100L"),
+    ("1100T" , TaxYear_2016_2017, false, "1100L"),
+    ("1150L" , TaxYear_2017_2018, true,  "1150L"),
+    ("11500L", TaxYear_2017_2018, false, "1150L"),
+    ("11150L", TaxYear_2017_2018, false, "1150L"),
+    ("1150T" , TaxYear_2017_2018, false, "1150L")
   )
 
   s"TaxCalculatorHelper isEmergencyTaxCode()" should {
     forAll(input) {
-      (taxCode,  taxCalcResource, expectedResult, taxYear, actualEmergencyTaxCode) =>
-      s"return $expectedResult for $taxYear for $taxCode if the tax code matches $actualEmergencyTaxCode" in new TaxCalculatorHelperSetup {
+      (taxCode,  taxCalcResource, expectedResult, actualEmergencyTaxCode) =>
+      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode if the tax code matches $actualEmergencyTaxCode" in new TaxCalculatorHelperSetup {
         helper.isEmergencyTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
       }
     }
