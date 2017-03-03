@@ -17,9 +17,9 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017}
 
-class TaxablePayCalculatorSpec extends WordSpecLike with Matchers {
+class TaxablePayCalculatorChanges extends WordSpecLike with Matchers with TaxYearChanges {
 
   "TaxablePayCalculator calculate " should {
     "calculate annual taxable pay" in {

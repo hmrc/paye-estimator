@@ -1,11 +1,11 @@
 package uk.gov.hmrc.payeestimator.services
 
-import org.scalatest.prop.TableDrivenPropertyChecks._
 import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{TaxYear_2016_2017, TaxYear_2017_2018}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
+import org.scalatest.prop.TableDrivenPropertyChecks._
 
-class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
+class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearChanges{
 
   val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)

@@ -3,7 +3,7 @@ package uk.gov.hmrc.payeestimator.services
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain._
 
-class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers {
+class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
   val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)

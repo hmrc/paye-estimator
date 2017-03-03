@@ -17,9 +17,11 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017}
 
-class TaxBandCalculatorSpec extends WordSpecLike with Matchers {
+class TaxBandCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
+
+
 
   val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
 
