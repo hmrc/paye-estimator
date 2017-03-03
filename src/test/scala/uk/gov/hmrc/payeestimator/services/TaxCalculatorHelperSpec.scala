@@ -1,11 +1,14 @@
 package uk.gov.hmrc.payeestimator.services
 
+import org.scalatest.prop.TableDrivenPropertyChecks._
 import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_2018}
-import org.scalatest.prop.TableDrivenPropertyChecks._
+import uk.gov.hmrc.payeestimator.domain.{TaxYear_2016_2017, TaxYear_2017_2018}
 
 class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
+
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
 
   "TaxCalculatorHelper isStandardTaxCode" should {
     "return true if the code matches the format where the first 4 digits are between 0-9999 and the last is L,M,N or T" in new TaxCalculatorHelperSetup {

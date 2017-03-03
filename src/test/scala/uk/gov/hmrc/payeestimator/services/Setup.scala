@@ -40,7 +40,7 @@ trait LivePAYETaxCalcServiceSuccess {
   val service = new PAYETaxCalculatorService {
   }
 
-  val taxCalcResource2016 = TaxYear_2016_2017
+  val taxCalcResource2016 = new TaxYear_2016_2017(false)
 }
 
 trait LiveNICTaxCalcServiceSuccess {

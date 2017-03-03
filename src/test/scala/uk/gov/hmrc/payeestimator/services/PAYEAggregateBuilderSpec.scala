@@ -7,6 +7,8 @@ import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class PAYEAggregateBuilderSpec extends WordSpecLike with Matchers {
 
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+
   "PAYEAggregateBuilder build" should {
     "build all aggregates with a value of 0 if in the first band and a Basic Rate Tax Code" in {
       val resultBR = PAYEAggregateBuilder("BR", 1, Money(160000, 2, true), TaxYear_2016_2017).build

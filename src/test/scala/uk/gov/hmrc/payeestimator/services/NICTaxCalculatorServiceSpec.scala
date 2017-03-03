@@ -23,6 +23,8 @@ import scala.math.BigDecimal
 
 class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+
   "NICTaxCalculatorService.calculateEmployeeNIC " should {
     "should calculate the annual rate" in new LiveNICTaxCalcServiceSuccess {
       val result = service.calculateEmployeeNIC(Money(100000.00), TaxYear_2016_2017).aggregation

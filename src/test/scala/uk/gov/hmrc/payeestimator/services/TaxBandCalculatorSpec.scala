@@ -21,6 +21,7 @@ import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class TaxBandCalculatorSpec extends WordSpecLike with Matchers {
 
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
 
   "TaxBandCalculatorSpec.calculate " should {
 

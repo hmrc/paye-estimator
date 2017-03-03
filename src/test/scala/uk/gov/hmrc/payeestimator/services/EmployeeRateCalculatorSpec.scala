@@ -25,6 +25,9 @@ import scala.math.BigDecimal
 
 class EmployeeRateCalculatorSpec extends WordSpecLike with Matchers {
 
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
+
   val input = Table(
     ("grossPay", "taxCalcResource", "limitId", "expectedAmount", "expectedPercentage"),
       (BigDecimal(100000.00), TaxYear_2016_2017, 1, 6.24,    12),

@@ -21,6 +21,8 @@ import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_
 
 class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
 
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
 
   import org.scalatest.prop.TableDrivenPropertyChecks._
 

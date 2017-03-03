@@ -23,7 +23,7 @@ class TaxablePayCalculatorSpec extends WordSpecLike with Matchers {
 
   "TaxablePayCalculator calculate " should {
     "calculate annual taxable pay" in {
-      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2016_2017).calculate().result
+      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), new TaxYear_2016_2017(false)).calculate().result
       result.value shouldBe 23993.32
     }
   }

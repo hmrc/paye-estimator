@@ -22,6 +22,8 @@ import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017}
 
 class ExcessPayCalculatorSpec extends WordSpecLike with Matchers {
 
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+
   val input = Table(
     ("taxCode",  "taxCalcResource", "bandId", "taxablePay", "expectedResult"),
     ("1100T",  TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),

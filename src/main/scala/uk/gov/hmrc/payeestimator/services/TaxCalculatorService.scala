@@ -40,7 +40,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
   @JSExport
   def calculateTax(isStatePensionAge: String, date: LocalDate, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
-    val taxCalcResource = TaxCalcResourceBuilder.resourceForDate(date)
+    val taxCalcResource = TaxCalcResourceBuilder.resourceForDate(date, isValidScottishTaxCode(taxCode))
     val taxCalResult = buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
     write(taxCalResult)
   }
