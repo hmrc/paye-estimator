@@ -33,9 +33,9 @@ class EmployeeRateCalculatorSpec extends WordSpecLike with Matchers {
       (BigDecimal(100000.00), TaxYear_2016_2017, 1, 6.24,    12),
       (BigDecimal(100000.00), TaxYear_2016_2017, 3, 4186.56, 12),
       (BigDecimal(100000.00), TaxYear_2016_2017, 4, 1140.00, 2),
-      (BigDecimal(100000.00), TaxYear_2017_2018, 1, 6.24,    12),
-      (BigDecimal(100000.00), TaxYear_2017_2018, 3, 4186.56, 12),
-      (BigDecimal(100000.00), TaxYear_2017_2018, 4, 1140.00, 2)
+      (BigDecimal(100000.00), TaxYear_2017_2018, 1, 0.00, 12),
+      (BigDecimal(100000.00), TaxYear_2017_2018, 3, 4420.32, 12),
+      (BigDecimal(100000.00), TaxYear_2017_2018, 4, 1100.00, 2)
 
   )
 
