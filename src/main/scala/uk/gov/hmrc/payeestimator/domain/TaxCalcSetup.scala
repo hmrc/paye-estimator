@@ -81,11 +81,11 @@ case class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
 
   override val taxBands: TaxBands = TaxBands(BigDecimal(100000.00), BigDecimal(10), BigDecimal(50), bands)
 
-  val rateLimit1 = RateLimit("lower", 5824.00)
-  val rateLimit2 = RateLimit("upper", 43000.00)
+  val rateLimit1 = RateLimit("lower", 5876.00)
+  val rateLimit2 = RateLimit("upper", 45000.00)
 
-  val threshold1 = RateLimit("primary", 8060.00)
-  val threshold2 = RateLimit("secondary", 8112.00)
+  val threshold1 = RateLimit("primary", 8164.00)
+  val threshold2 = RateLimit("secondary", 8164.00)
 
   val employee1 = RateLimit("1", 12)
   val employee2 = RateLimit("2", 0)

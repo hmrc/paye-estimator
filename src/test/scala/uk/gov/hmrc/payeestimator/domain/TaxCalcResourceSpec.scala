@@ -10,7 +10,8 @@ class TaxCalcResourceSpec extends WordSpecLike with Matchers {
   "Creating the TaxCalcResource" should {
 
     "return the 2016/17 TaxCalcResource when the date is before 6th April 2017" in {
-      resourceForDate(LocalDate.of(2016, 4, 6), false) shouldBe new TaxYear_2016_2017(false)
+      val isScottish = false
+      resourceForDate(LocalDate.of(2016, 4, 6), false) shouldBe new TaxYear_2016_2017(isScottish)
     }
 
     "return the 2016/17 TaxCalcResource when the date is on 6th April 2017" in {

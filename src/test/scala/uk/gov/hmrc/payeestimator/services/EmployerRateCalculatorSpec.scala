@@ -32,8 +32,8 @@ class EmployerRateCalculatorSpec extends WordSpecLike with Matchers with TaxYear
     ("grossPay", "taxCalcResource", "limitId", "expectedAmount", "expectedPercentage"),
     (BigDecimal(100000.00), TaxYear_2016_2017, 2, 4814.54, 13.8),
     (BigDecimal(100000.00), TaxYear_2016_2017, 3, 7866.00, 13.8),
-    (BigDecimal(100000.00), TaxYear_2017_2018, 2, 4814.54, 13.8),
-    (BigDecimal(100000.00), TaxYear_2017_2018, 3, 7866.00, 13.8)
+    (BigDecimal(100000.00), TaxYear_2017_2018, 2, 5083.37, 13.8),
+    (BigDecimal(100000.00), TaxYear_2017_2018, 3, 7590.00, 13.8)
   )
 
   s"EmployerRateCalculatorSpec.calculate()" should {
