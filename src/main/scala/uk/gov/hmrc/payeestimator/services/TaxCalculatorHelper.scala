@@ -77,10 +77,10 @@ trait TaxCalculatorHelper {
   }
 
   def removeScottishElement(taxCode: String): String = {
-    isValidScottishTaxCode(taxCode) match {
-      case true => taxCode.substring(1,taxCode.length)
-      case false => taxCode
+    if (isValidScottishTaxCode(taxCode)){
+      taxCode.toUpperCase.stripPrefix("S")
     }
+    else taxCode
   }
 
 }

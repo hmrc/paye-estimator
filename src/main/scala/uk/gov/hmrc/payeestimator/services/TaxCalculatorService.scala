@@ -50,6 +50,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     val isPensionAge = convertToBoolean(isStatePensionAge)
     val updatedPayPeriod = if (hours.getOrElse(-1) > 0) "annual" else payPeriod
 
+    val rateType = if (taxCalcResource.isScottish) "SCOTTLAND" else "ENGLAND"
     val grossPay = annualiseGrossPay(grossPayPence, hours, updatedPayPeriod)
     val updatedTaxCode = removeScottishElement(taxCode)
     val payeTax = payeTaxCalculatorService.calculatePAYETax(updatedTaxCode, grossPay, taxCalcResource)
@@ -74,7 +75,9 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
     val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
 
-    TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, payeTax.bandRate + nicTax.employeeNICBandRate, taxCalcResource.taxBands.maxRate, payeTax.bandRate, nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
+    TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, rateType,
+      payeTax.bandRate + nicTax.employeeNICBandRate, taxCalcResource.taxBands.maxRate, payeTax.bandRate,
+      nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
 
   }
 
