@@ -1,0 +1,176 @@
+{
+  "statePensionAge": false,
+  "taxCode": "1150L",
+  "payPerHour": -1,
+  "hours": -1,
+  "averageAnnualTaxRate": 37.85,
+  "marginalTaxRate": 42,
+  "maxTaxRate": 50,
+  "payeBand": 40,
+  "employeeNICBand": 2,
+  "tapered": true,
+  "taxBreakdown": [
+    {
+      "period": "annual",
+      "grossPay": 115024,
+      "taxFreePay": 3997,
+      "taxablePay": 111027,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 37710.8,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 6700
+            },
+            {
+              "percentage": 40,
+              "amount": 31010.8
+            },
+            {
+              "percentage": 45,
+              "amount": 0
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 5820.8,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 4420.32
+            },
+            {
+              "percentage": 2,
+              "amount": 1400.48
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 14746.68,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 14746.68
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 43531.6,
+      "takeHomePay": 71492.4
+    },
+    {
+      "period": "monthly",
+      "grossPay": 9585.33,
+      "taxFreePay": 333.08,
+      "taxablePay": 9252.25,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 3142.57,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 558.33
+            },
+            {
+              "percentage": 40,
+              "amount": 2584.23
+            },
+            {
+              "percentage": 45,
+              "amount": 0
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 485.07,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 368.36
+            },
+            {
+              "percentage": 2,
+              "amount": 116.71
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 1228.89,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 1228.89
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 3627.64,
+      "takeHomePay": 5957.69
+    },
+    {
+      "period": "weekly",
+      "grossPay": 2212,
+      "taxFreePay": 76.87,
+      "taxablePay": 2135.13,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 725.21,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 128.85
+            },
+            {
+              "percentage": 40,
+              "amount": 596.36
+            },
+            {
+              "percentage": 45,
+              "amount": 0
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 111.94,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 85.01
+            },
+            {
+              "percentage": 2,
+              "amount": 26.93
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 283.59,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 283.59
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 837.15,
+      "takeHomePay": 1374.85
+    }
+  ]
+}

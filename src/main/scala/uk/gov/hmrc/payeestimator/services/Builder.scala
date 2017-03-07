@@ -37,14 +37,13 @@ case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Mon
   private val taxbands = taxCalcResource.taxBands
 
   override def build(): AggregationBuildResult = {
-    isBasicRateTaxCode(taxCode) match {
-      case true => taxCode match {
-        case "BR" | "D0" | "D1" => {
+    if (isBasicRateTaxCode(taxCode)) {
+      taxCode match {
+        case "BR" | "D0" | "D1" =>
           AggregationBuildResult(taxbands.taxBands.filter(_.band != 1).collect(BasicRatePAYEAggregationFunc()))
-        }
       }
-      case false => appendAggregate(AggregationBuildResult(taxbands.taxBands.collect(PAYEAggregationFunc())))
     }
+    else appendAggregate(AggregationBuildResult(taxbands.taxBands.collect(PAYEAggregationFunc())))
   }
 
   private def PAYEAggregationFunc() : PartialFunction[Band, Aggregation] = {

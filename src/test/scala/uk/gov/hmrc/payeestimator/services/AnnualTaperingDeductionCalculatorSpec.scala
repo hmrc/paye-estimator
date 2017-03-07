@@ -21,10 +21,10 @@ class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers w
     ("1150L" , Money(110000), TaxYear_2017_2018         , true, true , "650.00L", false),
     ("1150L" , Money(123000), TaxYear_2017_2018         , true, true , "ZERO"   , false),
     ("1150L" , Money(100000), TaxYear_2017_2018         , true, false, "1150L"  , false),
-    ("S11L"  , Money(123000), Scottish_TaxYear_2017_2018, true, false, "S11L"   , true),
-    ("S1150L", Money(110000), Scottish_TaxYear_2017_2018, true, true , "650.00L", true),
-    ("S1150L", Money(123000), Scottish_TaxYear_2017_2018, true, true , "ZERO"   , true),
-    ("S1150L", Money(100000), Scottish_TaxYear_2017_2018, true, false, "S1150L" , true)
+    ("11L"   , Money(123000), Scottish_TaxYear_2017_2018, true, false, "11L"    , true),
+    ("1150L" , Money(110000), Scottish_TaxYear_2017_2018, true, true , "650.00L", true),
+    ("1150L" , Money(123000), Scottish_TaxYear_2017_2018, true, true , "ZERO"   , true),
+    ("1150L" , Money(100000), Scottish_TaxYear_2017_2018, true, false, "1150L"  , true)
   )
 
   forAll(input) {

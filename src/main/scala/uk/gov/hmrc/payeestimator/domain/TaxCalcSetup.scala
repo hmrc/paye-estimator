@@ -43,7 +43,8 @@ trait TaxCalcResource {
       (date.isBefore(endDate) || date.isEqual(endDate))
   }
 
-  def taxYear = s"${startDate.getYear} to ${endDate.getYear}"
+  lazy val rateType: String = if(isScottish) "Scotland" else ""
+  def taxYear = s"$rateType ${startDate.getYear} to ${endDate.getYear}"
 
   def getPreviousTaxBand(band:Int) = findTaxBand(band - 1)
 
@@ -52,7 +53,7 @@ trait TaxCalcResource {
 
 object TaxCalcResourceBuilder {
 
-  def resources(isScottish: Boolean): Seq[TaxCalcResource] = Seq(TaxYear_2016_2017(isScottish), TaxYear_2017_2018(isScottish))
+  def resources(isScottish: Boolean): Seq[TaxCalcResource] = Seq(TaxYear_2016_2017(), TaxYear_2017_2018(isScottish))
 
   def resourceForDate(date:LocalDate, isScottish: Boolean) : TaxCalcResource = {
     resources(isScottish).find(_.applicableForDate(date)) getOrElse {
@@ -61,9 +62,9 @@ object TaxCalcResourceBuilder {
   }
 }
 
-case class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
+case class TaxYear_2017_2018(val isScottish:Boolean = false) extends TaxCalcResource {
 
-  override val emergencyTaxCode: String = if(isScottish) "S1150L" else "1150L"
+  override val emergencyTaxCode: String = "1150L"
   override val startDate: LocalDate = LocalDate.of(2017,4,6)
   override val endDate: LocalDate = LocalDate.of(2018,4,5)
 
@@ -73,8 +74,8 @@ case class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
   val taxBands4 = Band(4, BigDecimal(-1),   45, PeriodCalc("annual", -1, -1, -1))
 
   val scottishTaxBands1 = Band(1, BigDecimal(0.00),      10, PeriodCalc("annual", 0, 0, 0))
-  val scottishTaxBands2 = Band(2, BigDecimal(33500.00),  20, PeriodCalc("annual", 31500.00, 6300.00, 6300.00))
-  val scottishTaxBands3 = Band(3, BigDecimal(116500.00), 40, PeriodCalc("annual", 150000.00, 53700.00, 47400.00))
+  val scottishTaxBands2 = Band(2, BigDecimal(31500.00),  20, PeriodCalc("annual", 31500.00, 6300.00, 6300.00))
+  val scottishTaxBands3 = Band(3, BigDecimal(118500.00), 40, PeriodCalc("annual", 150000.00, 53700.00, 47400.00))
   val scottishTaxBands4 = Band(4, BigDecimal(-1),        45, PeriodCalc("annual", -1, -1, -1))
 
   val bands = if(isScottish) Seq(scottishTaxBands1,scottishTaxBands2,scottishTaxBands3,scottishTaxBands4) else Seq(taxBands1,taxBands2,taxBands3,taxBands4)
@@ -105,9 +106,9 @@ case class TaxYear_2017_2018(val isScottish:Boolean) extends TaxCalcResource {
   )
 }
 
-case class TaxYear_2016_2017(val isScottish:Boolean) extends TaxCalcResource {
+case class TaxYear_2016_2017(val isScottish:Boolean = false) extends TaxCalcResource {
 
-  override val emergencyTaxCode: String = if (isScottish) "S1100L" else "1100L"
+  override val emergencyTaxCode: String = "1100L"
   override val startDate: LocalDate = LocalDate.of(2016,4,6)
   override val endDate: LocalDate = LocalDate.of(2017,4,5)
 

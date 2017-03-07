@@ -50,7 +50,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     val isPensionAge = convertToBoolean(isStatePensionAge)
     val updatedPayPeriod = if (hours.getOrElse(-1) > 0) "annual" else payPeriod
 
-    val rateType = if (taxCalcResource.isScottish) "SCOTTLAND" else "ENGLAND"
+    val rateType = if (taxCalcResource.isScottish) Some("SCOTLAND") else None
     val grossPay = annualiseGrossPay(grossPayPence, hours, updatedPayPeriod)
     val updatedTaxCode = removeScottishElement(taxCode)
     val payeTax = payeTaxCalculatorService.calculatePAYETax(updatedTaxCode, grossPay, taxCalcResource)
@@ -113,8 +113,11 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     }
   }
 
-  def calculateScottishElement(payeTaxAmount: Money, taxCode: String, taxCalcResource: TaxCalcResource): BigDecimal = {
-    if(isValidScottishTaxCode(taxCode)) (payeTaxAmount*taxCalcResource.taxBands.scottishRate/100).value else -1
+  def calculateScottishElement(payeTaxAmount: Money, taxCode: String, taxCalcResource: TaxCalcResource): Option[BigDecimal] = {
+    if(!taxCalcResource.isScottish) {
+      if (isValidScottishTaxCode(taxCode)) Some((payeTaxAmount * taxCalcResource.taxBands.scottishRate / 100).value) else None
+    }
+    else None
   }
 
   private def derivePeriodTaxBreakdowns(bandId: Int, taxCode: String, taxBreakdown: TaxBreakdown, payeTax: PAYETaxResult, nicTax: NICTaxResult, payeAggregation: Seq[Aggregation], isStatePensionAge: Boolean, taxCalcResource: TaxCalcResource): Seq[TaxBreakdown] = {

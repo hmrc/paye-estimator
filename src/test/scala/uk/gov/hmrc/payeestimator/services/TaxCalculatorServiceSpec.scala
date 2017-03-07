@@ -1,64 +1,117 @@
 package uk.gov.hmrc.payeestimator.services
 
-import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.TaxBreakdown
+import java.net.URL
 
-class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
+import org.scalatest.{DiagrammedAssertions, Matchers, WordSpecLike}
+import play.api.libs.json.Json
+import uk.gov.hmrc.payeestimator.domain._
 
-  "LiveTaxCalculatorService calculate tax for 2016 tax year" should {
-    "return a annual TaxCalc response" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax("false", date, "1100T", 1000008, "annual", -1)
-      result shouldBe TaxCalculatorTestData.taxCalculator_2016_response
+import scala.io.Source
+
+class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with DiagrammedAssertions {
+
+  val taxYear_2016_2017 = TaxYear_2016_2017()
+  val taxYear_2017_2018 = TaxYear_2017_2018()
+  val scottish_TaxYear_2016_2017 = TaxYear_2017_2018(true)
+
+  private def taxCalcFromJson(json: String): TaxCalc = {
+    val resource: URL = getClass.getResource(json)
+    Json.parse(Source.fromURL(resource).getLines().mkString).as[TaxCalc](Formats.taxCalcFormat)
+  }
+
+  import org.scalatest.prop.TableDrivenPropertyChecks._
+
+  val input = Table(
+    ("Test Description", "isStatePensionAge", "taxCalcResource", "taxCode", "grossPayPence", "payPeriod", "hoursIn", "expectedJson"),
+    ("return a annual TaxCalc response",
+      "false", taxYear_2016_2017, "1100T", 1000008, "annual", -1, "/data/2016_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response with zero value National Insurance Contributions Section",
+      "true", taxYear_2016_2017, "1100T", 1000008, "annual", -1, "/data/2016_no_NIC_Contribution_section_response.json"),
+    ("return a NT TaxCalc response with no PAYE tax applied",
+      "false", taxYear_2016_2017, "NT", 20000000, "annual", -1, "/data/2016_NT_TaxCode_Response.json"),
+    ("return a BR TaxCalc response with PAYE tax applied at 20%",
+      "false", taxYear_2016_2017, "BR", 20000000, "annual", -1, "/data/2016_BR_TaxCode_Response.json"),
+    ("return a D0 TaxCalc response with PAYE tax applied at 40%",
+      "false", taxYear_2016_2017, "D0", 20000000, "annual", -1, "/data/2016_D0_TaxCode_Response.json"),
+    ("return a D1 TaxCalc response with PAYE tax applied at 45%",
+      "false", taxYear_2016_2017, "D1", 20000000, "annual", -1, "/data/2016_D1_TaxCode_Response.json"),
+    ("return tax calc response using an hourly rate input",
+      "false", taxYear_2016_2017, "1100T", 9615, "annual", 40, "/data/2016_Hourly_Rate_Response.json"),
+    ("return tax calc response using tapering with emergency tax code input",
+      "false", taxYear_2016_2017, "SK1100", 221200, "weekly", -1, "/data/2016_Tapering_Emergency_TaxCode_Response.json"),
+    ("max tax rate should kick in when the paye amount is greater than 50% of annual salary",
+      "false", taxYear_2016_2017, "K4000", 1000000, "annual", -1, "/data/2016_Max_Tax_Response.json"),
+    ("max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
+      "false", taxYear_2016_2017, "K1100", 100000, "annual", -1, "/data/2016_Max_Tax_Edge_Case_Response.json"),
+    ("return a annual TaxCalc response with a Scottish Element",
+      "false", taxYear_2016_2017, "S1100T", 1000000, "annual", -1, "/data/2016_Scottish_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response with zero value National Insurance Contributions Section with a Scottish Element",
+      "true", taxYear_2016_2017, "S1100T", 1000000, "annual", -1, "/data/2016_Scottish_no_NIC_Contribution_section_response.json"),
+    ("return a SBR TaxCalc response with PAYE tax applied at 20% with a Scottish Element",
+      "false", taxYear_2016_2017, "SBR", 20000000, "annual", -1, "/data/2016_SBR_TaxCode_Response.json"),
+    ("return a SD0 TaxCalc response with PAYE tax applied at 40% with a Scottish Element",
+      "false", taxYear_2016_2017, "SD0", 20000000, "annual", -1, "/data/2016_SD0_TaxCode_Response.json"),
+    ("return a SD1 TaxCalc response with PAYE tax applied at 45% with a Scottish Element",
+      "false", taxYear_2016_2017, "SD1", 20000000, "annual", -1, "/data/2016_SD1_TaxCode_Response.json"),
+    ("return tax calc response using an hourly rate input with a Scottish Element",
+      "false", taxYear_2016_2017, "S1100T", 9615, "annual", 40, "/data/2016_Scottish_Hourly_Rate_Response.json"),
+    ("return a annual TaxCalc response",
+      "false", taxYear_2017_2018, "1100T", 1000000, "annual", -1, "/data/2017_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response with zero value National Insurance Contributions Section",
+      "true", taxYear_2017_2018, "1100T", 1000000, "annual", -1, "/data/2017_no_NIC_Contribution_section_response.json"),
+    ("return a NT TaxCalc response with no PAYE tax applied",
+      "false", taxYear_2017_2018, "NT", 20000000, "annual", -1, "/data/2017_NT_TaxCode_Response.json"),
+    ("return a BR TaxCalc response with PAYE tax applied at 20%",
+      "false", taxYear_2017_2018, "BR", 20000000, "annual", -1, "/data/2017_BR_TaxCode_Response.json"),
+    ("return a D0 TaxCalc response with PAYE tax applied at 40%",
+      "false", taxYear_2017_2018, "D0", 20000000, "annual", -1, "/data/2017_D0_TaxCode_Response.json"),
+    ("return a D1 TaxCalc response with PAYE tax applied at 45%",
+      "false", taxYear_2017_2018, "D1", 20000000, "annual", -1, "/data/2017_D1_TaxCode_Response.json"),
+    ("return tax calc response using an hourly rate input",
+      "false", taxYear_2017_2018, "1100T", 9615, "annual", 40, "/data/2017_Hourly_Rate_Response.json"),
+    ("return tax calc response using tapering with emergency tax code input",
+      "false", taxYear_2017_2018, "1150L", 221200, "weekly", -1, "/data/2017_Tapering_Emergency_TaxCode_Response.json"),
+    ("max tax rate should kick in when the paye amount is greater than 50% of annual salary",
+      "false", taxYear_2017_2018, "K4000", 1000000, "annual", -1, "/data/2017_Max_Tax_Response.json"),
+    ("max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
+      "false", taxYear_2017_2018, "K1100", 100000, "annual", -1, "/data/2017_Max_Tax_Edge_Case_Response.json"),
+    ("return a annual TaxCalc response",
+      "false", scottish_TaxYear_2016_2017, "S1100T", 1000000, "annual", -1, "/data/2017_Scottish_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response with zero value National Insurance Contributions Section",
+       "true", scottish_TaxYear_2016_2017, "1100T", 1000000, "annual", -1, "/data/2017_Scottish_no_NIC_Contribution_section_response.json"),
+    ("return a SBR TaxCalc response with PAYE tax applied at 20%",
+      "false", scottish_TaxYear_2016_2017, "SBR", 20000000, "annual", -1, "/data/2017_SBR_TaxCode_Response.json"),
+    ("return a SD0 TaxCalc response with PAYE tax applied at 40%",
+      "false", scottish_TaxYear_2016_2017, "SD0", 20000000, "annual", -1, "/data/2017_SD0_TaxCode_Response.json"),
+    ("return a SD1 TaxCalc response with PAYE tax applied at 45%",
+      "false", scottish_TaxYear_2016_2017, "SD1", 20000000, "annual", -1, "/data/2017_SD1_TaxCode_Response.json"),
+    ("return tax calc response using an hourly rate input",
+      "false", scottish_TaxYear_2016_2017, "S1100T", 9615, "annual", 40, "/data/2017_Scottish_Hourly_Rate_Response.json"),
+    ("return tax calc response using tapering with emergency tax code input",
+      "false", scottish_TaxYear_2016_2017, "S1150L", 221200, "weekly", -1, "/data/2017_Scottish_Tapering_Emergency_TaxCode_Response.json"),
+    ("max tax rate should kick in when the paye amount is greater than 50% of annual salary",
+      "false", scottish_TaxYear_2016_2017, "SK4000", 1000000, "annual", -1, "/data/2017_Scottish_Max_Tax_Response.json"),
+    ("max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
+      "false", scottish_TaxYear_2016_2017, "SK1100", 100000, "annual", -1, "/data/2017_Scottish_Max_Tax_Edge_Case_Response.json")
+  )
+
+  "LiveTaxCalculatorService calculate tax" should {
+    forAll(input) {
+
+      (testDescription, isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn, expectedJson) =>
+
+        s"${taxCalcResource.taxYear} $testDescription" in new LiveTaxCalcServiceSuccess {
+
+          val result = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
+          result shouldBe taxCalcFromJson(expectedJson)
+        }
     }
-    "return a annual TaxCalc response with zero value National Insurance Contributions Section" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax("true", date, "1100T", 1000008, "annual", -1)
-      result shouldBe TaxCalculatorTestData.no_NIC_Contribution_section_response
-    }
 
-    "return a NT TaxCalc response with no PAYE tax applied" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "NT", 20000000, "annual", -1)
-      result shouldBe TaxCalculatorTestData.NT_taxCode_response
-    }
+  }
 
-    "return a BR TaxCalc response with PAYE tax applied at 20%" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "BR", 20000000, "annual", -1)
-      result shouldBe TaxCalculatorTestData.BR_taxCode_response
-    }
-
-    "return a D0 TaxCalc response with PAYE tax applied at 40%" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "D0", 20000000, "annual", -1)
-      result shouldBe TaxCalculatorTestData.D0_taxCode_response
-    }
-
-    "return a D1 TaxCalc response with PAYE tax applied at 45%" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "D1", 20000000, "annual", -1)
-      result shouldBe TaxCalculatorTestData.D1_taxCode_response
-    }
-
-    "return weekly tax calc response using an hourly rate input" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "1100T", 9615, "weekly", 40)
-      result shouldBe TaxCalculatorTestData.hour_rate_weekly_response
-    }
-
-    "return weekly tax calc response using tapering with emergency taxcode input" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "SK1100", 221200, "weekly", -1)
-      result shouldBe TaxCalculatorTestData.tapering_emergency_code_response
-    }
-
-    "fail with exception max amount exceeded when greater than 999999999" in new LiveTaxCalcServiceSuccess {
-      intercept[Exception] {
-        service.calculateTax("false", date, "SK1100", 1999999999, "annual", -1)
-      }
-    }
-
-    "max tax rate should kick in when the paye amount is greater than 50% of annual salary" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "K4000", 1000000, "annual", -1)
-      result shouldBe TaxCalculatorTestData.max_tax_response
-    }
-
-    "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%" in new LiveTaxCalcServiceSuccess {
-      val result = service.calculateTax(false.toString, date, "K1100", 100000, "annual", -1)
-      result shouldBe TaxCalculatorTestData.max_tax_response_edge_case
+  "fail with exception max amount exceeded when greater than 999999999" in new LiveTaxCalcServiceSuccess {
+    intercept[Exception] {
+      service.buildTaxCalc("false", taxYear_2016_2017, "SK1100", 1999999999, "annual", -1)
     }
   }
 
@@ -75,7 +128,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
 
     "multiply 12345600 by 52 and convert to its Pound Value if the payPeriod is 'weekly'" in new LiveTaxCalcServiceSuccess {
       val result = service.annualiseGrossPay(12345600, None, "weekly")
-      result.value shouldBe BigDecimal(12345600*52/100)
+      result.value shouldBe BigDecimal(12345600 * 52 / 100)
     }
 
     "throw an exception when the amount exceeds 999999999 regardless of the pay period" in new LiveTaxCalcServiceSuccess {
@@ -106,9 +159,9 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
   "LiveTaxCalculatorService calculateAverageAnnualTaxRate" should {
     "calculate the average annual tax rate" in new LiveTaxCalcServiceSuccess {
 
-      val tbWeek = Option(TaxBreakdown("weekly",grossPay = BigDecimal(1000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), Seq(), totalDeductions = BigDecimal(200.00), BigDecimal(0)))
-      val tbMonth = Option(TaxBreakdown("monthly",grossPay = BigDecimal(7000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), Seq(), totalDeductions = BigDecimal(2000.00), BigDecimal(0)))
-      val tbAnnual = Option(TaxBreakdown("annual",grossPay = BigDecimal(60000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0), Seq(), totalDeductions = BigDecimal(24000.00), BigDecimal(0)))
+      val tbWeek = Option(TaxBreakdown("weekly", grossPay = BigDecimal(1000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), Option(BigDecimal(0)), BigDecimal(0), Seq(), totalDeductions = BigDecimal(200.00), BigDecimal(0)))
+      val tbMonth = Option(TaxBreakdown("monthly", grossPay = BigDecimal(7000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), Option(BigDecimal(0)), BigDecimal(0), Seq(), totalDeductions = BigDecimal(2000.00), BigDecimal(0)))
+      val tbAnnual = Option(TaxBreakdown("annual", grossPay = BigDecimal(60000.00), BigDecimal(0), BigDecimal(0), BigDecimal(0), Option(BigDecimal(0)), BigDecimal(0), Seq(), totalDeductions = BigDecimal(24000.00), BigDecimal(0)))
 
       service.calculateAverageAnnualTaxRate(tbWeek).value shouldBe BigDecimal(20.00)
       service.calculateAverageAnnualTaxRate(tbMonth).value shouldBe BigDecimal(28.57)
@@ -117,3 +170,12 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers {
     }
   }
 }
+
+
+object Formats {
+  implicit val taxCalcFormatAggregation = Json.format[Aggregation]
+  implicit val taxCalcFormatTaxCategory = Json.format[TaxCategory]
+  implicit val taxCalcFormatBreakdown = Json.format[TaxBreakdown]
+  implicit val taxCalcFormat = Json.format[TaxCalc]
+}
+
