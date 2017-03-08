@@ -1,0 +1,177 @@
+{
+  "statePensionAge": false,
+  "taxCode": "S1150L",
+  "payPerHour": -1,
+  "hours": -1,
+  "averageAnnualTaxRate": 38.19,
+  "rateType": "SCOTLAND",
+  "marginalTaxRate": 42,
+  "maxTaxRate": 50,
+  "payeBand": 40,
+  "employeeNICBand": 2,
+  "tapered": true,
+  "taxBreakdown": [
+    {
+      "period": "annual",
+      "grossPay": 115024,
+      "taxFreePay": 3997,
+      "taxablePay": 111027,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 38110.8,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 6300
+            },
+            {
+              "percentage": 40,
+              "amount": 31810.8
+            },
+            {
+              "percentage": 45,
+              "amount": 0
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 5820.8,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 4420.32
+            },
+            {
+              "percentage": 2,
+              "amount": 1400.48
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 14746.68,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 14746.68
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 43931.6,
+      "takeHomePay": 71092.4
+    },
+    {
+      "period": "monthly",
+      "grossPay": 9585.33,
+      "taxFreePay": 333.08,
+      "taxablePay": 9252.25,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 3175.9,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 525
+            },
+            {
+              "percentage": 40,
+              "amount": 2650.9
+            },
+            {
+              "percentage": 45,
+              "amount": 0
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 485.07,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 368.36
+            },
+            {
+              "percentage": 2,
+              "amount": 116.71
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 1228.89,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 1228.89
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 3660.97,
+      "takeHomePay": 5924.36
+    },
+    {
+      "period": "weekly",
+      "grossPay": 2212,
+      "taxFreePay": 76.87,
+      "taxablePay": 2135.13,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 732.9,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 121.15
+            },
+            {
+              "percentage": 40,
+              "amount": 611.75
+            },
+            {
+              "percentage": 45,
+              "amount": 0
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 111.94,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 85.01
+            },
+            {
+              "percentage": 2,
+              "amount": 26.93
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 283.59,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 283.59
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 844.84,
+      "takeHomePay": 1367.16
+    }
+  ]
+}

@@ -16,22 +16,34 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
 
-class MaxRateCalculatorSpec extends WordSpecLike with Matchers {
+class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChanges {
 
-  "MaxRateCalculator calculate " should {
-    "should calculate the max rate to be applied for PAYE, max rate applies" in  {
-      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), LocalDate.now, Money(BigDecimal(10000.00))).calculate().result
-      result.value shouldBe 5000.00
-    }
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
 
-    "should calculate the max rate to be applied for PAYE, NO max rate applies here" in  {
-      val result = MaxRateCalculator(Money(BigDecimal(8000.00)), LocalDate.now, Money(BigDecimal(20000.00))).calculate().result
-      result.value shouldBe -1
+  import org.scalatest.prop.TableDrivenPropertyChecks._
+
+  val input = Table(
+    ("payeAmount", "grossPay", "taxCalcResource", "expectedResult"),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2016_2017, BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, BigDecimal(-1)),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2017_2018, BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, BigDecimal(-1))
+  )
+
+  s"MaxRateCalculator calculate() " should {
+    forAll(input) {
+
+      (payeAmount, grossPay, taxCalcResource, expectedResult) =>
+
+        s"should return $expectedResult for taxYear[${taxCalcResource.taxYear}], when paye[$payeAmount] and grossYear[$grossPay] " in {
+
+          val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
+          result.value shouldBe expectedResult
+        }
     }
   }
 }

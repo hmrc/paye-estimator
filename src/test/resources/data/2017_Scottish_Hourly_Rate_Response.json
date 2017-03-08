@@ -1,0 +1,177 @@
+{
+  "statePensionAge": false,
+  "taxCode": "S1100T",
+  "payPerHour": 96.15,
+  "hours": 40,
+  "averageAnnualTaxRate": 39.38,
+  "rateType": "SCOTLAND",
+  "marginalTaxRate": 47,
+  "maxTaxRate": 50,
+  "payeBand": 45,
+  "employeeNICBand": 2,
+  "tapered": false,
+  "taxBreakdown": [
+    {
+      "period": "annual",
+      "grossPay": 199992,
+      "taxFreePay": 11009,
+      "taxablePay": 188983,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 71242.35,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 6300
+            },
+            {
+              "percentage": 40,
+              "amount": 47400
+            },
+            {
+              "percentage": 45,
+              "amount": 17542.35
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 7520.16,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 4420.32
+            },
+            {
+              "percentage": 2,
+              "amount": 3099.84
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 26472.27,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 26472.27
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 78762.51,
+      "takeHomePay": 121229.49
+    },
+    {
+      "period": "monthly",
+      "grossPay": 16666,
+      "taxFreePay": 917.42,
+      "taxablePay": 15748.58,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 5936.86,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 525
+            },
+            {
+              "percentage": 40,
+              "amount": 3950
+            },
+            {
+              "percentage": 45,
+              "amount": 1461.86
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 626.68,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 368.36
+            },
+            {
+              "percentage": 2,
+              "amount": 258.32
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 2206.02,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 2206.02
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 6563.54,
+      "takeHomePay": 10102.46
+    },
+    {
+      "period": "weekly",
+      "grossPay": 3846,
+      "taxFreePay": 211.71,
+      "taxablePay": 3634.29,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 1370.05,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 121.15
+            },
+            {
+              "percentage": 40,
+              "amount": 911.54
+            },
+            {
+              "percentage": 45,
+              "amount": 337.35
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 144.62,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 85.01
+            },
+            {
+              "percentage": 2,
+              "amount": 59.61
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 509.08,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 509.08
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 1514.67,
+      "takeHomePay": 2331.33
+    }
+  ]
+}

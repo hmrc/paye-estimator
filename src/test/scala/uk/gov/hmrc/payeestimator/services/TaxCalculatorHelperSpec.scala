@@ -1,8 +1,14 @@
 package uk.gov.hmrc.payeestimator.services
 
+import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
+import org.scalatest.prop.TableDrivenPropertyChecks._
 
-class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
+class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearChanges{
+
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
 
   "TaxCalculatorHelper isStandardTaxCode" should {
     "return true if the code matches the format where the first 4 digits are between 0-9999 and the last is L,M,N or T" in new TaxCalculatorHelperSetup {
@@ -30,14 +36,28 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers {
       helper.isBasicRateTaxCode("NT") shouldBe false
     }
   }
-  "TaxCalculatorHelper isEmergencyTaxCode" should {
-    "return true is the tax code matches 1100L" in new TaxCalculatorHelperSetup {
-      helper.isEmergencyTaxCode("1100L") shouldBe true
-      helper.isEmergencyTaxCode("11100L") shouldBe false
-      helper.isEmergencyTaxCode("11000L") shouldBe false
-      helper.isEmergencyTaxCode("1100T") shouldBe false
+
+  val input = Table(
+    ("taxCode",  "taxCalcResource", "expectedResult", "actualEmergencyTaxCode"),
+    ("1100L" , TaxYear_2016_2017, true,  "1100L"),
+    ("11000L", TaxYear_2016_2017, false, "1100L"),
+    ("11100L", TaxYear_2016_2017, false, "1100L"),
+    ("1100T" , TaxYear_2016_2017, false, "1100L"),
+    ("1150L" , TaxYear_2017_2018, true,  "1150L"),
+    ("11500L", TaxYear_2017_2018, false, "1150L"),
+    ("11150L", TaxYear_2017_2018, false, "1150L"),
+    ("1150T" , TaxYear_2017_2018, false, "1150L")
+  )
+
+  s"TaxCalculatorHelper isEmergencyTaxCode()" should {
+    forAll(input) {
+      (taxCode,  taxCalcResource, expectedResult, actualEmergencyTaxCode) =>
+      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode if the tax code matches $actualEmergencyTaxCode" in new TaxCalculatorHelperSetup {
+        helper.isEmergencyTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
+      }
     }
   }
+
   "TaxCalculatorHelper isAdjustedTaxCode" should {
     "return true if the tax code contains a decimal place with an appended L" in new TaxCalculatorHelperSetup {
       helper.isAdjustedTaxCode("1234.98L") shouldBe true

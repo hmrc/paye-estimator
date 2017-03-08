@@ -5,7 +5,7 @@ calculate-tax
   
 * **URL**
 
-  `uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(isStatePensionAge: String, taxYear: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int)`
+  `uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(isStatePensionAge: String, date: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int)`
 
 * **Method:**
   
@@ -15,7 +15,7 @@ calculate-tax
 
    * `isStatePensionAge=[Boolean]`
    Accepted values are true\false
-   * `taxYear=[Integer]`
+   * `date=[Integer]`
    Not used at present.
    * `taxCode=[String]`
    The taxCode must be a valid tax code [More...](valid-tax-codes.md) 

@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import uk.gov.hmrc.payeestimator.domain.{TaxBand, Aggregation, Money, Allowance}
+import uk.gov.hmrc.payeestimator.domain.{Band, Aggregation, Money, Allowance}
 
 trait CalculatorResponse {
   def success: Boolean
@@ -29,7 +29,7 @@ case class AllowanceResponse(override val success: Boolean, override val result:
 
 case class TaxablePayResponse(override val success: Boolean, override val result: Money, isTapered: Boolean, additionalTaxablePay: Money) extends CalculatorResponse
 
-case class TaxBandResponse(override val success: Boolean, override val result: TaxBand) extends CalculatorResponse
+case class TaxBandResponse(override val success: Boolean, override val result: Band) extends CalculatorResponse
 
 case class NICRateCalculatorResponse(override val success: Boolean, override val result: Money) extends CalculatorResponse
 

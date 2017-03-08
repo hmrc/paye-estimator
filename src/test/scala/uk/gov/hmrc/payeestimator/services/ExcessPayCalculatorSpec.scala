@@ -16,61 +16,36 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
+import org.scalatest.prop.TableDrivenPropertyChecks._
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017}
 
-class ExcessPayCalculatorSpec extends WordSpecLike with Matchers {
+class ExcessPayCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
-  "ExcessPayCalculator calculate " should {
-    "should calculate the excess pay to be the full taxable pay amount if the applicable tax band is band 1" in new ExcessPayCalculatorSetup {
-      override val taxCode: String = "1100T"
-      override val date: LocalDate = LocalDate.now
-      override val bandId: Int = 1
-      override val taxablePay: Money = Money(BigDecimal(60000.00))
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
 
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 60000.00
-    }
+  val input = Table(
+    ("taxCode",  "taxCalcResource", "bandId", "taxablePay", "expectedResult"),
+    ("1100T",  TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("BR1",    TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("D0",     TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("D1",     TaxYear_2016_2017, 1, Money(60000.00), Money(60000.00)),
+    ("1100T",  TaxYear_2016_2017, 2, Money(60000.00), Money(60000.00)),
+    ("1100T",  TaxYear_2016_2017, 3, Money(60000.00), Money(28000.00)),
+    ("1100T",  TaxYear_2016_2017, 4, Money(200000.00), Money(50000.00))
+  )
 
-    "should calculate the excess pay to be the full taxable pay amount if the taxCode is BR1" in new ExcessPayCalculatorFullTaxableAmountSetup {
-      override val taxCode = "BR1"
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 60000.00
-    }
+  "ExcessPayCalculator calculate()" should {
 
-    "should calculate the excess pay to be the full taxable pay amount if the taxCode is D0" in new ExcessPayCalculatorFullTaxableAmountSetup {
-      override val taxCode = "D0"
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 60000.00
-    }
+    forAll(input) {
+      (taxCode,  taxCalcResource, bandId, taxablePay, expectedResult) =>
 
-    "should calculate the excess pay to be the full taxable pay amount if the taxCode is D1" in new ExcessPayCalculatorFullTaxableAmountSetup {
-      override val taxCode = "D0"
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 60000.00
-    }
+        s"${taxCalcResource.taxYear} for $taxCode calculate the excess pay to be ${expectedResult.value} " +
+          s"for a grossPay amount of ${taxablePay.value} when the applicable tax band is $bandId" in {
 
-    "should calculate the excess pay to be the full taxable pay amount if an ordinary tax code and Band 2" in new ExcessPayCalculatorFullTaxableAmountSetup {
-      override val taxCode = "1100T"
-      override val bandId = 2
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 60000.00
-    }
-
-    "should calculate the excess pay to be the full taxable pay amount - previous period threshold if an ordinary tax code and Band 3" in new ExcessPayCalculatorFullTaxableAmountSetup {
-      override val taxCode = "1100T"
-      override val bandId = 3
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 28000.00
-    }
-
-    "should calculate the excess pay to be the full taxable pay amount - previous period threshold if an ordinary tax code and Band 4" in new ExcessPayCalculatorFullTaxableAmountSetup {
-      override val taxCode = "1100T"
-      override val bandId = 4
-      override val taxablePay = Money(BigDecimal(200000.00))
-      val result = ExcessPayCalculator(taxCode, date, bandId, taxablePay).calculate().result
-      result.value shouldBe 50000.00
+          val result = ExcessPayCalculator(taxCode, bandId, taxablePay, taxCalcResource).calculate().result
+          result.value shouldBe expectedResult.value
+        }
     }
   }
 }

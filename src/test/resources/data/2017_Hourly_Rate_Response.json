@@ -1,0 +1,176 @@
+{
+  "statePensionAge": false,
+  "taxCode": "1100T",
+  "payPerHour": 96.15,
+  "hours": 40,
+  "averageAnnualTaxRate": 39.18,
+  "marginalTaxRate": 47,
+  "maxTaxRate": 50,
+  "payeBand": 45,
+  "employeeNICBand": 2,
+  "tapered": false,
+  "taxBreakdown": [
+    {
+      "period": "annual",
+      "grossPay": 199992,
+      "taxFreePay": 11009,
+      "taxablePay": 188983,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 70842.35,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 6700
+            },
+            {
+              "percentage": 40,
+              "amount": 46600
+            },
+            {
+              "percentage": 45,
+              "amount": 17542.35
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 7520.16,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 4420.32
+            },
+            {
+              "percentage": 2,
+              "amount": 3099.84
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 26472.27,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 26472.27
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 78362.51,
+      "takeHomePay": 121629.49
+    },
+    {
+      "period": "monthly",
+      "grossPay": 16666,
+      "taxFreePay": 917.42,
+      "taxablePay": 15748.58,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 5903.53,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 558.33
+            },
+            {
+              "percentage": 40,
+              "amount": 3883.33
+            },
+            {
+              "percentage": 45,
+              "amount": 1461.86
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 626.68,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 368.36
+            },
+            {
+              "percentage": 2,
+              "amount": 258.32
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 2206.02,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 2206.02
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 6530.21,
+      "takeHomePay": 10135.79
+    },
+    {
+      "period": "weekly",
+      "grossPay": 3846,
+      "taxFreePay": 211.71,
+      "taxablePay": 3634.29,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
+        {
+          "taxType": "incomeTax",
+          "total": 1362.35,
+          "aggregation": [
+            {
+              "percentage": 20,
+              "amount": 128.85
+            },
+            {
+              "percentage": 40,
+              "amount": 896.15
+            },
+            {
+              "percentage": 45,
+              "amount": 337.35
+            }
+          ]
+        },
+        {
+          "taxType": "employeeNationalInsurance",
+          "total": 144.62,
+          "aggregation": [
+            {
+              "percentage": 12,
+              "amount": 85.01
+            },
+            {
+              "percentage": 2,
+              "amount": 59.61
+            }
+          ]
+        },
+        {
+          "taxType": "employerNationalInsurance",
+          "total": 509.08,
+          "aggregation": [
+            {
+              "percentage": 13.8,
+              "amount": 509.08
+            }
+          ]
+        }
+      ],
+      "totalDeductions": 1506.97,
+      "takeHomePay": 2339.03
+    }
+  ]
+}

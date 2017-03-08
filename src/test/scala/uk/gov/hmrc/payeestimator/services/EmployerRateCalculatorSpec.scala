@@ -16,24 +16,36 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
+import org.scalatest.prop.TableDrivenPropertyChecks.forAll
+import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.Money
+import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
 
 import scala.math.BigDecimal
 
-class EmployerRateCalculatorSpec extends WordSpecLike with Matchers {
+class EmployerRateCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
-  "EmployerRateCalculatorSpec.calculate " should {
-    "should calculate the annual rate" in {
-      val rate2 = EmployerRateCalculator(LocalDate.now, Money(BigDecimal(100000.00)), 2).calculate().result
-      val rate3 = EmployerRateCalculator(LocalDate.now, Money(BigDecimal(100000.00)), 3).calculate().result
+  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
 
-      rate2.amount shouldBe 4814.54
-      rate2.percentage shouldBe 13.8
-      rate3.amount shouldBe 7866.00
-      rate3.percentage shouldBe 13.8
+  val input = Table(
+    ("grossPay", "taxCalcResource", "limitId", "expectedAmount", "expectedPercentage"),
+    (BigDecimal(100000.00), TaxYear_2016_2017, 2, 4814.54, 13.8),
+    (BigDecimal(100000.00), TaxYear_2016_2017, 3, 7866.00, 13.8),
+    (BigDecimal(100000.00), TaxYear_2017_2018, 2, 5083.37, 13.8),
+    (BigDecimal(100000.00), TaxYear_2017_2018, 3, 7590.00, 13.8)
+  )
+
+  s"EmployerRateCalculatorSpec.calculate()" should {
+    forAll(input) {
+
+      (grossPay, taxCalcResource, limitId, expectedAmount, expectedPercentage) =>
+
+        s"calculate [$expectedAmount] in ${taxCalcResource.taxYear}, given grossPay[$grossPay], limitId[rate.$limitId]" in {
+          val rate = EmployerRateCalculator( Money(grossPay), limitId, taxCalcResource).calculate().result
+          rate.amount shouldBe expectedAmount
+          rate.percentage shouldBe expectedPercentage
+        }
     }
   }
 }
