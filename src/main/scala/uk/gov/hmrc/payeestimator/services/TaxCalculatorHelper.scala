@@ -15,7 +15,12 @@
  */
 package uk.gov.hmrc.payeestimator.services
 
+import java.time.LocalDate
+
 import uk.gov.hmrc.payeestimator.domain._
+
+import scala.scalajs.js.annotation.JSExport
+
 
 trait TaxCalculatorHelper {
 
@@ -82,5 +87,4 @@ trait TaxCalculatorHelper {
     }
     else taxCode
   }
-
 }

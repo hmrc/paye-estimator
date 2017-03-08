@@ -1,6 +1,7 @@
 package uk.gov.hmrc.payeestimator.services
 
 import java.net.URL
+import java.time.LocalDate
 
 import org.scalatest.{DiagrammedAssertions, Matchers, WordSpecLike}
 import play.api.libs.json.Json
@@ -167,6 +168,12 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       service.calculateAverageAnnualTaxRate(tbMonth).value shouldBe BigDecimal(28.57)
       service.calculateAverageAnnualTaxRate(tbAnnual).value shouldBe BigDecimal(40.00)
       service.calculateAverageAnnualTaxRate(None).value shouldBe BigDecimal(0.00)
+    }
+  }
+
+  "LiveTaxCalculatorService parseDate" should {
+    "parse a Date String yyyy-MM-dd to a LocalDate" in new LiveTaxCalcServiceSuccess {
+      LocalDate.of(2017, 3, 8) shouldBe service.parseDate("2017-03-08")
     }
   }
 }
