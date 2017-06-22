@@ -29,7 +29,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
     ("return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true", taxYear_2016_2017, "1100T", 1000008, "annual", -1, "/data/2016_no_NIC_Contribution_section_response.json"),
     ("return a NT TaxCalc response with no PAYE tax applied",
-      "false", taxYear_2016_2017, "NT", 20000000, "annual", -1, "/data/2016_NT_TaxCode_Response.json"),
+      "false", taxYear_2016_2017, "nt", 20000000, "annual", -1, "/data/2016_NT_TaxCode_Response.json"),
     ("return a BR TaxCalc response with PAYE tax applied at 20%",
       "false", taxYear_2016_2017, "BR", 20000000, "annual", -1, "/data/2016_BR_TaxCode_Response.json"),
     ("return a D0 TaxCalc response with PAYE tax applied at 40%",

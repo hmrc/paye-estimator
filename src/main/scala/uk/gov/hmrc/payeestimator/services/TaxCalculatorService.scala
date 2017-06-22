@@ -59,7 +59,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
     val rateType = if (taxCalcResource.isScottish) Some("SCOTLAND") else None
     val grossPay = annualiseGrossPay(grossPayPence, hours, updatedPayPeriod)
-    val updatedTaxCode = removeScottishElement(taxCode)
+    val updatedTaxCode = removeScottishElement(taxCode) toUpperCase
     val payeTax = payeTaxCalculatorService.calculatePAYETax(updatedTaxCode, grossPay, taxCalcResource)
     val nicTax = nicTaxCalculatorService.calculateNICTax(isPensionAge, grossPay, taxCalcResource)
     val maxTax = MaxRateCalculator(payeTax.payeTaxAmount, grossPay, taxCalcResource).calculate().result
@@ -75,14 +75,14 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     }
 
     val calculatedTaxBreakdown = TaxBreakdown("annual", grossPay.value, taxFreePay.value,
-      payeTax.taxablePay.value, payeTax.additionalTaxablePay.value, calculateScottishElement(payeTax.taxablePay, taxCode, taxCalcResource), maxTax.value, taxCategories, totalDeductions,
+      payeTax.taxablePay.value, payeTax.additionalTaxablePay.value, calculateScottishElement(payeTax.taxablePay, taxCode toUpperCase, taxCalcResource), maxTax.value, taxCategories, totalDeductions,
       (grossPay - totalDeductions).value)
 
-    val taxBreakdown = derivePeriodTaxBreakdowns(payeTax.band, taxCode, calculatedTaxBreakdown, payeTax, nicTax, aggregation, isPensionAge, taxCalcResource)
+    val taxBreakdown = derivePeriodTaxBreakdowns(payeTax.band, taxCode toUpperCase, calculatedTaxBreakdown, payeTax, nicTax, aggregation, isPensionAge, taxCalcResource)
 
     val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
 
-    TaxCalc(isPensionAge, taxCode, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, rateType,
+    TaxCalc(isPensionAge, taxCode toUpperCase, getHourlyGrossPay(hours, grossPayPence), hoursIn, averageAnnualTaxRate.value, rateType,
       payeTax.bandRate + nicTax.employeeNICBandRate, taxCalcResource.taxBands.maxRate, payeTax.bandRate,
       nicTax.employeeNICBandRate, payeTax.isTapered, taxBreakdown)
 
