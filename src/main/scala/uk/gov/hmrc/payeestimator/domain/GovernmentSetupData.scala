@@ -36,7 +36,7 @@ object GovernmentSpendingData extends MoneyFormatting {
                                   receipt.receiptSource.equalsIgnoreCase("National Insurance")
                                 }).foldLeft(BigDecimal(0.0, MathContext.DECIMAL64))(_ + _.amount)
 
-  val governmentSpending = Seq(createGovernmentSpending("Welfare",BigDecimal(25.30)),
+  val governmentSpending = Seq(createGovernmentSpending("Welfare",BigDecimal(25.00)),
                                createGovernmentSpending("Health",BigDecimal(19.90)),
                                createGovernmentSpending("State Pensions",BigDecimal(12.80)),
                                createGovernmentSpending("Education",BigDecimal(12.00)),
