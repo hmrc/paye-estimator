@@ -39,18 +39,18 @@ object GovernmentSpendingData extends MoneyFormatting {
   val governmentSpending = Seq(createGovernmentSpending("Welfare",BigDecimal(25.30)),
                                createGovernmentSpending("Health",BigDecimal(19.90)),
                                createGovernmentSpending("State Pensions",BigDecimal(12.80)),
-                               createGovernmentSpending("Education",BigDecimal(12.50)),
-                               createGovernmentSpending("Defence",BigDecimal(5.40)),
-                               createGovernmentSpending("National Debt Interest",BigDecimal(5.00)),
-                               createGovernmentSpending("Public order & safety",BigDecimal(4.40)),
-                               createGovernmentSpending("Transport" ,BigDecimal(3.00)),
-                               createGovernmentSpending("Business and Industry",BigDecimal(2.70)),
+                               createGovernmentSpending("Education",BigDecimal(12.00)),
+                               createGovernmentSpending("Defence",BigDecimal(5.20)),
+                               createGovernmentSpending("National Debt Interest",BigDecimal(5.30)),
+                               createGovernmentSpending("Public order & safety",BigDecimal(4.30)),
+                               createGovernmentSpending("Transport" ,BigDecimal(4.00)),
+                               createGovernmentSpending("Business and Industry",BigDecimal(2.40)),
                                createGovernmentSpending("Government Administration",BigDecimal(2.00)),
-                               createGovernmentSpending("Culture e.g. sports, libraries, museums",BigDecimal(1.80)),
+                               createGovernmentSpending("Culture e.g. sports, libraries, museums",BigDecimal(1.60)),
                                createGovernmentSpending("Environment",BigDecimal(1.70)),
-                               createGovernmentSpending("Housing and Utilities",BigDecimal(1.60)),
-                               createGovernmentSpending("Overseas Aid",BigDecimal(1.30)),
-                               createGovernmentSpending("UK contribution to the EU budget",BigDecimal(0.60)))
+                               createGovernmentSpending("Housing and Utilities",BigDecimal(1.40)),
+                               createGovernmentSpending("Overseas Aid",BigDecimal(1.20)),
+                               createGovernmentSpending("UK contribution to the EU budget",BigDecimal(1.10)))
 
   def createGovernmentSpending(description: String, percentage: BigDecimal) : GovernmentSpending = {
     GovernmentSpending(description, percentage, format(totalGovernmentReceipts*(percentage/100)))
