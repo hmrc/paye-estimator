@@ -29,7 +29,7 @@ object GovernmentReceiptData extends MoneyFormatting {
 
 object GovernmentSpendingData extends MoneyFormatting {
 
-  val year = "2015"
+  val year = "2016"
   val totalGovernmentReceipts = GovernmentReceiptData.governmentReceipting.filter(
                                 receipt => {
                                   receipt.receiptSource.equalsIgnoreCase("Income Tax") ||
