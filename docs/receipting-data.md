@@ -16,15 +16,15 @@ receipting-data
 
 ```String
 {
-  "year": "2014-15",
+  "year": "2015-16",
   "governmentReceipting": [
     {
       "receiptSource": "Income Tax",
-      "amount": "164000000000.00"
+      "amount": "169000000000.00"
     },
     {
       "receiptSource": "National Insurance",
-      "amount": "110000000000.00"
+      "amount": "114000000000.00"
     },
     {
       "receiptSource": "Excise Duties",
@@ -32,25 +32,25 @@ receipting-data
     },
     {
       "receiptSource": "Corporation Tax",
-      "amount": "43000000000.00"
+      "amount": "44000000000.00"
     },
     {
       "receiptSource": "VAT",
-      "amount": "111000000000.00"
+      "amount": "116000000000.00"
     },
     {
       "receiptSource": "Business Rates",
-      "amount": "27000000000.00"
+      "amount": "29000000000.00"
     },
     {
       "receiptSource": "Council Tax",
-      "amount": "28000000000.00"
+      "amount": "29000000000.00"
     },
     {
       "receiptSource": "Other",
-      "amount": "124000000000.00"
+      "amount": "132000000000.00"
     }
   ],
-  "totalGovernmentReceipts": "654000000000.00"
+  "totalGovernmentReceipts": "680000000000.00"
 }
 ```
