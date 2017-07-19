@@ -21,7 +21,7 @@ spending-data
   "governmentSpending": [
     {
       "category": "Welfare",
-      "percentage": "25.3",
+      "percentage": "25",
       "spendingCategoryAmount": "69322000000.00"
     },
     {
@@ -36,32 +36,32 @@ spending-data
     },
     {
       "category": "Education",
-      "percentage": "12.5",
+      "percentage": "12",
       "spendingCategoryAmount": "34250000000.00"
     },
     {
       "category": "Defence",
-      "percentage": "5.4",
+      "percentage": "5.2",
       "spendingCategoryAmount": "14796000000.00"
     },
     {
       "category": "National Debt Interest",
-      "percentage": "5",
+      "percentage": "5.3",
       "spendingCategoryAmount": "13700000000.00"
     },
     {
       "category": "Public order & safety",
-      "percentage": "4.4",
+      "percentage": "4.3",
       "spendingCategoryAmount": "12056000000.00"
     },
     {
       "category": "Transport",
-      "percentage": "3",
+      "percentage": "4",
       "spendingCategoryAmount": "8220000000.00"
     },
     {
       "category": "Business and Industry",
-      "percentage": "2.7",
+      "percentage": "2.4",
       "spendingCategoryAmount": "7398000000.00"
     },
     {
@@ -71,7 +71,7 @@ spending-data
     },
     {
       "category": "Culture e.g. sports, libraries, museums",
-      "percentage": "1.8",
+      "percentage": "1.6",
       "spendingCategoryAmount": "4932000000.00"
     },
     {
@@ -81,17 +81,17 @@ spending-data
     },
     {
       "category": "Housing and Utilities",
-      "percentage": "1.6",
+      "percentage": "1.4",
       "spendingCategoryAmount": "4384000000.00"
     },
     {
       "category": "Overseas Aid",
-      "percentage": "1.3",
+      "percentage": "1.2",
       "spendingCategoryAmount": "3562000000.00"
     },
     {
       "category": "UK contribution to the EU budget",
-      "percentage": "0.6",
+      "percentage": "1.1",
       "spendingCategoryAmount": "1644000000.00"
     }
   ]
