@@ -13,15 +13,15 @@ case class GovernmentReceiptDataResponse(year: String, governmentReceipting: Seq
 
 object GovernmentReceiptData extends MoneyFormatting {
 
-  val year = "2014-15"
-  val governmentReceipting = Seq(GovernmentReceipt("Income Tax"        ,format(BigDecimal(164000000000.00))),
-                                 GovernmentReceipt("National Insurance",format(BigDecimal(110000000000.00))),
+  val year = "2015-16"
+  val governmentReceipting = Seq(GovernmentReceipt("Income Tax"        ,format(BigDecimal(169000000000.00))),
+                                 GovernmentReceipt("National Insurance",format(BigDecimal(114000000000.00))),
                                  GovernmentReceipt("Excise Duties"     ,format(BigDecimal(47000000000.00))),
-                                 GovernmentReceipt("Corporation Tax"   ,format(BigDecimal(43000000000.00))),
-                                 GovernmentReceipt("VAT"               ,format(BigDecimal(111000000000.00))),
-                                 GovernmentReceipt("Business Rates"    ,format(BigDecimal(27000000000.00))),
-                                 GovernmentReceipt("Council Tax"       ,format(BigDecimal(28000000000.00))),
-                                 GovernmentReceipt("Other"             ,format(BigDecimal(124000000000.00))))
+                                 GovernmentReceipt("Corporation Tax"   ,format(BigDecimal(44000000000.00))),
+                                 GovernmentReceipt("VAT"               ,format(BigDecimal(116000000000.00))),
+                                 GovernmentReceipt("Business Rates"    ,format(BigDecimal(29000000000.00))),
+                                 GovernmentReceipt("Council Tax"       ,format(BigDecimal(29000000000.00))),
+                                 GovernmentReceipt("Other"             ,format(BigDecimal(132000000000.00))))
 
   val totalGovernmentReceipts = governmentReceipting.foldLeft(BigDecimal(0.0, MathContext.DECIMAL64))(_ + _.amount)
 
