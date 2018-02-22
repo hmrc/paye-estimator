@@ -53,7 +53,8 @@ trait TaxCalcResource {
 
 object TaxCalcResourceBuilder {
 
-  def resources(isScottish: Boolean): Seq[TaxCalcResource] = Seq(TaxYear_2016_2017(), TaxYear_2017_2018(isScottish))
+  def resources(isScottish: Boolean): Seq[TaxCalcResource] =
+    Seq(TaxYear_2016_2017(), TaxYear_2017_2018(isScottish), TaxYear_2018_2019(isScottish))
 
   def resourceForDate(date:LocalDate, isScottish: Boolean) : TaxCalcResource = {
     resources(isScottish).find(_.applicableForDate(date)) getOrElse {
@@ -62,7 +63,7 @@ object TaxCalcResourceBuilder {
   }
 }
 
-case class TaxYear_2018_2019(val isScottish:Boolean = false) extends TaxCalcResource {
+case class TaxYear_2018_2019(isScottish:Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = "1185L"
   override val startDate: LocalDate = LocalDate.of(2018,4,6)
@@ -82,13 +83,13 @@ case class TaxYear_2018_2019(val isScottish:Boolean = false) extends TaxCalcReso
 
   override val taxBands: TaxBands = TaxBands(BigDecimal(100000.00), BigDecimal(0), BigDecimal(50), bands)
 
-  val rateLimit1 = RateLimit("lower", 5876.00)
-  val rateLimit2 = RateLimit("upper", 45000.00)
+  val rateLimit1 = RateLimit("lower", 6032.00)
+  val rateLimit2 = RateLimit("upper", 46350.00)
 
-  val threshold1 = RateLimit("primary", 8164.00)
-  val threshold2 = RateLimit("secondary", 8164.00)
+  val threshold1 = RateLimit("primary", 8424.00)
+  val threshold2 = RateLimit("secondary", 8424.00)
 
-  val employee1 = RateLimit("1", 12)
+  val employee1 = RateLimit("1", 12)// why 12% not zero?
   val employee2 = RateLimit("2", 0)
   val employee3 = RateLimit("3", 12)
   val employee4 = RateLimit("4", 2)
@@ -106,7 +107,7 @@ case class TaxYear_2018_2019(val isScottish:Boolean = false) extends TaxCalcReso
   )
 }
 
-case class TaxYear_2017_2018(val isScottish:Boolean = false) extends TaxCalcResource {
+case class TaxYear_2017_2018(isScottish:Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = "1150L"
   override val startDate: LocalDate = LocalDate.of(2017,4,6)
@@ -132,7 +133,7 @@ case class TaxYear_2017_2018(val isScottish:Boolean = false) extends TaxCalcReso
   val threshold1 = RateLimit("primary", 8164.00)
   val threshold2 = RateLimit("secondary", 8164.00)
 
-  val employee1 = RateLimit("1", 12)
+  val employee1 = RateLimit("1", 12)// why 12% not zero?
   val employee2 = RateLimit("2", 0)
   val employee3 = RateLimit("3", 12)
   val employee4 = RateLimit("4", 2)
@@ -150,7 +151,7 @@ case class TaxYear_2017_2018(val isScottish:Boolean = false) extends TaxCalcReso
   )
 }
 
-case class TaxYear_2016_2017(val isScottish:Boolean = false) extends TaxCalcResource {
+case class TaxYear_2016_2017(isScottish:Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = "1100L"
   override val startDate: LocalDate = LocalDate.of(2016,4,6)

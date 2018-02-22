@@ -4,12 +4,13 @@ import java.net.URL
 import java.time.LocalDate
 
 import org.scalatest.{DiagrammedAssertions, Matchers, WordSpecLike}
-import play.api.libs.json.Json
+import play.api.libs.json.Json.{format, parse}
 import uk.gov.hmrc.payeestimator.domain._
+import uk.gov.hmrc.payeestimator.services.Formats.taxCalcFormat
 
 import scala.io.Source
 
-class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with DiagrammedAssertions {
+class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with DiagrammedAssertions with TaxYearChanges {
 
   val taxYear_2016_2017 = TaxYear_2016_2017()
   val taxYear_2017_2018 = TaxYear_2017_2018()
@@ -17,7 +18,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
   private def taxCalcFromJson(json: String): TaxCalc = {
     val resource: URL = getClass.getResource(json)
-    Json.parse(Source.fromURL(resource).getLines().mkString).as[TaxCalc](Formats.taxCalcFormat)
+    parse(Source.fromURL(resource).getLines().mkString).as[TaxCalc](taxCalcFormat)
   }
 
   import org.scalatest.prop.TableDrivenPropertyChecks._
@@ -180,9 +181,9 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
 
 object Formats {
-  implicit val taxCalcFormatAggregation = Json.format[Aggregation]
-  implicit val taxCalcFormatTaxCategory = Json.format[TaxCategory]
-  implicit val taxCalcFormatBreakdown = Json.format[TaxBreakdown]
-  implicit val taxCalcFormat = Json.format[TaxCalc]
+  implicit val taxCalcFormatAggregation = format[Aggregation]
+  implicit val taxCalcFormatTaxCategory = format[TaxCategory]
+  implicit val taxCalcFormatBreakdown = format[TaxBreakdown]
+  implicit val taxCalcFormat = format[TaxCalc]
 }
 
