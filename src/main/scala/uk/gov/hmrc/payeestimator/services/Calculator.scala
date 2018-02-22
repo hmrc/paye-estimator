@@ -102,14 +102,9 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
 case class TaxBandCalculator(taxCode: String, taxablePay: Money, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): TaxBandResponse = {
-    val taxBand = if (isBasicRateTaxCode(taxCode)) {
-      taxCode match {
-        case "BR" => taxCalcResource.findTaxBand(2).head
-        case "D0" => taxCalcResource.findTaxBand(3).head
-        case "D1" => taxCalcResource.findTaxBand(4).head
-      }
-    }
-    else {
+    val taxBand: Band =  if (isBasicRateTaxCode(taxCode,taxCalcResource.isScottish)) {
+      taxCalcResource.findTaxBand(taxCode).get
+    } else {
       val taxBands = taxCalcResource.taxBands.taxBands.collect(taxBandFilterFunc(taxablePay))
       if (taxBands.nonEmpty) taxBands.head else taxCalcResource.taxBands.taxBands.last
     }

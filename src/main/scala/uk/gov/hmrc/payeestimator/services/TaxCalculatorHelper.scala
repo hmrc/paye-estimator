@@ -41,9 +41,9 @@ trait TaxCalculatorHelper {
     !taxCode.matches("([N][T]){1}") && !isBasicRateTaxCode(taxCode)
   }
 
-  def isBasicRateTaxCode(taxCode: String): Boolean = {
+  def isBasicRateTaxCode(taxCode: String, isScottish: Boolean = false): Boolean = {
     taxCode.matches("([B][R]){1}") ||
-      taxCode.matches("([D][0,1]){1}")
+    taxCode.matches(s"([D][0,1${if(isScottish){",2"} else{""}}])")
   }
 
   def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean = {
