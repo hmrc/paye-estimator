@@ -33,7 +33,7 @@ trait NICTaxCalculatorService extends TaxCalculatorHelper {
     val rate1 = EmployeeRateCalculator(grossPay, 1, taxCalcResource).calculate().result
     val rate3 = EmployeeRateCalculator(grossPay, 3, taxCalcResource).calculate().result
     val rate4 = EmployeeRateCalculator(grossPay, 4, taxCalcResource).calculate().result
-    val result = Seq(Aggregation(rate1.percentage, rate1.amount + rate3.amount), rate4).filter(_.amount > BigDecimal(0))
+    val result = Seq(Aggregation(rate3.percentage, rate1.amount + rate3.amount), rate4).filter(_.amount > BigDecimal(0))
     val nicBandRate = result.size > 0 match {
       case true => result.last.percentage
       case false => BigDecimal(0)
