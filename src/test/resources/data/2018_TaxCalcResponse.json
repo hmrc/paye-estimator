@@ -3,7 +3,7 @@
   "taxCode": "1100T",
   "payPerHour": "-1",
   "hours": -1,
-  "averageAnnualTaxRate": "2.33",
+  "averageAnnualTaxRate": "1.89",
   "marginalTaxRate": "12",
   "maxTaxRate": "50",
   "payeBand": "0",
@@ -38,27 +38,27 @@
         },
         {
           "taxType": "employeeNationalInsurance",
-          "total": "232.81",
+          "total": "189.13",
           "aggregation": [
             {
               "percentage": "12",
-              "amount": "232.81"
+              "amount": "189.13"
             }
           ]
         },
         {
           "taxType": "employerNationalInsurance",
-          "total": "260.55",
+          "total": "217.50",
           "aggregation": [
             {
               "percentage": "13.8",
-              "amount": "260.55"
+              "amount": "217.50"
             }
           ]
         }
       ],
-      "totalDeductions": "232.81",
-      "takeHomePay": "9767.27"
+      "totalDeductions": "189.13",
+      "takeHomePay": "9810.95"
     },
     {
       "period": "monthly",
@@ -88,27 +88,27 @@
         },
         {
           "taxType": "employeeNationalInsurance",
-          "total": "19.40",
+          "total": "15.76",
           "aggregation": [
             {
               "percentage": "12",
-              "amount": "19.40"
+              "amount": "15.76"
             }
           ]
         },
         {
           "taxType": "employerNationalInsurance",
-          "total": "21.71",
+          "total": "18.13",
           "aggregation": [
             {
               "percentage": "13.8",
-              "amount": "21.71"
+              "amount": "18.13"
             }
           ]
         }
       ],
-      "totalDeductions": "19.40",
-      "takeHomePay": "813.94"
+      "totalDeductions": "15.76",
+      "takeHomePay": "817.58"
     },
     {
       "period": "weekly",
@@ -138,27 +138,27 @@
         },
         {
           "taxType": "employeeNationalInsurance",
-          "total": "4.48",
+          "total": "3.64",
           "aggregation": [
             {
               "percentage": "12",
-              "amount": "4.48"
+              "amount": "3.64"
             }
           ]
         },
         {
           "taxType": "employerNationalInsurance",
-          "total": "5.01",
+          "total": "4.18",
           "aggregation": [
             {
               "percentage": "13.8",
-              "amount": "5.01"
+              "amount": "4.18"
             }
           ]
         }
       ],
-      "totalDeductions": "4.48",
-      "takeHomePay": "187.83"
+      "totalDeductions": "3.64",
+      "takeHomePay": "188.67"
     }
   ]
 }
