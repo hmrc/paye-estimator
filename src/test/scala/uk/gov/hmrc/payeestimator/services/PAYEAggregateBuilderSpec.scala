@@ -1,9 +1,9 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYear_2016_2017, TaxYear_2017_2018, TaxYear_2018_2019}
+import uk.gov.hmrc.payeestimator.domain._
 
-class PAYEAggregateBuilderSpec extends WordSpecLike with Matchers {
+class PAYEAggregateBuilderSpec extends WordSpecLike with Matchers with TaxYearChanges{
   "For 2017-18 PAYEAggregateBuilder build" should {
     val taxYear = new TaxYear_2017_2018(false)
 

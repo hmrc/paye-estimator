@@ -26,8 +26,8 @@ trait TaxCalculatorHelper {
 
   def isValidTaxCode(taxCode: String, taxCalcResource:TaxCalcResource): Boolean = {
     isStandardTaxCode(taxCode) ||
-      !isTaxableCode(taxCode) ||
-      isBasicRateTaxCode(taxCode) ||
+      !isTaxableCode(taxCode, taxCalcResource.isScottish) ||
+      isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) ||
       isEmergencyTaxCode(taxCode, taxCalcResource) ||
       isValidScottishTaxCode(taxCode) ||
       isUnTaxedIncomeTaxCode(taxCode)
@@ -37,8 +37,8 @@ trait TaxCalculatorHelper {
     taxCode.matches("([0-9]{1,4}[L-N,T]{1}){1}")
   }
 
-  def isTaxableCode(taxCode: String): Boolean = {
-    !taxCode.matches("([N][T]){1}") && !isBasicRateTaxCode(taxCode)
+  def isTaxableCode(taxCode: String, isScottish: Boolean = false): Boolean = {
+    !taxCode.matches("([N][T]){1}") && !isBasicRateTaxCode(taxCode, isScottish)
   }
 
   def isBasicRateTaxCode(taxCode: String, isScottish: Boolean = false): Boolean = {
@@ -57,7 +57,7 @@ trait TaxCalculatorHelper {
   def isValidScottishTaxCode(taxCode: String): Boolean = {
     taxCode.matches("([S]{1}[0-9]{1,4}[L-N,T]{1}){1}") ||
       taxCode.matches("([S][B][R]){1}") ||
-      taxCode.matches("([S][D][0,1]){1}") ||
+      taxCode.matches("([S][D][0,1,2]){1}") ||
       taxCode.matches("([S][K][0-9]{1,4}){1}")
   }
 

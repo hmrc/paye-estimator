@@ -37,7 +37,7 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
   override def calculate(): ExcessPayResponse = {
 
     if (taxBandId > 1) {
-      isBasicRateTaxCode(taxCode) match {
+      isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) match {
         case true => applyResponse(true, taxablePay)
         case false => {
           val previousBand = taxCalcResource.getPreviousTaxBand(taxBandId).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
@@ -74,10 +74,10 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
     val taperingDeductionCalc = AnnualTaperingDeductionCalculator(taxCode, grossPay, taxCalcResource).calculate()
     val updatedTaxCode = taperingDeductionCalc.result
 
-    val taxablePay: Money = isBasicRateTaxCode(taxCode) match {
+    val taxablePay: Money = isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) match {
       case true => grossPay
       case false => {
-        isTaxableCode(taxCode) match {
+        isTaxableCode(taxCode, taxCalcResource.isScottish) match {
           case true => {
             val allowance = AllowanceCalculator(updatedTaxCode).calculate().result
             if (isUnTaxedIncomeTaxCode(taxCode))

@@ -2,13 +2,13 @@ package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.prop.Tables.Table
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
+import uk.gov.hmrc.payeestimator.domain._
 import org.scalatest.prop.TableDrivenPropertyChecks._
 
 class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearChanges{
 
-  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
+  val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
 
   "TaxCalculatorHelper isStandardTaxCode" should {
     "return true if the code matches the format where the first 4 digits are between 0-9999 and the last is L,M,N or T" in new TaxCalculatorHelperSetup {
@@ -20,11 +20,13 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     }
   }
   "TaxCalculatorHelper isTaxableCode" should {
-    "return true is the taxCode is not NT, BR, D0 or D1" in new TaxCalculatorHelperSetup {
+    "return true is the taxCode is not NT, BR, D0 or D1 and D2 if Scottish Rates" in new TaxCalculatorHelperSetup {
       helper.isTaxableCode("NT") shouldBe false
       helper.isTaxableCode("BR") shouldBe false
       helper.isTaxableCode("D0") shouldBe false
       helper.isTaxableCode("D1") shouldBe false
+      helper.isTaxableCode("D2") shouldBe true
+      helper.isTaxableCode("D2",true) shouldBe false
       helper.isTaxableCode("9999L") shouldBe true
     }
   }
@@ -33,20 +35,22 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isBasicRateTaxCode("BR") shouldBe true
       helper.isBasicRateTaxCode("D0") shouldBe true
       helper.isBasicRateTaxCode("D1") shouldBe true
+      helper.isBasicRateTaxCode("D2") shouldBe false
+      helper.isBasicRateTaxCode("D2", true) shouldBe true
       helper.isBasicRateTaxCode("NT") shouldBe false
     }
   }
 
   val input = Table(
     ("taxCode",  "taxCalcResource", "expectedResult", "actualEmergencyTaxCode"),
-    ("1100L" , TaxYear_2016_2017, true,  "1100L"),
-    ("11000L", TaxYear_2016_2017, false, "1100L"),
-    ("11100L", TaxYear_2016_2017, false, "1100L"),
-    ("1100T" , TaxYear_2016_2017, false, "1100L"),
     ("1150L" , TaxYear_2017_2018, true,  "1150L"),
     ("11500L", TaxYear_2017_2018, false, "1150L"),
     ("11150L", TaxYear_2017_2018, false, "1150L"),
-    ("1150T" , TaxYear_2017_2018, false, "1150L")
+    ("1150T" , TaxYear_2017_2018, false, "1150L"),
+    ("1185L" , TaxYear_2018_2019, true,  "1185L"),
+    ("11850L", TaxYear_2018_2019, false, "1185L"),
+    ("11185L", TaxYear_2018_2019, false, "1185L"),
+    ("1185T" , TaxYear_2018_2019, false, "1185L")
   )
 
   s"TaxCalculatorHelper isEmergencyTaxCode()" should {

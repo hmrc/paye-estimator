@@ -39,11 +39,8 @@ case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Mon
 
 
   override def build(): AggregationBuildResult = {
-    if (isBasicRateTaxCode(taxCode)) {
-      taxCode match {
-        case "BR" | "D0" | "D1" =>
-          AggregationBuildResult(taxbands.taxBands.filter(_.band != 1).collect(BasicRatePAYEAggregationFunc()))
-      }
+    if (isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) {
+      AggregationBuildResult(taxbands.taxBands.filter(_.band != 1).collect(BasicRatePAYEAggregationFunc()))
     }
     else
       appendAggregate(AggregationBuildResult(taxbands.taxBands.collect(PAYEAggregationFunc())))

@@ -34,13 +34,12 @@ package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
 
-import uk.gov.hmrc.payeestimator.domain.{TaxYear_2016_2017, TaxYear_2017_2018, TaxYear_2018_2019}
+import uk.gov.hmrc.payeestimator.domain.{TaxYear_2017_2018, TaxYear_2018_2019}
 
 trait LivePAYETaxCalcServiceSuccess {
   val service = new PAYETaxCalculatorService {
   }
 
-  val taxCalcResource2016 = new TaxYear_2016_2017(false)
   val taxCalcResource2017 = new TaxYear_2017_2018(false)
   val taxCalcResource2018 = new TaxYear_2018_2019(false)
   val taxCalcResource2018Scottish = new TaxYear_2018_2019(true)

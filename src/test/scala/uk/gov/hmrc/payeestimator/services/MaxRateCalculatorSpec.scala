@@ -17,21 +17,21 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, TaxYearChanges, TaxYear_2016_2017, TaxYear_2017_2018}
+import uk.gov.hmrc.payeestimator.domain._
 
 class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChanges {
 
-  val TaxYear_2016_2017 = new TaxYear_2016_2017(false)
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
+  val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
 
   import org.scalatest.prop.TableDrivenPropertyChecks._
 
   val input = Table(
     ("payeAmount", "grossPay", "taxCalcResource", "expectedResult"),
-    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2016_2017, BigDecimal(5000.00)),
-    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2016_2017, BigDecimal(-1)),
     (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2017_2018, BigDecimal(5000.00)),
-    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, BigDecimal(-1))
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, BigDecimal(-1)),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2018_2019, BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2018_2019, BigDecimal(-1))
   )
 
   s"MaxRateCalculator calculate() " should {
