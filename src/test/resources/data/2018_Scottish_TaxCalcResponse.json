@@ -4,6 +4,7 @@
   "payPerHour": -1,
   "hours": -1,
   "averageAnnualTaxRate": 1.89,
+  "rateType": "SCOTLAND",
   "marginalTaxRate": 12,
   "maxTaxRate": 50,
   "payeBand": 0,
@@ -16,7 +17,6 @@
       "taxFreePay": 10000,
       "taxablePay": 0,
       "additionalTaxablePay": 0,
-      "scottishElement": 0,
       "maxTaxAmount": -1,
       "taxCategories": [
         {
@@ -24,15 +24,23 @@
           "total": 0,
           "aggregation": [
             {
+              "percentage": 19,
+              "amount": 0
+            },
+            {
               "percentage": 20,
               "amount": 0
             },
             {
-              "percentage": 40,
+              "percentage": 21,
               "amount": 0
             },
             {
-              "percentage": 45,
+              "percentage": 41,
+              "amount": 0
+            },
+            {
+              "percentage": 46,
               "amount": 0
             }
           ]
@@ -67,7 +75,6 @@
       "taxFreePay": 833.33,
       "taxablePay": 0,
       "additionalTaxablePay": 0,
-      "scottishElement": 0,
       "maxTaxAmount": -1,
       "taxCategories": [
         {
@@ -75,15 +82,23 @@
           "total": 0,
           "aggregation": [
             {
+              "percentage": 19,
+              "amount": 0
+            },
+            {
               "percentage": 20,
               "amount": 0
             },
             {
-              "percentage": 40,
+              "percentage": 21,
               "amount": 0
             },
             {
-              "percentage": 45,
+              "percentage": 41,
+              "amount": 0
+            },
+            {
+              "percentage": 46,
               "amount": 0
             }
           ]
@@ -118,7 +133,6 @@
       "taxFreePay": 192.31,
       "taxablePay": 0,
       "additionalTaxablePay": 0,
-      "scottishElement": 0,
       "maxTaxAmount": -1,
       "taxCategories": [
         {
@@ -126,15 +140,23 @@
           "total": 0,
           "aggregation": [
             {
+              "percentage": 19,
+              "amount": 0
+            },
+            {
               "percentage": 20,
               "amount": 0
             },
             {
-              "percentage": 40,
+              "percentage": 21,
               "amount": 0
             },
             {
-              "percentage": 45,
+              "percentage": 41,
+              "amount": 0
+            },
+            {
+              "percentage": 46,
               "amount": 0
             }
           ]
