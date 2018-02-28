@@ -123,8 +123,6 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
           val expected = taxCalcFromJson(expectedJson)
 
-          println("Actual -> " + Json.toJson(result).toString())
-          println("Expected -> " + Json.toJson(expected).toString())
           result shouldBe expected
         }
     }
