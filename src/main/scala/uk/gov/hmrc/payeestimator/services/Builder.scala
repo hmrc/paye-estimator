@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
 import uk.gov.hmrc.payeestimator.domain._
+
 import scala.math.BigDecimal
 
 trait Builder {
@@ -35,25 +35,25 @@ trait Builder {
 case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Money, taxCalcResource: TaxCalcResource) extends Builder with TaxCalculatorHelper {
 
   private val taxbands = taxCalcResource.taxBands
+  private val numberOfBands: Int = taxbands.taxBands.size
+
 
   override def build(): AggregationBuildResult = {
-    if (isBasicRateTaxCode(taxCode)) {
-      taxCode match {
-        case "BR" | "D0" | "D1" =>
-          AggregationBuildResult(taxbands.taxBands.filter(_.band != 1).collect(BasicRatePAYEAggregationFunc()))
-      }
+    if (isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) {
+      AggregationBuildResult(taxbands.taxBands.filter(_.band != 1).collect(BasicRatePAYEAggregationFunc()))
     }
-    else appendAggregate(AggregationBuildResult(taxbands.taxBands.collect(PAYEAggregationFunc())))
+    else
+      appendAggregate(AggregationBuildResult(taxbands.taxBands.collect(PAYEAggregationFunc())))
   }
 
   private def PAYEAggregationFunc() : PartialFunction[Band, Aggregation] = {
-    case taxBand if taxBand.band == bandId && payeTaxAmount != Money(0) && taxBand.band != 4 => {
+    case taxBand if taxBand.band == bandId && payeTaxAmount != Money(0) && taxBand.band != numberOfBands => {
       val sum = taxbands.taxBands.filter(_.band < bandId).collect(previousBandMaxTaxFunction()).foldLeft(BigDecimal(0.0))(_ + _)
       Aggregation(taxBand.rate, (payeTaxAmount - sum).value)
     }
     case taxBand if taxBand.band < bandId && taxBand.band != 1 && payeTaxAmount != Money(0) => createPAYEAggregation(taxBand)
     case taxBand if taxBand.band != 1 && payeTaxAmount == Money(0) => Aggregation(taxBand.rate, BigDecimal(0.0))
-    case taxBand if taxBand.band > bandId && taxBand.band != 4 => Aggregation(taxBand.rate, BigDecimal(0.0))
+    case taxBand if taxBand.band > bandId && taxBand.band != numberOfBands => Aggregation(taxBand.rate, BigDecimal(0.0))
   }
 
   private def previousBandMaxTaxFunction() : PartialFunction[Band, BigDecimal] = {
@@ -84,10 +84,10 @@ case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Mon
 case class NICTaxCategoryBuilder(taxResult: NICTaxResult) extends Builder {
 
   override def build(): TaxCategoryBuildResult = {
-        TaxCategoryBuildResult(Seq(
-          TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
-          TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC))
-        )
+    TaxCategoryBuildResult(Seq(
+      TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
+      TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC))
+    )
   }
 }
 

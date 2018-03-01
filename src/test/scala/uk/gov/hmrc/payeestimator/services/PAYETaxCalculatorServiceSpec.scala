@@ -118,5 +118,60 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers  with TaxY
       val result = service.calculatePAYETax("D1", Money(80000.00), taxCalcResource2018)
       result.payeTaxAmount.value shouldBe BigDecimal(36000.00)
     }
+
+    "Calculate Annual PAYE tax for a gross salary of 43000.00 in Scottish tax band 4 for 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1185L", Money(43000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(6398.11)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 75500.00 in Scottish tax band 5 for 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("980L", Money(75500.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(20475.81)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 119000.00 in Scottish tax band 5 for 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1185L", Money(119000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(41365.31)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 160000.00 in Scottish tax band 6 for 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("1185L", Money(160000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(59642.50)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 45000.00 K code (untaxed income) Scottish for 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("K100", Money(45000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(12406.19)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 50000.00 in Scottish No Tax (NT) code 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("NT", Money(50000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(0.00)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 60000.00 in Scottish 0T (no personal allowance) code 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("0T", Money(60000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(18142.50)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 10000.00 in Scottish BR (basic rate) code 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("BR", Money(10000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(2000.00)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 12000.00 in Scottish D0 (basic rate) code 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("D0", Money(12000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(2520.00)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 12000.00 in Scottish D1 (basic rate) code 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("D1", Money(12000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(4920.00)
+    }
+
+    "Calculate Annual PAYE tax for a gross salary of 12000.00 in Scottish D2 (basic rate) code 2018" in new LivePAYETaxCalcServiceSuccess {
+      val result = service.calculatePAYETax("D2", Money(12000.00), taxCalcResource2018Scottish)
+      result.payeTaxAmount.value shouldBe BigDecimal(5520.00)
+    }
   }
 }

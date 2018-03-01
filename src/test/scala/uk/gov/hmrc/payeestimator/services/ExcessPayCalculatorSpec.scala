@@ -24,6 +24,8 @@ class ExcessPayCalculatorSpec extends WordSpecLike with Matchers with TaxYearCha
 
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
   val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
+  val scottishTaxYear_2017_2018 = new TaxYear_2017_2018(true)
+  val scottishTaxYear_2018_2019 = new TaxYear_2018_2019(true)
 
   val input = Table(
     ("taxCode",  "taxCalcResource", "bandId", "taxablePay", "expectedResult"),
@@ -35,13 +37,31 @@ class ExcessPayCalculatorSpec extends WordSpecLike with Matchers with TaxYearCha
     ("1100T",  TaxYear_2017_2018, 3, Money(60000.00), Money(26500.00)),
     ("1100T",  TaxYear_2017_2018, 4, Money(200000.00), Money(50000.00)),
 
+    ("1100T",  scottishTaxYear_2017_2018, 1, Money(60000.00), Money(60000.00)),
+    ("BR1",    scottishTaxYear_2017_2018, 1, Money(60000.00), Money(60000.00)),
+    ("D0",     scottishTaxYear_2017_2018, 1, Money(60000.00), Money(60000.00)),
+    ("D1",     scottishTaxYear_2017_2018, 1, Money(60000.00), Money(60000.00)),
+    ("1100T",  scottishTaxYear_2017_2018, 2, Money(60000.00), Money(60000.00)),
+    ("1100T",  scottishTaxYear_2017_2018, 3, Money(60000.00), Money(28500.00)),
+    ("1100T",  scottishTaxYear_2017_2018, 4, Money(200000.00), Money(50000.00)),
+
     ("1100T",  TaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
     ("BR1",    TaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
     ("D0",     TaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
     ("D1",     TaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
     ("1100T",  TaxYear_2018_2019, 2, Money(60000.00), Money(60000.00)),
     ("1100T",  TaxYear_2018_2019, 3, Money(60000.00), Money(25500.00)),
-    ("1100T",  TaxYear_2018_2019, 4, Money(200000.00), Money(50000.00))
+    ("1100T",  TaxYear_2018_2019, 4, Money(200000.00), Money(50000.00)),
+
+    ("1100T",  scottishTaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
+    ("BR1",    scottishTaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
+    ("D0",     scottishTaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
+    ("D1",     scottishTaxYear_2018_2019, 1, Money(60000.00), Money(60000.00)),
+    ("1100T",  scottishTaxYear_2018_2019, 2, Money(60000.00), Money(60000.00)),
+    ("1100T",  scottishTaxYear_2018_2019, 3, Money(60000.00), Money(58000.00)),
+    ("1100T",  scottishTaxYear_2018_2019, 4, Money(60000.00), Money(47850.00)),
+    ("1100T",  scottishTaxYear_2018_2019, 5, Money(60000.00), Money(28420.00)),
+    ("1100T",  scottishTaxYear_2018_2019, 6, Money(160000.00), Money(10000.00))
   )
 
   "ExcessPayCalculator calculate()" should {

@@ -31,5 +31,10 @@ class TaxablePayCalculatorChanges extends WordSpecLike with Matchers with TaxYea
       val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2018_2019(false)).calculate().result
       result.value shouldBe 23993.32
     }
+
+    "calculate annual taxable pay for 2018_2019 Scotland" in {
+      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2018_2019(true)).calculate().result
+      result.value shouldBe 23993.32
+    }
   }
 }

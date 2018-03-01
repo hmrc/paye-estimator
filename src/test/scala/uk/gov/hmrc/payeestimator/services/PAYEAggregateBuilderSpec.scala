@@ -187,4 +187,91 @@ class PAYEAggregateBuilderSpec extends WordSpecLike with Matchers with TaxYearCh
       result.aggregation(2).amount shouldBe 106900
     }
   }
+
+  "For 2018-19 Scottish PAYEAggregateBuilder build" should {
+    val taxYear = new TaxYear_2018_2019(true)
+
+    "build all aggregates with a value of 0 if in the first band and a Basic Rate Tax Code" in {
+      val resultBR = PAYEAggregateBuilder("BR", 1, Money(160000, 2, true), taxYear).build
+      resultBR.aggregation.map{ aggregation =>
+        aggregation.amount shouldBe BigDecimal(0)
+      }
+      val resultD0 = PAYEAggregateBuilder("D0", 1, Money(160000, 2, true), taxYear).build
+      resultD0.aggregation.map { aggregation =>
+        aggregation.amount shouldBe BigDecimal(0)
+      }
+      val resultD1 = PAYEAggregateBuilder("D1", 1, Money(160000, 2, true), taxYear).build
+      resultD1.aggregation.map { aggregation =>
+        aggregation.amount shouldBe BigDecimal(0)
+      }
+    }
+    "build aggregate band 2 with the entire value ignoring the band max for Basic Rate Tax Code" in {
+      val resultBR = PAYEAggregateBuilder("BR", 2, Money(160000, 2, true), taxYear).build
+      resultBR.aggregation(0).amount shouldBe 160000
+      resultBR.aggregation(1).amount shouldBe 0
+      resultBR.aggregation(2).amount shouldBe 0
+
+      val resultD0 = PAYEAggregateBuilder("D0", 2, Money(160000, 2, true), taxYear).build
+      resultD0.aggregation(0).amount shouldBe 160000
+      resultD0.aggregation(1).amount shouldBe 0
+      resultD0.aggregation(2).amount shouldBe 0
+
+      val resultD1 = PAYEAggregateBuilder("D1", 2, Money(160000, 2, true), taxYear).build
+      resultD1.aggregation(0).amount shouldBe 160000
+      resultD1.aggregation(1).amount shouldBe 0
+      resultD1.aggregation(2).amount shouldBe 0
+    }
+    "build aggregate band 3 with the entire value ignoring the band max for Basic Rate Tax Code" in {
+      val resultBR = PAYEAggregateBuilder("BR", 3, Money(160000, 2, true), taxYear).build
+      resultBR.aggregation(0).amount shouldBe 0
+      resultBR.aggregation(1).amount shouldBe 160000
+      resultBR.aggregation(2).amount shouldBe 0
+
+      val resultD0 = PAYEAggregateBuilder("D0", 3, Money(160000, 2, true), taxYear).build
+      resultD0.aggregation(0).amount shouldBe 0
+      resultD0.aggregation(1).amount shouldBe 160000
+      resultD0.aggregation(2).amount shouldBe 0
+
+      val resultD1 = PAYEAggregateBuilder("D1", 3, Money(160000, 2, true), taxYear).build
+      resultD1.aggregation(0).amount shouldBe 0
+      resultD1.aggregation(1).amount shouldBe 160000
+      resultD1.aggregation(2).amount shouldBe 0
+    }
+    "build aggregate band 4 with the entire value ignoring the band max for Basic Rate Tax Code" in {
+      val resultBR = PAYEAggregateBuilder("BR", 4, Money(160000, 2, true), taxYear).build
+      resultBR.aggregation(0).amount shouldBe 0
+      resultBR.aggregation(1).amount shouldBe 0
+      resultBR.aggregation(2).amount shouldBe 160000
+
+      val resultD0 = PAYEAggregateBuilder("D0", 4, Money(160000, 2, true), taxYear).build
+      resultD0.aggregation(0).amount shouldBe 0
+      resultD0.aggregation(1).amount shouldBe 0
+      resultD0.aggregation(2).amount shouldBe 160000
+
+      val resultD1 = PAYEAggregateBuilder("D1", 4, Money(160000, 2, true), taxYear).build
+      resultD1.aggregation(0).amount shouldBe 0
+      resultD1.aggregation(1).amount shouldBe 0
+      resultD1.aggregation(2).amount shouldBe 160000
+    }
+    "build aggregate band 1 for the entire amount for any tax code" in {
+      val result = PAYEAggregateBuilder("Any Code", 1, Money(160000, 2, true), taxYear).build
+      result.aggregation(0).amount shouldBe 160000
+      result.aggregation(1).amount shouldBe 0
+      result.aggregation(2).amount shouldBe 0
+    }
+    "build aggregate ignores the first band given band id 2" in {
+      val result = PAYEAggregateBuilder("Any Code", 2, Money(160000, 2, true), taxYear).build
+      result.aggregation(0).amount shouldBe 160000
+      result.aggregation(1).amount shouldBe 0
+      result.aggregation(2).amount shouldBe 0
+    }
+    "show distribution of tax payment of 160,000 across the applicable tax bands" in {
+      val result = PAYEAggregateBuilder("Any Code", 6, Money(160000, 2, true), taxYear).build
+      result.aggregation(0).amount shouldBe 380.00
+      result.aggregation(1).amount shouldBe 2030.00
+      result.aggregation(2).amount shouldBe 4080.30
+      result.aggregation(3).amount shouldBe 48552.20
+      result.aggregation(4).amount shouldBe 104957.50
+    }
+  }
 }

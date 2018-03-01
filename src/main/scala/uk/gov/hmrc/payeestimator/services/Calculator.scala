@@ -37,7 +37,7 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
   override def calculate(): ExcessPayResponse = {
 
     if (taxBandId > 1) {
-      isBasicRateTaxCode(taxCode) match {
+      isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) match {
         case true => applyResponse(true, taxablePay)
         case false => {
           val previousBand = taxCalcResource.getPreviousTaxBand(taxBandId).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
@@ -74,10 +74,10 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
     val taperingDeductionCalc = AnnualTaperingDeductionCalculator(taxCode, grossPay, taxCalcResource).calculate()
     val updatedTaxCode = taperingDeductionCalc.result
 
-    val taxablePay: Money = isBasicRateTaxCode(taxCode) match {
+    val taxablePay: Money = isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) match {
       case true => grossPay
       case false => {
-        isTaxableCode(taxCode) match {
+        isTaxableCode(taxCode, taxCalcResource.isScottish) match {
           case true => {
             val allowance = AllowanceCalculator(updatedTaxCode).calculate().result
             if (isUnTaxedIncomeTaxCode(taxCode))
@@ -102,14 +102,9 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
 case class TaxBandCalculator(taxCode: String, taxablePay: Money, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): TaxBandResponse = {
-    val taxBand = if (isBasicRateTaxCode(taxCode)) {
-      taxCode match {
-        case "BR" => taxCalcResource.findTaxBand(2).head
-        case "D0" => taxCalcResource.findTaxBand(3).head
-        case "D1" => taxCalcResource.findTaxBand(4).head
-      }
-    }
-    else {
+    val taxBand: Band =  if (isBasicRateTaxCode(taxCode,taxCalcResource.isScottish)) {
+      taxCalcResource.findTaxBand(taxCode).get
+    } else {
       val taxBands = taxCalcResource.taxBands.taxBands.collect(taxBandFilterFunc(taxablePay))
       if (taxBands.nonEmpty) taxBands.head else taxCalcResource.taxBands.taxBands.last
     }

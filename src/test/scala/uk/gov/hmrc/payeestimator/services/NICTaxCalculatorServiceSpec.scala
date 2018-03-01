@@ -25,6 +25,8 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYea
 
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
   val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
+  val Scottish_TaxYear_2017_2018 = new TaxYear_2017_2018(true)
+  val Scottish_TaxYear_2018_2019 = new TaxYear_2018_2019(true)
 
   "NICTaxCalculatorService.calculateEmployeeNIC " should {
     "should calculate the annual rate for 2017/8" in new LiveNICTaxCalcServiceSuccess {
@@ -48,6 +50,27 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYea
         }
       }
     }
+    "should calculate the annual Scottish rate for 2017/8" in new LiveNICTaxCalcServiceSuccess {
+      val result = service.calculateEmployeeNIC(Money(100000.00), Scottish_TaxYear_2017_2018).aggregation
+      result.size shouldBe 2
+      result.map{
+        aggregation => aggregation.percentage.intValue() match {
+          case 12 => aggregation.amount shouldBe BigDecimal(4420.32)
+          case 2 => aggregation.amount shouldBe BigDecimal(1100.00)
+        }
+      }
+    }
+
+    "should calculate the annual Scottish rate for 2018/9" in new LiveNICTaxCalcServiceSuccess {
+      val result = service.calculateEmployeeNIC(Money(119000.00), Scottish_TaxYear_2018_2019).aggregation
+      result.size shouldBe 2
+      result.map{
+        aggregation => aggregation.percentage.intValue() match {
+          case 12 => aggregation.amount shouldBe BigDecimal(4551.12)
+          case 2 => aggregation.amount shouldBe BigDecimal(1453.00)
+        }
+      }
+    }
   }
 
   "NICTaxCalculatorService.calculateEmployerNIC " should {
@@ -63,6 +86,26 @@ class NICTaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYea
 
     "should calculate the annual rate for 2018/9" in new LiveNICTaxCalcServiceSuccess {
       val result = service.calculateEmployerNIC(Money(119000.00), TaxYear_2018_2019)
+      result.size shouldBe 1
+      result.map{
+        aggregation =>
+          aggregation.percentage shouldBe 13.8
+          aggregation.amount shouldBe BigDecimal(15259.49)
+      }
+    }
+
+    "should calculate the annual Scottish rate for 2017/8" in new LiveNICTaxCalcServiceSuccess {
+      val result = service.calculateEmployerNIC(Money(100000.00), Scottish_TaxYear_2017_2018)
+      result.size shouldBe 1
+      result.map{
+        aggregation =>
+          aggregation.percentage shouldBe 13.8
+          aggregation.amount shouldBe BigDecimal(12673.37)
+      }
+    }
+
+    "should calculate the annual Scottish rate for 2018/9" in new LiveNICTaxCalcServiceSuccess {
+      val result = service.calculateEmployerNIC(Money(119000.00), Scottish_TaxYear_2018_2019)
       result.size shouldBe 1
       result.map{
         aggregation =>

@@ -42,6 +42,7 @@ trait LivePAYETaxCalcServiceSuccess {
 
   val taxCalcResource2017 = new TaxYear_2017_2018(false)
   val taxCalcResource2018 = new TaxYear_2018_2019(false)
+  val taxCalcResource2018Scottish = new TaxYear_2018_2019(true)
 }
 
 trait LiveNICTaxCalcServiceSuccess {

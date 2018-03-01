@@ -8,6 +8,7 @@ class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers w
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
   val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
   val Scottish_TaxYear_2017_2018 = new TaxYear_2017_2018(true)
+  val Scottish_TaxYear_2018_2019 = new TaxYear_2018_2019(true)
 
   import org.scalatest.prop.TableDrivenPropertyChecks._
 
@@ -24,7 +25,11 @@ class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers w
     ("11L"   , Money(123000), Scottish_TaxYear_2017_2018, true, false, "11L"    , true),
     ("1150L" , Money(110000), Scottish_TaxYear_2017_2018, true, true , "650.00L", true),
     ("1150L" , Money(123000), Scottish_TaxYear_2017_2018, true, true , "ZERO"   , true),
-    ("1150L" , Money(100000), Scottish_TaxYear_2017_2018, true, false, "1150L"  , true)
+    ("1150L" , Money(100000), Scottish_TaxYear_2017_2018, true, false, "1150L"  , true),
+    ("11L"   , Money(123000), Scottish_TaxYear_2018_2019, true, false, "11L"    , true),
+    ("1185L" , Money(110000), Scottish_TaxYear_2018_2019, true, true , "685.00L", true),
+    ("1185L" , Money(123700), Scottish_TaxYear_2018_2019, true, true , "ZERO"   , true),
+    ("1185L" , Money(100000), Scottish_TaxYear_2018_2019, true, false, "1185L"  , true)
   )
 
   forAll(input) {

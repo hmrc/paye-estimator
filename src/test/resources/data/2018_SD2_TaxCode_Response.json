@@ -1,13 +1,13 @@
 {
   "statePensionAge": false,
-  "taxCode": "SD0",
+  "taxCode": "SD2",
   "payPerHour": -1,
   "hours": -1,
-  "averageAnnualTaxRate": 24.81,
+  "averageAnnualTaxRate": 49.81,
   "rateType": "SCOTLAND",
-  "marginalTaxRate": 23,
+  "marginalTaxRate": 48,
   "maxTaxRate": 50,
-  "payeBand": 21,
+  "payeBand": 46,
   "employeeNICBand": 2,
   "tapered": false,
   "taxBreakdown": [
@@ -21,7 +21,7 @@
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 42000,
+          "total": 92000,
           "aggregation": [
             {
               "percentage": 19,
@@ -33,7 +33,7 @@
             },
             {
               "percentage": 21,
-              "amount": 42000
+              "amount": 0
             },
             {
               "percentage": 41,
@@ -41,7 +41,7 @@
             },
             {
               "percentage": 46,
-              "amount": 0
+              "amount": 92000
             }
           ]
         },
@@ -70,8 +70,8 @@
           ]
         }
       ],
-      "totalDeductions": 49624.12,
-      "takeHomePay": 150375.88
+      "totalDeductions": 99624.12,
+      "takeHomePay": 100375.88
     },
     {
       "period": "monthly",
@@ -83,7 +83,7 @@
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 3500,
+          "total": 7666.67,
           "aggregation": [
             {
               "percentage": 19,
@@ -95,7 +95,7 @@
             },
             {
               "percentage": 21,
-              "amount": 3500
+              "amount": 0
             },
             {
               "percentage": 41,
@@ -103,7 +103,7 @@
             },
             {
               "percentage": 46,
-              "amount": 0
+              "amount": 7666.67
             }
           ]
         },
@@ -132,8 +132,8 @@
           ]
         }
       ],
-      "totalDeductions": 4135.34,
-      "takeHomePay": 12531.33
+      "totalDeductions": 8302.01,
+      "takeHomePay": 8364.66
     },
     {
       "period": "weekly",
@@ -145,7 +145,7 @@
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 807.69,
+          "total": 1769.23,
           "aggregation": [
             {
               "percentage": 19,
@@ -157,7 +157,7 @@
             },
             {
               "percentage": 21,
-              "amount": 807.69
+              "amount": 0
             },
             {
               "percentage": 41,
@@ -165,7 +165,7 @@
             },
             {
               "percentage": 46,
-              "amount": 0
+              "amount": 1769.23
             }
           ]
         },
@@ -194,8 +194,8 @@
           ]
         }
       ],
-      "totalDeductions": 954.31,
-      "takeHomePay": 2891.84
+      "totalDeductions": 1915.85,
+      "takeHomePay": 1930.3
     }
   ]
 }

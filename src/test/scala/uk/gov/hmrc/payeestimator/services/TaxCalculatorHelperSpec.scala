@@ -20,11 +20,13 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     }
   }
   "TaxCalculatorHelper isTaxableCode" should {
-    "return true is the taxCode is not NT, BR, D0 or D1" in new TaxCalculatorHelperSetup {
+    "return true is the taxCode is not NT, BR, D0 or D1 and D2 if Scottish Rates" in new TaxCalculatorHelperSetup {
       helper.isTaxableCode("NT") shouldBe false
       helper.isTaxableCode("BR") shouldBe false
       helper.isTaxableCode("D0") shouldBe false
       helper.isTaxableCode("D1") shouldBe false
+      helper.isTaxableCode("D2") shouldBe true
+      helper.isTaxableCode("D2",true) shouldBe false
       helper.isTaxableCode("9999L") shouldBe true
     }
   }
@@ -33,6 +35,8 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isBasicRateTaxCode("BR") shouldBe true
       helper.isBasicRateTaxCode("D0") shouldBe true
       helper.isBasicRateTaxCode("D1") shouldBe true
+      helper.isBasicRateTaxCode("D2") shouldBe false
+      helper.isBasicRateTaxCode("D2", true) shouldBe true
       helper.isBasicRateTaxCode("NT") shouldBe false
     }
   }
