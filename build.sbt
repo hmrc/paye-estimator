@@ -1,8 +1,12 @@
-enablePlugins(SbtGitVersioning, ScalaJSPlugin, UniversalPlugin)
+import uk.gov.hmrc.SbtArtifactory
+
+enablePlugins(SbtGitVersioning, ScalaJSPlugin, UniversalPlugin, SbtArtifactory)
 
 name := "paye-estimator"
 
 LocalTempBuildSettings.localDefaultSettings
+
+majorVersion := 2
 
 scalaVersion := "2.11.8"
 
