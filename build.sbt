@@ -21,6 +21,8 @@ libraryDependencies ++= Seq(
       "org.pegdown" % "pegdown" % "1.6.0"
     )
 
+makePublicallyAvailableOnBintray := true
+
 scalaJSStage in Global := FastOptStage
 
 topLevelDirectory := None
