@@ -21,8 +21,6 @@ API
 | *Supported Methods* | *Description* |
 |----|----|
 | ```uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(isStatePensionAge: String, date: Int, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int)``` | Calculates income tax and national insurance contributions  [More...](docs/calculate-tax.md) |
-| ```uk.gov.hmrc.payeestimator.services.LiveGovernmentSpendingReceiptingService().getGovernmentReceiptingData()``` | Returns government receipting data  [More...](docs/receipting-data.md) |
-| ```uk.gov.hmrc.payeestimator.services.LiveGovernmentSpendingReceiptingService().getGovernmentSpendingData()``` | Returns government spending data breakdown  [More...](docs/spending-data.md) |
 
 
 ### License
