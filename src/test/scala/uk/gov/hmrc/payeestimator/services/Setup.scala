@@ -59,10 +59,6 @@ trait LiveTaxCalcServiceSuccess {
   val date = LocalDate.now()
 }
 
-trait LiveGovernmentSpendingReceiptingServiceSuccess {
-  val service = LiveGovernmentSpendingReceiptingService
-}
-
 trait TaxCalculatorHelperSetup {
   val helper = new TaxCalculatorHelper {}
 }
