@@ -1,3 +1,4 @@
+import PlayCrossCompilation._
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import uk.gov.hmrc.SbtArtifactory
@@ -16,12 +17,10 @@ crossScalaVersions := Seq("2.11.12")
 
 libraryDependencies ++= Seq(
   "org.scala-js" %%% "scalajs-java-time" % "0.2.0",
-  "com.lihaoyi" %%% "upickle" % "0.4.3",
-  Dependencies.tests.scalajsenvs,
-  Dependencies.tests.scalatest,
-  Dependencies.tests.playJson,
-  "org.pegdown" % "pegdown" % "1.6.0"
-)
+  "com.lihaoyi" %%% "upickle" % "0.4.3"
+) ++ Dependencies()
+
+playCrossCompilationSettings
 
 makePublicallyAvailableOnBintray := true
 
@@ -59,3 +58,5 @@ publish <<= publish dependsOn (packageZipTarball in Universal)
 publishM2 <<= publishM2 dependsOn (packageZipTarball in Universal)
 
 publishLocal <<= publishLocal dependsOn (packageZipTarball in Universal)
+
+
