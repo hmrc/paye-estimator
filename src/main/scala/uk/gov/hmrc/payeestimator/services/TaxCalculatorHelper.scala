@@ -15,76 +15,58 @@
  */
 package uk.gov.hmrc.payeestimator.services
 
-import java.time.LocalDate
-
 import uk.gov.hmrc.payeestimator.domain._
-
-import scala.scalajs.js.annotation.JSExport
-
 
 trait TaxCalculatorHelper {
 
-  def isValidTaxCode(taxCode: String, taxCalcResource:TaxCalcResource): Boolean = {
+  def isValidTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
     isStandardTaxCode(taxCode) ||
       !isTaxableCode(taxCode, taxCalcResource.isScottish) ||
       isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) ||
       isEmergencyTaxCode(taxCode, taxCalcResource) ||
       isValidScottishTaxCode(taxCode) ||
       isUnTaxedIncomeTaxCode(taxCode)
-  }
 
-  def isStandardTaxCode(taxCode: String): Boolean = {
+  def isStandardTaxCode(taxCode: String): Boolean =
     taxCode.matches("([0-9]{1,4}[L-N,T]{1}){1}")
-  }
 
-  def isTaxableCode(taxCode: String, isScottish: Boolean = false): Boolean = {
+  def isTaxableCode(taxCode: String, isScottish: Boolean = false): Boolean =
     !taxCode.matches("([N][T]){1}") && !isBasicRateTaxCode(taxCode, isScottish)
-  }
 
-  def isBasicRateTaxCode(taxCode: String, isScottish: Boolean = false): Boolean = {
+  def isBasicRateTaxCode(taxCode: String, isScottish: Boolean = false): Boolean =
     taxCode.matches("([B][R]){1}") ||
-    taxCode.matches(s"([D][0,1${if(isScottish){",2"} else{""}}])")
-  }
+      taxCode.matches(s"([D][0,1${if (isScottish) { ",2" } else { "" }}])")
 
-  def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean = {
+  def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
     taxCode.equalsIgnoreCase(taxCalcResource.emergencyTaxCode)
-  }
 
-  def isAdjustedTaxCode(taxCode: String): Boolean = {
+  def isAdjustedTaxCode(taxCode: String): Boolean =
     taxCode.matches("([0-9]+[.]{1}[0-9]{2}[L]{1}){1}")
-  }
 
-  def isValidScottishTaxCode(taxCode: String): Boolean = {
+  def isValidScottishTaxCode(taxCode: String): Boolean =
     taxCode.matches("([S]{1}[0-9]{1,4}[L-N,T]{1}){1}") ||
       taxCode.matches("([S][B][R]){1}") ||
       taxCode.matches("([S][D][0,1,2]){1}") ||
       taxCode.matches("([S][K][0-9]{1,4}){1}")
-  }
 
-  def isUnTaxedIncomeTaxCode(taxCode: String): Boolean = {
+  def isUnTaxedIncomeTaxCode(taxCode: String): Boolean =
     taxCode matches "([S]?[K]{1}[0-9]{1,4}){1}"
-  }
 
   def rateLimit(limitType: String): PartialFunction[RateLimit, Money] = {
-    case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) => {
+    case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) =>
       Money(rateLimit.limit)
-    }
   }
 
-  def splitTaxCode(taxCode: String): String = {
-    if(isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode))
+  def splitTaxCode(taxCode: String): String =
+    if (isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode))
       taxCode.stripSuffix(taxCode.substring(taxCode.length - 1, taxCode.length))
-    else if(isUnTaxedIncomeTaxCode(taxCode) && (taxCode.toUpperCase.contains("S") || taxCode.toUpperCase.contains("K"))) {
-        taxCode.toUpperCase.stripPrefix("S").stripPrefix("K")
-    }
-    else
+    else if (isUnTaxedIncomeTaxCode(taxCode) && (taxCode.toUpperCase.contains("S") || taxCode.toUpperCase.contains("K"))) {
+      taxCode.toUpperCase.stripPrefix("S").stripPrefix("K")
+    } else
       taxCode
-  }
 
-  def removeScottishElement(taxCode: String): String = {
-    if (isValidScottishTaxCode(taxCode)){
+  def removeScottishElement(taxCode: String): String =
+    if (isValidScottishTaxCode(taxCode)) {
       taxCode.toUpperCase.stripPrefix("S")
-    }
-    else taxCode
-  }
+    } else taxCode
 }

@@ -19,7 +19,7 @@ package uk.gov.hmrc.payeestimator.services
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain._
 
-class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChanges {
+class MaxRateCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
   val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
@@ -38,12 +38,11 @@ class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChan
   )
 
   s"MaxRateCalculator calculate() " should {
-    forAll(input) {
-      (payeAmount, grossPay, taxCalcResource, expectedResult) =>
-        s"should return $expectedResult for taxYear[${taxCalcResource.taxYear}], when paye[$payeAmount] and grossYear[$grossPay] " in {
-          val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
-          result.value shouldBe expectedResult
-        }
+    forAll(input) { (payeAmount, grossPay, taxCalcResource, expectedResult) =>
+      s"should return $expectedResult for taxYear[${taxCalcResource.taxYear}], when paye[$payeAmount] and grossYear[$grossPay] " in {
+        val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
+        result.value shouldBe expectedResult
+      }
     }
   }
 }

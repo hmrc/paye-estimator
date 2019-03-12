@@ -1,201 +1,201 @@
 {
-  "statePensionAge":false,
-  "taxCode":"SD2",
-  "payPerHour":-1,
-  "hours":-1,
-  "averageAnnualTaxRate":49.98,
-  "rateType":"SCOTLAND",
-  "marginalTaxRate":48,
-  "maxTaxRate":50,
-  "payeBand":46,
-  "employeeNICBand":2,
-  "tapered":false,
-  "taxBreakdown":[
+  "statePensionAge": false,
+  "taxCode": "SD2",
+  "payPerHour": -1,
+  "hours": -1,
+  "averageAnnualTaxRate": 49.98,
+  "rateType": "SCOTLAND",
+  "marginalTaxRate": 48,
+  "maxTaxRate": 50,
+  "payeBand": 46,
+  "employeeNICBand": 2,
+  "tapered": false,
+  "taxBreakdown": [
     {
-      "period":"annual",
-      "grossPay":200000,
-      "taxFreePay":0,
-      "taxablePay":200000,
-      "additionalTaxablePay":0,
-      "maxTaxAmount":-1,
-      "taxCategories":[
+      "period": "annual",
+      "grossPay": 200000,
+      "taxFreePay": 0,
+      "taxablePay": 200000,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
         {
-          "taxType":"incomeTax",
-          "total":92000,
-          "aggregation":[
+          "taxType": "incomeTax",
+          "total": 92000,
+          "aggregation": [
             {
-              "percentage":19,
-              "amount":0
+              "percentage": 19,
+              "amount": 0
             },
             {
-              "percentage":20,
-              "amount":0
+              "percentage": 20,
+              "amount": 0
             },
             {
-              "percentage":21,
-              "amount":0
+              "percentage": 21,
+              "amount": 0
             },
             {
-              "percentage":41,
-              "amount":0
+              "percentage": 41,
+              "amount": 0
             },
             {
-              "percentage":46,
-              "amount":92000
+              "percentage": 46,
+              "amount": 92000
             }
           ]
         },
         {
-          "taxType":"employeeNationalInsurance",
-          "total":7964.16,
-          "aggregation":[
+          "taxType": "employeeNationalInsurance",
+          "total": 7964.16,
+          "aggregation": [
             {
-              "percentage":12,
-              "amount":4964.16
+              "percentage": 12,
+              "amount": 4964.16
             },
             {
-              "percentage":2,
-              "amount":3000
+              "percentage": 2,
+              "amount": 3000
             }
           ]
         },
         {
-          "taxType":"employerNationalInsurance",
-          "total":26408.78,
-          "aggregation":[
+          "taxType": "employerNationalInsurance",
+          "total": 26408.78,
+          "aggregation": [
             {
-              "percentage":13.8,
-              "amount":26408.78
+              "percentage": 13.8,
+              "amount": 26408.78
             }
           ]
         }
       ],
-      "totalDeductions":99964.16,
-      "takeHomePay":100035.84
+      "totalDeductions": 99964.16,
+      "takeHomePay": 100035.84
     },
     {
-      "period":"monthly",
-      "grossPay":16666.67,
-      "taxFreePay":0,
-      "taxablePay":16666.67,
-      "additionalTaxablePay":0,
-      "maxTaxAmount":-1,
-      "taxCategories":[
+      "period": "monthly",
+      "grossPay": 16666.67,
+      "taxFreePay": 0,
+      "taxablePay": 16666.67,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
         {
-          "taxType":"incomeTax",
-          "total":7666.67,
-          "aggregation":[
+          "taxType": "incomeTax",
+          "total": 7666.67,
+          "aggregation": [
             {
-              "percentage":19,
-              "amount":0
+              "percentage": 19,
+              "amount": 0
             },
             {
-              "percentage":20,
-              "amount":0
+              "percentage": 20,
+              "amount": 0
             },
             {
-              "percentage":21,
-              "amount":0
+              "percentage": 21,
+              "amount": 0
             },
             {
-              "percentage":41,
-              "amount":0
+              "percentage": 41,
+              "amount": 0
             },
             {
-              "percentage":46,
-              "amount":7666.67
+              "percentage": 46,
+              "amount": 7666.67
             }
           ]
         },
         {
-          "taxType":"employeeNationalInsurance",
-          "total":663.68,
-          "aggregation":[
+          "taxType": "employeeNationalInsurance",
+          "total": 663.68,
+          "aggregation": [
             {
-              "percentage":12,
-              "amount":413.68
+              "percentage": 12,
+              "amount": 413.68
             },
             {
-              "percentage":2,
-              "amount":250
+              "percentage": 2,
+              "amount": 250
             }
           ]
         },
         {
-          "taxType":"employerNationalInsurance",
-          "total":2200.73,
-          "aggregation":[
+          "taxType": "employerNationalInsurance",
+          "total": 2200.73,
+          "aggregation": [
             {
-              "percentage":13.8,
-              "amount":2200.73
+              "percentage": 13.8,
+              "amount": 2200.73
             }
           ]
         }
       ],
-      "totalDeductions":8330.35,
-      "takeHomePay":8336.32
+      "totalDeductions": 8330.35,
+      "takeHomePay": 8336.32
     },
     {
-      "period":"weekly",
-      "grossPay":3846.15,
-      "taxFreePay":0,
-      "taxablePay":3846.15,
-      "additionalTaxablePay":0,
-      "maxTaxAmount":-1,
-      "taxCategories":[
+      "period": "weekly",
+      "grossPay": 3846.15,
+      "taxFreePay": 0,
+      "taxablePay": 3846.15,
+      "additionalTaxablePay": 0,
+      "maxTaxAmount": -1,
+      "taxCategories": [
         {
-          "taxType":"incomeTax",
-          "total":1769.23,
-          "aggregation":[
+          "taxType": "incomeTax",
+          "total": 1769.23,
+          "aggregation": [
             {
-              "percentage":19,
-              "amount":0
+              "percentage": 19,
+              "amount": 0
             },
             {
-              "percentage":20,
-              "amount":0
+              "percentage": 20,
+              "amount": 0
             },
             {
-              "percentage":21,
-              "amount":0
+              "percentage": 21,
+              "amount": 0
             },
             {
-              "percentage":41,
-              "amount":0
+              "percentage": 41,
+              "amount": 0
             },
             {
-              "percentage":46,
-              "amount":1769.23
+              "percentage": 46,
+              "amount": 1769.23
             }
           ]
         },
         {
-          "taxType":"employeeNationalInsurance",
-          "total":153.15,
-          "aggregation":[
+          "taxType": "employeeNationalInsurance",
+          "total": 153.15,
+          "aggregation": [
             {
-              "percentage":12,
-              "amount":95.46
+              "percentage": 12,
+              "amount": 95.46
             },
             {
-              "percentage":2,
-              "amount":57.69
+              "percentage": 2,
+              "amount": 57.69
             }
           ]
         },
         {
-          "taxType":"employerNationalInsurance",
-          "total":507.86,
-          "aggregation":[
+          "taxType": "employerNationalInsurance",
+          "total": 507.86,
+          "aggregation": [
             {
-              "percentage":13.8,
-              "amount":507.86
+              "percentage": 13.8,
+              "amount": 507.86
             }
           ]
         }
       ],
-      "totalDeductions":1922.38,
-      "takeHomePay":1923.77
+      "totalDeductions": 1922.38,
+      "takeHomePay": 1923.77
     }
   ]
 }
