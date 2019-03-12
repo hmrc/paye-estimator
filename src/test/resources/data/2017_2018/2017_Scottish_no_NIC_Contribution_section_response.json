@@ -41,14 +41,12 @@
           "taxType": "employeeNationalInsurance",
           "total": 0,
           "aggregation": [
-
           ]
         },
         {
           "taxType": "employerNationalInsurance",
           "total": 0,
           "aggregation": [
-
           ]
         }
       ],
@@ -85,14 +83,12 @@
           "taxType": "employeeNationalInsurance",
           "total": 0,
           "aggregation": [
-
           ]
         },
         {
           "taxType": "employerNationalInsurance",
           "total": 0,
           "aggregation": [
-
           ]
         }
       ],
@@ -129,14 +125,12 @@
           "taxType": "employeeNationalInsurance",
           "total": 0,
           "aggregation": [
-
           ]
         },
         {
           "taxType": "employerNationalInsurance",
           "total": 0,
           "aggregation": [
-
           ]
         }
       ],

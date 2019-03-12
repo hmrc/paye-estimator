@@ -19,8 +19,7 @@ package uk.gov.hmrc.payeestimator.services
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxYearChanges}
 
-
-class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers  with TaxYearChanges{
+class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
   "PAYETaxCalculatorService.isValidTaxCode " should {
     "return true if pattern matches ([0-9]{1,4}[L-N,l-n,T,t,X,x]{1}){1}" in new LivePAYETaxCalcServiceSuccess {
@@ -138,7 +137,7 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers  with TaxY
     "Calculate Annual PAYE tax for a gross salary of 1190000.00 in tax band 4 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(119000.00), taxCalcResource2019)
       result.payeTaxAmount.value shouldBe BigDecimal(38896.40)
-  }
+    }
 
     "Calculate Annual PAYE tax for a gross salary of 45000.00 with tax code K100 for 2018" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("K100", Money(45000.00), taxCalcResource2018)
@@ -224,9 +223,6 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers  with TaxY
       val result: PAYETaxResult = service.calculatePAYETax("D2", Money(12000.00), taxCalcResource2018Scottish)
       result.payeTaxAmount.value shouldBe BigDecimal(5520.00)
     }
-
-
-
 
     "Calculate Annual PAYE tax for a gross salary of 45000.00 with tax code K100 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("K100", Money(45000.00), taxCalcResource2019)

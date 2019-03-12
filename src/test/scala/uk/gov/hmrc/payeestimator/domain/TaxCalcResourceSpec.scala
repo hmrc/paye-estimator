@@ -5,8 +5,8 @@ import java.time.LocalDate
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain.TaxCalcResourceBuilder.resourceForDate
 
-class TaxCalcResourceSpec extends WordSpecLike with Matchers with TaxYearChanges{
-  
+class TaxCalcResourceSpec extends WordSpecLike with Matchers with TaxYearChanges {
+
   "Creating the TaxCalcResource" should {
 
     "return the 2017/18 TaxCalcResource on April 6th 2017" in {
