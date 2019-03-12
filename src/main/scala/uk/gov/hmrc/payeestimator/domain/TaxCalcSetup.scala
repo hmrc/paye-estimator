@@ -55,7 +55,7 @@ trait TaxCalcResource {
 object TaxCalcResourceBuilder {
 
   def resources(isScottish: Boolean): Seq[TaxCalcResource] =
-    Seq(TaxYear_2017_2018(isScottish), TaxYear_2018_2019(isScottish))
+    Seq(TaxYear_2017_2018(isScottish), TaxYear_2018_2019(isScottish), TaxYear_2019_2020(isScottish))
 
   def resourceForDate(date:LocalDate, isScottish: Boolean) : TaxCalcResource = {
     resources(isScottish).find(_.applicableForDate(date)) getOrElse {
@@ -64,6 +64,55 @@ object TaxCalcResourceBuilder {
   }
 }
 
+case class TaxYear_2019_2020(isScottish:Boolean = false) extends TaxCalcResource {
+
+  override val emergencyTaxCode: String = "1250L"
+  override val startDate: LocalDate = LocalDate.of(2019,4,6)
+  override val endDate: LocalDate = LocalDate.of(2020,4,5)
+
+  val taxBands1 = Band(band = 1, bandwidth = BigDecimal(0.00), rate = 10, period = PeriodCalc(periodType = "annual", threshold = 0, cumulativeMaxTax = 0, maxTax = 0))
+  val taxBands2 = Band(band = 2, bandwidth = BigDecimal(37500.00), rate = 20, period = PeriodCalc(periodType = "annual", threshold = 37500.00, cumulativeMaxTax = 7500.00, maxTax = 7500.00), specialTaxCode = Some("BR"))
+  val taxBands3 = Band(band = 3, bandwidth = BigDecimal(112500.00), rate = 40, period = PeriodCalc(periodType = "annual", threshold = 150000.00, cumulativeMaxTax = 47500, maxTax = 40000.00), specialTaxCode = Some("D0"))
+  val taxBands4 = Band(band = 4, bandwidth = BigDecimal(-1),   rate = 45, period = PeriodCalc(periodType = "annual", threshold = -1, cumulativeMaxTax = -1, maxTax = -1), specialTaxCode = Some("D1"))
+
+  val scottishTaxBands1 = Band(band = 1, bandwidth = BigDecimal(0.00),      rate = 10, period = PeriodCalc(periodType = "annual", threshold = 0, cumulativeMaxTax = 0, maxTax = 0))
+  val scottishTaxBands2 = Band(band = 2, bandwidth = BigDecimal(2049.00),   rate = 19, period = PeriodCalc(periodType = "annual", threshold = 2049.00, cumulativeMaxTax = 389.00, maxTax = 389.00))
+  val scottishTaxBands3 = Band(band = 3, bandwidth = BigDecimal(10395.00),  rate = 20, period = PeriodCalc(periodType = "annual", threshold = 12445.00, cumulativeMaxTax = 2468.00, maxTax = 2079.00), specialTaxCode = Some("BR"))
+  val scottishTaxBands4 = Band(band = 4, bandwidth = BigDecimal(18485.00),  rate = 21, period = PeriodCalc(periodType = "annual", threshold = 30930.00, cumulativeMaxTax = 6350.30, maxTax = 3882.30), specialTaxCode = Some("D0"))
+  val scottishTaxBands5 = Band(band = 5, bandwidth = BigDecimal(119070.00), rate = 41, period = PeriodCalc(periodType = "annual", threshold = 150000.00, cumulativeMaxTax = 50044.50, maxTax = 43694.20), specialTaxCode = Some("D1"))
+  val scottishTaxBands6 = Band(band = 6, bandwidth = BigDecimal(-1),        rate = 46, period = PeriodCalc(periodType = "annual", threshold = -1, cumulativeMaxTax = -1, maxTax = -1), specialTaxCode = Some("D2"))
+
+  val bands: Seq[Band] =
+    if(isScottish) Seq(scottishTaxBands1,scottishTaxBands2,scottishTaxBands3,scottishTaxBands4,scottishTaxBands5,scottishTaxBands6)
+    else Seq(taxBands1,taxBands2,taxBands3,taxBands4)
+
+  override val taxBands: TaxBands = TaxBands(annualIncomeThreshold = BigDecimal(100000.00), scottishRate = BigDecimal(0), maxRate = BigDecimal(50), taxBands = bands)
+
+  val rateLimit1 = RateLimit("lower", 6136.00)
+  val rateLimit2 = RateLimit("upper", 50000.00)
+
+  val threshold1 = RateLimit("primary", 8632.00)
+  val threshold2 = RateLimit("secondary", 8632.00)
+
+  val employee1 = RateLimit("1", 0)
+  val employee2 = RateLimit("2", 0)
+  val employee3 = RateLimit("3", 12)
+  val employee4 = RateLimit("4", 2)
+
+  val employer1 = RateLimit("1", 0)
+  val employer2 = RateLimit("2", 13.8)
+  val employer3 = RateLimit("3", 13.8)
+  val employer4 = RateLimit("4", 0)
+
+  override val nicRateLimits = NICRateLimits(
+    Seq(rateLimit1, rateLimit2),
+    Seq(threshold1, threshold2),
+    Seq(employee1, employee2, employee3, employee4),
+    Seq(employer1, employer2, employer3, employer4)
+  )
+}
+
+
 case class TaxYear_2018_2019(isScottish:Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String = "1185L"
@@ -71,8 +120,8 @@ case class TaxYear_2018_2019(isScottish:Boolean = false) extends TaxCalcResource
   override val endDate: LocalDate = LocalDate.of(2019,4,5)
 
   val taxBands1 = Band(1, BigDecimal(0.00), 10, PeriodCalc("annual", 0, 0, 0))
-  val taxBands2 = Band(2, BigDecimal(34500.00), 20, PeriodCalc("annual", 34500.00, 6900.00, 6900.00), Some("BR"))
-  val taxBands3 = Band(3, BigDecimal(115500.00), 40, PeriodCalc("annual", 150000.00, 53100.00, 46200.00), Some("D0"))
+  val taxBands2 = Band(band = 2, bandwidth = BigDecimal(34500.00), rate = 20, period = PeriodCalc(periodType = "annual", threshold = 34500.00, cumulativeMaxTax = 6900.00, maxTax = 6900.00), specialTaxCode = Some("BR"))
+  val taxBands3 = Band(band = 3, bandwidth = BigDecimal(115500.00), rate = 40, period = PeriodCalc(periodType = "annual", threshold = 150000.00, cumulativeMaxTax = 53100.00, maxTax = 46200.00), specialTaxCode = Some("D0"))
   val taxBands4 = Band(4, BigDecimal(-1),   45, PeriodCalc("annual", -1, -1, -1), Some("D1"))
 
   val scottishTaxBands1 = Band(1, BigDecimal(0.00),      10, PeriodCalc("annual", 0, 0, 0))
@@ -119,7 +168,7 @@ case class TaxYear_2017_2018(isScottish:Boolean = false) extends TaxCalcResource
   override val endDate: LocalDate = LocalDate.of(2018,4,5)
 
   val taxBands1 = Band(1, BigDecimal(0.00), 10, PeriodCalc("annual", 0, 0, 0))
-  val taxBands2 = Band(2, BigDecimal(33500.00), 20, PeriodCalc("annual", 33500.00, 6700.00, 6700.00), Some("BR"))
+  val taxBands2 = Band(band = 2, bandwidth = BigDecimal(33500.00), rate = 20, period = PeriodCalc(periodType = "annual", threshold = 33500.00, cumulativeMaxTax = 6700.00, maxTax = 6700.00), specialTaxCode = Some("BR"))
   val taxBands3 = Band(3, BigDecimal(116500.00), 40, PeriodCalc("annual", 150000.00, 53300.00, 46600.00), Some("D0"))
   val taxBands4 = Band(4, BigDecimal(-1),   45, PeriodCalc("annual", -1, -1, -1), Some("D1"))
 
