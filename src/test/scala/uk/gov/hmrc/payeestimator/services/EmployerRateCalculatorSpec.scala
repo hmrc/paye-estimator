@@ -25,16 +25,23 @@ import scala.math.BigDecimal
 
 class EmployerRateCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
-  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
-  val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
-  val Scottish_TaxYear_2017_2018 = new TaxYear_2017_2018(true)
-  val Scottish_TaxYear_2018_2019 = new TaxYear_2018_2019(true)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(isScottish = false)
+  val TaxYear_2018_2019 = new TaxYear_2018_2019(isScottish = false)
+  val TaxYear_2019_2020 = new TaxYear_2019_2020(isScottish = false)
+
+  val Scottish_TaxYear_2017_2018 = new TaxYear_2017_2018(isScottish = true)
+  val Scottish_TaxYear_2018_2019 = new TaxYear_2018_2019(isScottish = true)
+  val Scottish_TaxYear_2019_2020 = new TaxYear_2019_2020(isScottish = true)
 
   val input = Table(
     ("grossPay", "taxCalcResource", "limitId", "expectedAmount", "expectedPercentage"),
+    //2017-2018
     (BigDecimal(100000.00), TaxYear_2017_2018, 2, 5083.37, 13.8),
     (BigDecimal(100000.00), TaxYear_2017_2018, 3, 7590.00, 13.8),
+    (BigDecimal(100000.00), Scottish_TaxYear_2017_2018, 2, 5083.37, 13.8),
+    (BigDecimal(100000.00), Scottish_TaxYear_2017_2018, 3, 7590.00, 13.8),
 
+    //2018-2019
     (BigDecimal(43000.00) , TaxYear_2018_2019, 2, 4771.49 , 13.8),
     (BigDecimal(43000.00) , TaxYear_2018_2019, 3, 0.00    , 13.8),
 
@@ -62,9 +69,6 @@ class EmployerRateCalculatorSpec extends WordSpecLike with Matchers with TaxYear
     (BigDecimal(12000.00) , TaxYear_2018_2019, 2, 493.49  , 13.8),
     (BigDecimal(12000.00) , TaxYear_2018_2019, 3, 0.00    , 13.8),
 
-    (BigDecimal(100000.00), Scottish_TaxYear_2017_2018, 2, 5083.37, 13.8),
-    (BigDecimal(100000.00), Scottish_TaxYear_2017_2018, 3, 7590.00, 13.8),
-
     (BigDecimal(43000.00) , Scottish_TaxYear_2018_2019, 2, 4771.49 , 13.8),
     (BigDecimal(43000.00) , Scottish_TaxYear_2018_2019, 3, 0.00    , 13.8),
 
@@ -90,7 +94,62 @@ class EmployerRateCalculatorSpec extends WordSpecLike with Matchers with TaxYear
     (BigDecimal(10000.00) , Scottish_TaxYear_2018_2019, 3, 0.00    , 13.8),
 
     (BigDecimal(12000.00) , Scottish_TaxYear_2018_2019, 2, 493.49  , 13.8),
-    (BigDecimal(12000.00) , Scottish_TaxYear_2018_2019, 3, 0.00    , 13.8)
+    (BigDecimal(12000.00) , Scottish_TaxYear_2018_2019, 3, 0.00    , 13.8),
+
+    //2019-2020
+    (BigDecimal(43000.00) , TaxYear_2019_2020, 2, 4742.78 , 13.8),
+    (BigDecimal(43000.00) , TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(75500.00) , TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(75500.00) , TaxYear_2019_2020, 3, 3519.00 , 13.8),
+
+    (BigDecimal(119000.00), TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(119000.00), TaxYear_2019_2020, 3, 9522.00, 13.8),
+
+    (BigDecimal(160000.00), TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(160000.00), TaxYear_2019_2020, 3, 15180.00, 13.8),
+
+    (BigDecimal(45000.00) , TaxYear_2019_2020, 2, 5018.78 , 13.8),
+    (BigDecimal(45000.00) , TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(50000.00) , TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(50000.00) , TaxYear_2019_2020, 3, 0  , 13.8),
+
+    (BigDecimal(60000.00) , TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(60000.00) , TaxYear_2019_2020, 3, 1380.00 , 13.8),
+
+    (BigDecimal(10000.00) , TaxYear_2019_2020, 2, 188.78  , 13.8),
+    (BigDecimal(10000.00) , TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(12000.00) , TaxYear_2019_2020, 2, 464.78  , 13.8),
+    (BigDecimal(12000.00) , TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(43000.00) , Scottish_TaxYear_2019_2020, 2, 4742.78 , 13.8),
+    (BigDecimal(43000.00) , Scottish_TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(75500.00) , Scottish_TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(75500.00) , Scottish_TaxYear_2019_2020, 3, 3519.00 , 13.8),
+
+    (BigDecimal(119000.00), Scottish_TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(119000.00), Scottish_TaxYear_2019_2020, 3, 9522.00, 13.8),
+
+    (BigDecimal(160000.00), Scottish_TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(160000.00), Scottish_TaxYear_2019_2020, 3, 15180.00, 13.8),
+
+    (BigDecimal(45000.00) , Scottish_TaxYear_2019_2020, 2, 5018.78 , 13.8),
+    (BigDecimal(45000.00) , Scottish_TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(50000.00) , Scottish_TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(50000.00) , Scottish_TaxYear_2019_2020, 3, 0  , 13.8),
+
+    (BigDecimal(60000.00) , Scottish_TaxYear_2019_2020, 2, 5708.78 , 13.8),
+    (BigDecimal(60000.00) , Scottish_TaxYear_2019_2020, 3, 1380.0 , 13.8),
+
+    (BigDecimal(10000.00) , Scottish_TaxYear_2019_2020, 2, 188.78  , 13.8),
+    (BigDecimal(10000.00) , Scottish_TaxYear_2019_2020, 3, 0.00    , 13.8),
+
+    (BigDecimal(12000.00) , Scottish_TaxYear_2019_2020, 2, 464.78  , 13.8),
+    (BigDecimal(12000.00) , Scottish_TaxYear_2019_2020, 3, 0.00    , 13.8)
 
   )
 

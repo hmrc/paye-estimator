@@ -23,12 +23,12 @@ class TaxablePayCalculatorChanges extends WordSpecLike with Matchers with TaxYea
 
   "TaxablePayCalculator calculate " should {
     "calculate annual taxable pay for 2017_2018" in {
-      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2017_2018(false)).calculate().result
+      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2017_2018()).calculate().result
       result.value shouldBe 23993.32
     }
 
     "calculate annual taxable pay for 2018_2019" in {
-      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2018_2019(false)).calculate().result
+      val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2018_2019()).calculate().result
       result.value shouldBe 23993.32
     }
 
@@ -36,5 +36,16 @@ class TaxablePayCalculatorChanges extends WordSpecLike with Matchers with TaxYea
       val result = TaxablePayCalculator("1100T", Money(BigDecimal(35002.32)), TaxYear_2018_2019(true)).calculate().result
       result.value shouldBe 23993.32
     }
+
+    "calculate annual taxable pay for 2019_2020" in {
+      val result = TaxablePayCalculator("1250L", Money(BigDecimal(35002.32)), TaxYear_2019_2020()).calculate().result
+      result.value shouldBe 22493.32
+    }
+
+    "calculate annual taxable pay for 2019_2020 Scotland" in {
+      val result = TaxablePayCalculator("1250L", Money(BigDecimal(35002.32)), TaxYear_2019_2020(true)).calculate().result
+      result.value shouldBe 22493.32
+    }
+
   }
 }

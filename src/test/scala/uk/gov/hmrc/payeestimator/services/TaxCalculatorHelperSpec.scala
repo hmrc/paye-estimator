@@ -7,8 +7,9 @@ import org.scalatest.prop.TableDrivenPropertyChecks._
 
 class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearChanges{
 
-  val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
-  val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
+  val TaxYear_2017_2018 = new TaxYear_2017_2018(isScottish = false)
+  val TaxYear_2018_2019 = new TaxYear_2018_2019(isScottish = false)
+  val TaxYear_2019_2020 = new TaxYear_2019_2020(isScottish = false)
 
   "TaxCalculatorHelper isStandardTaxCode" should {
     "return true if the code matches the format where the first 4 digits are between 0-9999 and the last is L,M,N or T" in new TaxCalculatorHelperSetup {
@@ -26,7 +27,7 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isTaxableCode("D0") shouldBe false
       helper.isTaxableCode("D1") shouldBe false
       helper.isTaxableCode("D2") shouldBe true
-      helper.isTaxableCode("D2",true) shouldBe false
+      helper.isTaxableCode("D2", isScottish = true) shouldBe false
       helper.isTaxableCode("9999L") shouldBe true
     }
   }
@@ -36,7 +37,7 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isBasicRateTaxCode("D0") shouldBe true
       helper.isBasicRateTaxCode("D1") shouldBe true
       helper.isBasicRateTaxCode("D2") shouldBe false
-      helper.isBasicRateTaxCode("D2", true) shouldBe true
+      helper.isBasicRateTaxCode("D2", isScottish = true) shouldBe true
       helper.isBasicRateTaxCode("NT") shouldBe false
     }
   }
@@ -50,7 +51,10 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     ("1185L" , TaxYear_2018_2019, true,  "1185L"),
     ("11850L", TaxYear_2018_2019, false, "1185L"),
     ("11185L", TaxYear_2018_2019, false, "1185L"),
-    ("1185T" , TaxYear_2018_2019, false, "1185L")
+    ("1250L" , TaxYear_2019_2020, true,  "1250L"),
+    ("12500L", TaxYear_2018_2019, false, "1250L"),
+    ("12250L", TaxYear_2018_2019, false, "1250L"),
+    ("1185T" , TaxYear_2018_2019, false, "1250L")
   )
 
   s"TaxCalculatorHelper isEmergencyTaxCode()" should {

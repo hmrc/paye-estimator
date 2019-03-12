@@ -39,10 +39,9 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
     if (taxBandId > 1) {
       isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) match {
         case true => applyResponse(success = true, taxablePay)
-        case false => {
+        case false =>
           val previousBand = taxCalcResource.getPreviousTaxBand(taxBandId).getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
           applyResponse(success = true, Money(previousBand.period.threshold.-(taxablePay.value.intValue()).abs))
-        }
       }
     }
     else applyResponse(success = true, taxablePay)
@@ -92,7 +91,7 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
   }
 
   def applyResponse(success: Boolean, taxablePay: Money, isTapered: Boolean, additionalTaxablePay: Money): TaxablePayResponse = {
-    val result = if (taxablePay < Money(0)) Money(0, 2, true) else taxablePay
+    val result = if (taxablePay < Money(0)) Money(0, 2, roundingUp = true) else taxablePay
     TaxablePayResponse(success, result, isTapered, additionalTaxablePay)
   }
 }
@@ -122,7 +121,7 @@ case class TaxBandCalculator(taxCode: String, taxablePay: Money, taxCalcResource
 case class NICRateCalculator(rate: BigDecimal, amount: Money) extends Calculator {
 
   override def calculate(): NICRateCalculatorResponse = {
-    applyResponse(true, Money((amount.value * (rate / 100)) - 0.001, 2, true))
+    applyResponse(success = true, Money((amount.value * (rate / 100)) - 0.001, 2, true))
   }
 
   def applyResponse(success: Boolean, rate: Money): NICRateCalculatorResponse = {
@@ -145,7 +144,7 @@ trait EmployeeEmployerCalculations {
   lazy val secondaryThresholdLimit: Money = findThresholdLimit("secondary")
   def zeroRate = RateResult(Money(0), Money(0), rate)
 
-  def calculateRate(leftLimit: Money, rightLimit: Money) = {
+  def calculateRate(leftLimit: Money, rightLimit: Money): RateResult = {
     if(grossPay > leftLimit) RateResult(leftLimit, rightLimit, rate)
     else if(grossPay <= leftLimit && grossPay > rightLimit) RateResult(grossPay, rightLimit, rate)
     else zeroRate
@@ -178,7 +177,7 @@ case class EmployerRateCalculator(grossPay: Money, limitId: Int, taxCalcResource
   extends Calculator with TaxCalculatorHelper with EmployeeEmployerCalculations{
 
   override def rate: BigDecimal = collectRateLimit(s"$limitId", nicRateLimit.employerRate).value
-  override def calculate(): RateCalculatorResponse = RateCalculatorResponse(true, calculateAggregation)
+  override def calculate(): RateCalculatorResponse = RateCalculatorResponse(success = true, calculateAggregation)
 
   private def calculateAggregation = {
     (limitId match {
@@ -212,7 +211,7 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, grossPay: Money, t
 case class MaxRateCalculator(payeAmount: Money, grossPay: Money, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): MaxRateCalculatorResponse = {
-    val maxRate = Money((grossPay.value * (taxCalcResource.taxBands.maxRate / BigDecimal(100))).setScale(2, RoundingMode.DOWN), 2, false)
+    val maxRate = Money((grossPay.value * (taxCalcResource.taxBands.maxRate / BigDecimal(100))).setScale(2, RoundingMode.DOWN), 2, roundingUp = false)
 
     MaxRateCalculatorResponse(success = true,
       if(payeAmount > maxRate) maxRate else Money(BigDecimal(-1))
