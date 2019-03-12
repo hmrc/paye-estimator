@@ -20,7 +20,6 @@ import org.scalatest.{Matchers, WordSpecLike}
 
 class AllowanceCalculatorSpec extends WordSpecLike with Matchers {
 
-
   "AllowanceCalculator calculate " should {
     "should calculate a weekly allowance" in {
       val result = AllowanceCalculator("1100T").calculate().result

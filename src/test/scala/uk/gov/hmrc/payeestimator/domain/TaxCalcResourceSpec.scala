@@ -22,7 +22,7 @@ class TaxCalcResourceSpec extends WordSpecLike with Matchers with TaxYearChanges
     }
 
     "return the 2017/18 Scottish TaxCalcResource on April 5th 2018" in {
-      resourceForDate(date = LocalDate.of(2018, 4, 5), isScottish = true) shouldBe TaxYear_2017_2018(true)
+      resourceForDate(date = LocalDate.of(2018, 4, 5), isScottish = true) shouldBe TaxYear_2017_2018(isScottish = true)
     }
 
     "return the 2018/19 TaxCalcResource on April 6th 2018" in {
@@ -34,11 +34,11 @@ class TaxCalcResourceSpec extends WordSpecLike with Matchers with TaxYearChanges
     }
 
     "return the 2018/19 Scottish TaxCalcResource on April 6th 2018" in {
-      resourceForDate(date = LocalDate.of(2018, 4, 6), isScottish = true) shouldBe TaxYear_2018_2019(true)
+      resourceForDate(date = LocalDate.of(2018, 4, 6), isScottish = true) shouldBe TaxYear_2018_2019(isScottish = true)
     }
 
     "return the 2018/19 Scottish TaxCalcResource until April 5th 2019" in {
-      resourceForDate(date = LocalDate.of(2019, 4, 5), isScottish = true) shouldBe TaxYear_2018_2019(true)
+      resourceForDate(date = LocalDate.of(2019, 4, 5), isScottish = true) shouldBe TaxYear_2018_2019(isScottish = true)
     }
 
     "return the 2019/20 TaxCalcResource on April 6th 2019" in {
@@ -50,11 +50,11 @@ class TaxCalcResourceSpec extends WordSpecLike with Matchers with TaxYearChanges
     }
 
     "return the 2019/20 Scottish TaxCalcResource on April 6th 2019" in {
-      resourceForDate(date = LocalDate.of(2019, 4, 6), isScottish = true) shouldBe TaxYear_2019_2020(true)
+      resourceForDate(date = LocalDate.of(2019, 4, 6), isScottish = true) shouldBe TaxYear_2019_2020(isScottish = true)
     }
 
     "return the 2019/20 Scottish TaxCalcResource until April 5th 2020" in {
-      resourceForDate(date = LocalDate.of(2020, 4, 5), isScottish = true) shouldBe TaxYear_2019_2020(true)
+      resourceForDate(date = LocalDate.of(2020, 4, 5), isScottish = true) shouldBe TaxYear_2019_2020(isScottish = true)
     }
 
     "throw an IllegalArgumentException for dates before 6th April 2016" in {
@@ -68,7 +68,7 @@ class TaxCalcResourceSpec extends WordSpecLike with Matchers with TaxYearChanges
     }
 
     "throw an IllegalArgumentException after 6th April 2100" in {
-      val exception = intercept[IllegalArgumentException](resourceForDate(LocalDate.of(2100, 5, 1), false))
+      val exception = intercept[IllegalArgumentException](resourceForDate(LocalDate.of(2100, 5, 1), isScottish = false))
       exception.getMessage shouldBe "Unsupported Tax Period"
     }
   }
