@@ -43,7 +43,7 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
     val previousBand = taxCalcResource
       .getPreviousTaxBand(taxBandId)
       .getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
-    applyResponse(success = true, Money(previousBand.period.threshold.-(taxablePay.value.intValue()).abs))
+    applyResponse(success = true, Money(previousBand.period.maxAmountTaxedOn.-(taxablePay.value.intValue()).abs))
   }
     } else applyResponse(success = true, taxablePay)
 
@@ -109,7 +109,7 @@ case class TaxBandCalculator(taxCode: String, taxablePay: Money, taxCalcResource
     TaxBandResponse(success, taxBand)
 
   private def taxBandFilterFunc(taxablePay: Money): PartialFunction[Band, Band] = {
-    case taxBand: Band if taxBand.period.threshold > taxablePay.value => taxBand
+    case taxBand: Band if taxBand.period.maxAmountTaxedOn > taxablePay.value => taxBand
   }
 }
 
