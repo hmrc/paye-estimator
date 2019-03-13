@@ -17,7 +17,7 @@
 package uk.gov.hmrc.payeestimator.domain
 
 case class PAYETaxResult(
-  taxablePay:           Money,
+                          taxablePay:           Money,
   excessPay:            Money,
   finalBandTaxedAmount: Money,
   band:                 Int,
@@ -56,6 +56,11 @@ case class TaxBreakdown(
   totalDeductions:      BigDecimal,
   takeHomePay:          BigDecimal)
 
-case class TaxCategory(taxType: String, total: BigDecimal, aggregation: Seq[Aggregation])
+sealed trait TaxType
+case object EmployeeNationalInsurance extends TaxType
+case object EmployerNationalInsurance extends TaxType
+case object IncomeTax extends TaxType
+
+case class TaxCategory(taxType: TaxType, total: BigDecimal, aggregation: Seq[Aggregation])
 
 case class Aggregation(percentage: BigDecimal, amount: BigDecimal)

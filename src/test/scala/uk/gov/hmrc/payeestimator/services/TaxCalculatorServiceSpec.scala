@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 import org.scalatest.{DiagrammedAssertions, Matchers, WordSpecLike}
 import play.api.libs.json.Json.{format, parse}
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json._
 import uk.gov.hmrc.payeestimator.domain._
 import uk.gov.hmrc.payeestimator.services.Formats.taxCalcFormat
 
@@ -640,6 +640,18 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 }
 
 object Formats {
+  implicit val taxCalcTaxType: Format[TaxType] = new Format[TaxType] {
+    override def reads(json: JsValue): JsResult[TaxType] =
+      json.validate[String] fold (
+        error => JsError(error), {
+          case "incomeTax"                 => JsSuccess(IncomeTax)
+          case "employeeNationalInsurance" => JsSuccess(EmployeeNationalInsurance)
+          case "employerNationalInsurance" => JsSuccess(EmployerNationalInsurance)
+          case _                           => JsError(Nil)
+        }
+      )
+    override def writes(taxType: TaxType): JsValue = JsString(taxType.toString)
+  }
   implicit val taxCalcFormatAggregation: OFormat[Aggregation]  = format[Aggregation]
   implicit val taxCalcFormatTaxCategory: OFormat[TaxCategory]  = format[TaxCategory]
   implicit val taxCalcFormatBreakdown:   OFormat[TaxBreakdown] = format[TaxBreakdown]

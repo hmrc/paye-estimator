@@ -81,8 +81,8 @@ case class NICTaxCategoryBuilder(taxResult: NICTaxResult) extends Builder {
   override def build(): TaxCategoryBuildResult =
     TaxCategoryBuildResult(
       Seq(
-        TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
-        TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC)
+        TaxCategory(taxType = EmployeeNationalInsurance, calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
+        TaxCategory(taxType = EmployerNationalInsurance, calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC)
       ))
 }
 

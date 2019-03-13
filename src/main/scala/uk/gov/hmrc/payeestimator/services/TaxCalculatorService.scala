@@ -84,7 +84,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     val aggregation    = PAYEAggregateBuilder(updatedTaxCode, payeTax.band, payeTax.payeTaxAmount, taxCalcResource).build().aggregation
 
     val nicTaxCategories = NICTaxCategoryBuilder(nicTax).build().taxCategories
-    val taxCategories    = Seq(TaxCategory(taxType = "incomeTax", payeTax.payeTaxAmount.value, aggregation)) ++ nicTaxCategories
+    val taxCategories    = Seq(TaxCategory(taxType = IncomeTax, payeTax.payeTaxAmount.value, aggregation)) ++ nicTaxCategories
     val totalDeductions  = taxCategories.collect(TotalDeductionsFunc(maxTax.value)).foldLeft(BigDecimal(0.0))(_ + _)
 
     val taxFreePay = if (grossPay > payeTax.taxablePay) {
@@ -241,7 +241,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
     val nicTaxCategories =
       NICTaxCategoryBuilder(NICTaxResult(nicTax.employeeNICBandRate, employeeNICAggregation, employerNICAggregation)).build().taxCategories
-    val taxCategories = Seq(TaxCategory(taxType = "incomeTax", payeTotal.value, derivePAYEAggregation(rhs, payeAggregation))) ++ nicTaxCategories
+    val taxCategories = Seq(TaxCategory(taxType = IncomeTax, payeTotal.value, derivePAYEAggregation(rhs, payeAggregation))) ++ nicTaxCategories
 
     val taxFreePay = if (updatedGrossPay > updatedTaxablePay) {
 Money(updatedGrossPay - updatedTaxablePay , 2, roundingUp = true)
@@ -282,9 +282,9 @@ Money(0)
   }
 
   private def evalMaxTaxCategory(isMaxTax: Boolean, taxCategory: TaxCategory) = {
-    val validCategory = !taxCategory.taxType.equals("employerNationalInsurance")
+    val validCategory = !taxCategory.taxType.equals(EmployerNationalInsurance)
     if (isMaxTax)
-      validCategory && !taxCategory.taxType.equals("incomeTax")
+      validCategory && !taxCategory.taxType.equals(IncomeTax)
     else
       validCategory
   }

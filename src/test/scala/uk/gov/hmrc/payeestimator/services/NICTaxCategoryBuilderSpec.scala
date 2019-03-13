@@ -1,7 +1,7 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Aggregation, NICTaxResult}
+import uk.gov.hmrc.payeestimator.domain.{Aggregation, EmployeeNationalInsurance, EmployerNationalInsurance, NICTaxResult}
 
 class NICTaxCategoryBuilderSpec extends WordSpecLike with Matchers {
 
@@ -13,10 +13,10 @@ class NICTaxCategoryBuilderSpec extends WordSpecLike with Matchers {
       val result      = NICTaxCategoryBuilder(nicResult).build()
       result.taxCategories.map { taxCategory =>
         taxCategory.taxType match {
-          case "employeeNationalInsurance" =>
+          case EmployeeNationalInsurance =>
             taxCategory.total            shouldBe 1500
             taxCategory.aggregation.size shouldBe 2
-          case "employerNationalInsurance" =>
+          case EmployerNationalInsurance =>
             taxCategory.total            shouldBe 300
             taxCategory.aggregation.size shouldBe 1
         }
