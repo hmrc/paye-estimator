@@ -587,12 +587,12 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
     }
 
     "convert String value to its PayPeriod equivalent" in new LiveTaxCalcServiceSuccess {
-      service.convertToPayPeriod("annual") shouldBe Annually
-      service.convertToPayPeriod("ANNUAL") shouldBe Annually
-      service.convertToPayPeriod("monthly")  shouldBe Monthly
-      service.convertToPayPeriod("MONTHLY")  shouldBe Monthly
-      service.convertToPayPeriod("weekly")   shouldBe Weekly
-      service.convertToPayPeriod("WEEKLY")   shouldBe Weekly
+      service.convertToPayPeriod("annual")  shouldBe Annually
+      service.convertToPayPeriod("ANNUAL")  shouldBe Annually
+      service.convertToPayPeriod("monthly") shouldBe Monthly
+      service.convertToPayPeriod("MONTHLY") shouldBe Monthly
+      service.convertToPayPeriod("weekly")  shouldBe Weekly
+      service.convertToPayPeriod("WEEKLY")  shouldBe Weekly
       intercept[Exception] {
         service.convertToPayPeriod("daily")
         service.convertToPayPeriod("DAILY")

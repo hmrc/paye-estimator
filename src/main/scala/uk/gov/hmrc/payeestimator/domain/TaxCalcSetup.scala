@@ -33,7 +33,6 @@ case object RateLimitType2 extends RateLimitType
 case object RateLimitType3 extends RateLimitType
 case object RateLimitType4 extends RateLimitType
 
-
 case class TaxBands(annualIncomeThreshold: BigDecimal, scottishRate: BigDecimal, maxRate: BigDecimal, taxBands: Seq[Band])
 
 case class Band(band: Int, bandwidth: BigDecimal, rate: BigDecimal, period: PeriodCalc, specialTaxCode: Option[String] = None)

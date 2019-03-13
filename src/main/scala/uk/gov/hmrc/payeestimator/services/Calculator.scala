@@ -38,13 +38,13 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
   override def calculate(): ExcessPayResponse =
     if (taxBandId > 1) {
       if (isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) {
-    applyResponse(success = true, taxablePay)
-  } else {
-    val previousBand = taxCalcResource
-      .getPreviousTaxBand(taxBandId)
-      .getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
-    applyResponse(success = true, Money(previousBand.period.maxAmountTaxedOn.-(taxablePay.value.intValue()).abs))
-  }
+        applyResponse(success = true, taxablePay)
+      } else {
+        val previousBand = taxCalcResource
+          .getPreviousTaxBand(taxBandId)
+          .getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
+        applyResponse(success = true, Money(previousBand.period.maxAmountTaxedOn.-(taxablePay.value.intValue()).abs))
+      }
     } else applyResponse(success = true, taxablePay)
 
   def applyResponse(success: Boolean, excessPay: Money): ExcessPayResponse =
@@ -71,17 +71,17 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
     val updatedTaxCode        = taperingDeductionCalc.result
 
     val taxablePay: Money = if (isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) {
-    grossPay
-  } else {
-    if (isTaxableCode(taxCode, taxCalcResource.isScottish)) {
-      val allowance = AllowanceCalculator(updatedTaxCode).calculate().result
-      if (isUnTaxedIncomeTaxCode(taxCode))
-        Money(grossPay + allowance.allowance)
-      else Money(grossPay - allowance.allowance)
+      grossPay
     } else {
-      Money(0, 2, roundingUp = true)
+      if (isTaxableCode(taxCode, taxCalcResource.isScottish)) {
+        val allowance = AllowanceCalculator(updatedTaxCode).calculate().result
+        if (isUnTaxedIncomeTaxCode(taxCode))
+          Money(grossPay + allowance.allowance)
+        else Money(grossPay - allowance.allowance)
+      } else {
+        Money(0, 2, roundingUp = true)
+      }
     }
-  }
 
     val additionalTaxablePay = if (isUnTaxedIncomeTaxCode(taxCode)) taxablePay - grossPay else Money(0, 2, roundingUp = true)
     applyResponse(success = true, taxablePay, isTapered = taperingDeductionCalc.isTapered, additionalTaxablePay)

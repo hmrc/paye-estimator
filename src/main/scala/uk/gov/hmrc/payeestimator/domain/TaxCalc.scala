@@ -17,7 +17,7 @@
 package uk.gov.hmrc.payeestimator.domain
 
 case class PAYETaxResult(
-                          taxablePay:           Money,
+  taxablePay:           Money,
   excessPay:            Money,
   finalBandTaxedAmount: Money,
   band:                 Int,

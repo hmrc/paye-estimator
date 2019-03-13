@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import uk.gov.hmrc.payeestimator.domain.{NICTaxResult, RateLimitType, _}
+import uk.gov.hmrc.payeestimator.domain.{NICTaxResult, _}
 
 trait NICTaxCalculatorService extends TaxCalculatorHelper {
 
@@ -33,10 +33,10 @@ trait NICTaxCalculatorService extends TaxCalculatorHelper {
     val rate4  = EmployeeRateCalculator(grossPay, RateLimitType4, taxCalcResource).calculate().result
     val result = Seq(Aggregation(rate3.percentage, rate1.amount + rate3.amount), rate4).filter(_.amount > BigDecimal(0))
     val nicBandRate = if (result.nonEmpty) {
-    result.last.percentage
-  } else {
-    BigDecimal(0)
-  }
+      result.last.percentage
+    } else {
+      BigDecimal(0)
+    }
     EmployeeNICResult(result, nicBandRate)
   }
 

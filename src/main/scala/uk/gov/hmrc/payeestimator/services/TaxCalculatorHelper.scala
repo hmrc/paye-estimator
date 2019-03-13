@@ -50,7 +50,7 @@ trait TaxCalculatorHelper {
       taxCode.matches("([S][K][0-9]{1,4}){1}")
 
   def isUnTaxedIncomeTaxCode(taxCode: String): Boolean =
-    taxCode matches "([S]?[K]{1}[0-9]{1,4}){1}"
+    taxCode.matches("([S]?[K]{1}[0-9]{1,4}){1}")
 
   def rateLimit(limitType: RateLimitType): PartialFunction[RateLimit, Money] = {
     case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) =>
