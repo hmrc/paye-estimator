@@ -131,6 +131,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
           case "weekly"  => Money((BigDecimal(grossPayPence) * BigDecimal(52)) / 100, 2, roundingUp = true)
           case "monthly" => Money((BigDecimal(grossPayPence) * BigDecimal(12)) / 100, 2, roundingUp = true)
           case "annual"  => Money(BigDecimal(grossPayPence) / 100, 2, roundingUp = true)
+          case other => throw new RuntimeException(s"payPeriod MatchError for object: $other")
         }
     }
     if (grossPayPence > BigDecimal(999999999)) {
