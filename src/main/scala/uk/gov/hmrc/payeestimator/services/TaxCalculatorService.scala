@@ -41,14 +41,26 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
   @JSExport
   def calculateTax(isStatePensionAge: String, date: LocalDate, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
     val taxCalcResource = TaxCalcResourceBuilder.resourceForDate(date, isValidScottishTaxCode(taxCode))
-    val taxCalResult    = buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
+    val taxCalResult    = buildTaxCalc(
+      isStatePensionAge = isStatePensionAge,
+      taxCalcResource   = taxCalcResource,
+      taxCode           = taxCode,
+      grossPayPence     = grossPayPence,
+      payPeriod         = payPeriod,
+      hoursIn           = hoursIn)
     write(taxCalResult)
   }
 
   @JSExport
   def calculateTax(isStatePensionAge: String, date: String, taxCode: String, grossPayPence: Int, payPeriod: String, hoursIn: Int): String = {
     val taxCalcResource = TaxCalcResourceBuilder.resourceForDate(parseDate(date), isValidScottishTaxCode(taxCode))
-    val taxCalResult    = buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
+    val taxCalResult    = buildTaxCalc(
+      isStatePensionAge = isStatePensionAge,
+      taxCalcResource   = taxCalcResource,
+      taxCode           = taxCode,
+      grossPayPence     = grossPayPence,
+      payPeriod         = payPeriod,
+      hoursIn           = hoursIn)
     write(taxCalResult)
   }
 
@@ -82,43 +94,43 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
   }
 
     val calculatedTaxBreakdown = TaxBreakdown(
-      "annual",
-      grossPay.value,
-      taxFreePay.value,
-      payeTax.taxablePay.value,
-      payeTax.additionalTaxablePay.value,
-      calculateScottishElement(payeTax.taxablePay, taxCode.toUpperCase(), taxCalcResource),
-      maxTax.value,
-      taxCategories,
-      totalDeductions,
-      (grossPay - totalDeductions).value
+      period = "annual",
+      grossPay = grossPay.value,
+      taxFreePay = taxFreePay.value,
+      taxablePay = payeTax.taxablePay.value,
+      additionalTaxablePay = payeTax.additionalTaxablePay.value,
+      scottishElement = calculateScottishElement(payeTax.taxablePay, taxCode.toUpperCase(), taxCalcResource),
+      maxTaxAmount = maxTax.value,
+      taxCategories = taxCategories,
+      totalDeductions = totalDeductions,
+      takeHomePay = (grossPay - totalDeductions).value
     )
 
     val taxBreakdown = derivePeriodTaxBreakdowns(
-      payeTax.band,
-      taxCode.toUpperCase(),
-      calculatedTaxBreakdown,
-      payeTax,
-      nicTax,
-      aggregation,
-      isPensionAge,
-      taxCalcResource)
+      bandId = payeTax.band,
+      taxCode = taxCode.toUpperCase(),
+      taxBreakdown = calculatedTaxBreakdown,
+      payeTax = payeTax,
+      nicTax = nicTax,
+      payeAggregation = aggregation,
+      isStatePensionAge = isPensionAge,
+      taxCalcResource = taxCalcResource)
 
     val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
 
     TaxCalc(
-      isPensionAge,
-      taxCode.toUpperCase(),
-      getHourlyGrossPay(hours, grossPayPence),
-      hoursIn,
-      averageAnnualTaxRate.value,
-      rateType,
-      payeTax.bandRate + nicTax.employeeNICBandRate,
-      taxCalcResource.taxBands.maxRate,
-      payeTax.bandRate,
-      nicTax.employeeNICBandRate,
-      payeTax.isTapered,
-      taxBreakdown
+      statePensionAge = isPensionAge,
+      taxCode = taxCode.toUpperCase(),
+      payPerHour = getHourlyGrossPay(hours, grossPayPence),
+      hours = hoursIn,
+      averageAnnualTaxRate = averageAnnualTaxRate.value,
+      rateType = rateType,
+      marginalTaxRate = payeTax.bandRate + nicTax.employeeNICBandRate,
+      maxTaxRate = taxCalcResource.taxBands.maxRate,
+      payeBand = payeTax.bandRate,
+      employeeNICBand = nicTax.employeeNICBandRate,
+      tapered = payeTax.isTapered,
+      taxBreakdown = taxBreakdown
     )
 
   }
