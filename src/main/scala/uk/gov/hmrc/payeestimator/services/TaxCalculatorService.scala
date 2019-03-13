@@ -94,7 +94,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
   }
 
     val calculatedTaxBreakdown = TaxBreakdown(
-      period = "annual",
+      period = Annually,
       grossPay = grossPay.value,
       taxFreePay = taxFreePay.value,
       taxablePay = payeTax.taxablePay.value,
@@ -116,7 +116,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       isStatePensionAge = isPensionAge,
       taxCalcResource = taxCalcResource)
 
-    val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == "annual"))
+    val averageAnnualTaxRate = calculateAverageAnnualTaxRate(taxBreakdown.find(_.period == Annually))
 
     TaxCalc(
       statePensionAge = isPensionAge,
@@ -191,29 +191,29 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     Seq(
       taxBreakdown,
       deriveTaxBreakdown(
-        bandId,
-        taxCode,
-        grossPay,
-        taxablePay,
-        additionalTaxablePay,
-        12,
-        "monthly",
-        nicTax,
-        payeAggregation,
-        isStatePensionAge,
-        taxCalcResource),
+        bandId = bandId,
+        taxCode = taxCode,
+        grossPay = grossPay,
+        taxablePay = taxablePay,
+        additionalTaxablePay = additionalTaxablePay,
+        rhs = 12,
+        payPeriod = Monthly,
+        nicTax = nicTax,
+        payeAggregation = payeAggregation,
+        isStatePensionAge = isStatePensionAge,
+        taxCalcResource = taxCalcResource),
       deriveTaxBreakdown(
-        bandId,
-        taxCode,
-        grossPay,
-        taxablePay,
-        additionalTaxablePay,
-        52,
-        "weekly",
-        nicTax,
-        payeAggregation,
-        isStatePensionAge,
-        taxCalcResource)
+        bandId = bandId,
+        taxCode = taxCode,
+        grossPay = grossPay,
+        taxablePay = taxablePay,
+        additionalTaxablePay = additionalTaxablePay,
+        rhs = 52,
+        payPeriod = Weekly,
+        nicTax = nicTax,
+        payeAggregation = payeAggregation,
+        isStatePensionAge = isStatePensionAge,
+        taxCalcResource = taxCalcResource)
     )
   }
 
@@ -224,7 +224,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     taxablePay:           Money,
     additionalTaxablePay: Money,
     rhs:                  Int,
-    payPeriod:            String,
+    payPeriod:            PayPeriod,
     nicTax:               NICTaxResult,
     payeAggregation:      Seq[Aggregation],
     isStatePensionAge:    Boolean,

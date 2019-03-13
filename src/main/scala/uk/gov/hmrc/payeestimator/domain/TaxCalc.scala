@@ -44,8 +44,13 @@ case class TaxCalc(
   tapered:              Boolean,
   taxBreakdown:         Seq[TaxBreakdown])
 
+sealed trait PayPeriod
+case object Annually extends PayPeriod
+case object Monthly extends PayPeriod
+case object Weekly extends PayPeriod
+
 case class TaxBreakdown(
-  period:               String,
+  period:               PayPeriod,
   grossPay:             BigDecimal,
   taxFreePay:           BigDecimal,
   taxablePay:           BigDecimal,

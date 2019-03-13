@@ -587,42 +587,42 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
       val tbWeek = Option(
         TaxBreakdown(
-          "weekly",
-          grossPay = BigDecimal(1000.00),
-          BigDecimal(0),
-          BigDecimal(0),
-          BigDecimal(0),
-          Option(BigDecimal(0)),
-          BigDecimal(0),
-          Seq(),
-          totalDeductions = BigDecimal(200.00),
-          BigDecimal(0)
+          period               = Weekly,
+          grossPay             = BigDecimal(1000.00),
+          taxFreePay           = BigDecimal(0),
+          taxablePay           = BigDecimal(0),
+          additionalTaxablePay = BigDecimal(0),
+          scottishElement      = Option(BigDecimal(0)),
+          maxTaxAmount         = BigDecimal(0),
+          taxCategories        = Seq(),
+          totalDeductions      = BigDecimal(200.00),
+          takeHomePay          = BigDecimal(0)
         ))
       val tbMonth = Option(
         TaxBreakdown(
-          "monthly",
-          grossPay = BigDecimal(7000.00),
-          BigDecimal(0),
-          BigDecimal(0),
-          BigDecimal(0),
-          Option(BigDecimal(0)),
-          BigDecimal(0),
-          Seq(),
-          totalDeductions = BigDecimal(2000.00),
-          BigDecimal(0)
+          period               = Monthly,
+          grossPay             = BigDecimal(7000.00),
+          taxFreePay           = BigDecimal(0),
+          taxablePay           = BigDecimal(0),
+          additionalTaxablePay = BigDecimal(0),
+          scottishElement      = Option(BigDecimal(0)),
+          maxTaxAmount         = BigDecimal(0),
+          taxCategories        = Seq(),
+          totalDeductions      = BigDecimal(2000.00),
+          takeHomePay          = BigDecimal(0)
         ))
       val tbAnnual = Option(
         TaxBreakdown(
-          "annual",
-          grossPay = BigDecimal(60000.00),
-          BigDecimal(0),
-          BigDecimal(0),
-          BigDecimal(0),
-          Option(BigDecimal(0)),
-          BigDecimal(0),
-          Seq(),
-          totalDeductions = BigDecimal(24000.00),
-          BigDecimal(0)
+          period               = Annually,
+          grossPay             = BigDecimal(60000.00),
+          taxFreePay           = BigDecimal(0),
+          taxablePay           = BigDecimal(0),
+          additionalTaxablePay = BigDecimal(0),
+          scottishElement      = Option(BigDecimal(0)),
+          maxTaxAmount         = BigDecimal(0),
+          taxCategories        = Seq(),
+          totalDeductions      = BigDecimal(24000.00),
+          takeHomePay          = BigDecimal(0)
         ))
 
       service.calculateAverageAnnualTaxRate(tbWeek).value   shouldBe BigDecimal(20.00)
@@ -652,6 +652,20 @@ object Formats {
       )
     override def writes(taxType: TaxType): JsValue = JsString(taxType.toString)
   }
+
+  implicit val taxCalcPayPeriod: Format[PayPeriod] = new Format[PayPeriod] {
+    override def reads(json: JsValue): JsResult[PayPeriod] =
+      json.validate[String] fold (
+        error => JsError(error), {
+          case "annual"  => JsSuccess(Annually)
+          case "monthly" => JsSuccess(Monthly)
+          case "weekly"  => JsSuccess(Weekly)
+          case _         => JsError(Nil)
+        }
+      )
+    override def writes(payPeriod: PayPeriod): JsValue = JsString(payPeriod.toString)
+  }
+
   implicit val taxCalcFormatAggregation: OFormat[Aggregation]  = format[Aggregation]
   implicit val taxCalcFormatTaxCategory: OFormat[TaxCategory]  = format[TaxCategory]
   implicit val taxCalcFormatBreakdown:   OFormat[TaxBreakdown] = format[TaxBreakdown]
