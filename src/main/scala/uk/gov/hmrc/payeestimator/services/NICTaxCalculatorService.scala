@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import uk.gov.hmrc.payeestimator.domain.{NICTaxResult, _}
+import uk.gov.hmrc.payeestimator.domain.{NICTaxResult, RateLimitType, _}
 
 trait NICTaxCalculatorService extends TaxCalculatorHelper {
 
@@ -28,9 +28,9 @@ trait NICTaxCalculatorService extends TaxCalculatorHelper {
     }
 
   def calculateEmployeeNIC(grossPay: Money, taxCalcResource: TaxCalcResource): EmployeeNICResult = {
-    val rate1  = EmployeeRateCalculator(grossPay, 1, taxCalcResource).calculate().result
-    val rate3  = EmployeeRateCalculator(grossPay, 3, taxCalcResource).calculate().result
-    val rate4  = EmployeeRateCalculator(grossPay, 4, taxCalcResource).calculate().result
+    val rate1  = EmployeeRateCalculator(grossPay, RateLimitType1, taxCalcResource).calculate().result
+    val rate3  = EmployeeRateCalculator(grossPay, RateLimitType3, taxCalcResource).calculate().result
+    val rate4  = EmployeeRateCalculator(grossPay, RateLimitType4, taxCalcResource).calculate().result
     val result = Seq(Aggregation(rate3.percentage, rate1.amount + rate3.amount), rate4).filter(_.amount > BigDecimal(0))
     val nicBandRate = if (result.nonEmpty) {
     result.last.percentage
@@ -41,8 +41,8 @@ trait NICTaxCalculatorService extends TaxCalculatorHelper {
   }
 
   def calculateEmployerNIC(grossPay: Money, taxCalcResource: TaxCalcResource): Seq[Aggregation] = {
-    val rate2 = EmployerRateCalculator(grossPay, 2, taxCalcResource).calculate().result
-    val rate3 = EmployerRateCalculator(grossPay, 3, taxCalcResource).calculate().result
+    val rate2 = EmployerRateCalculator(grossPay, RateLimitType2, taxCalcResource).calculate().result
+    val rate3 = EmployerRateCalculator(grossPay, RateLimitType3, taxCalcResource).calculate().result
     Seq(Aggregation(rate2.percentage, rate2.amount + rate3.amount))
   }
 }
