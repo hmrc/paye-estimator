@@ -46,7 +46,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       taxCalcResource   = taxCalcResource,
       taxCode           = taxCode,
       grossPayPence     = grossPayPence,
-      payPeriod         = convertToPayPeriod(payPeriod),
+      payPeriod         = payPeriod,
       hoursIn           = hoursIn)
     write(taxCalResult)
   }
@@ -59,7 +59,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       taxCalcResource   = taxCalcResource,
       taxCode           = taxCode,
       grossPayPence     = grossPayPence,
-      payPeriod         = convertToPayPeriod(payPeriod),
+      payPeriod         = payPeriod,
       hoursIn           = hoursIn)
     write(taxCalResult)
   }
@@ -69,11 +69,11 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     taxCalcResource:   TaxCalcResource,
     taxCode:           String,
     grossPayPence:     Int,
-    payPeriod:         PayPeriod,
+    payPeriod:         String,
     hoursIn:           Int): TaxCalc = {
     val hours            = if (hoursIn > 0) Some(hoursIn) else None
     val isPensionAge     = convertToBoolean(isStatePensionAge)
-    val updatedPayPeriod = if (hours.getOrElse(-1) > 0) Annually else payPeriod
+    val updatedPayPeriod = if (hours.getOrElse(-1) > 0) Annually else convertToPayPeriod(payPeriod)
 
     val rateType       = if (taxCalcResource.isScottish) Some("SCOTLAND") else None
     val grossPay       = annualiseGrossPay(grossPayPence, hours, updatedPayPeriod)

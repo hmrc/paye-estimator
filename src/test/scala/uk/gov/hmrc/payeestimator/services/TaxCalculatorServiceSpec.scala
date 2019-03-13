@@ -30,14 +30,14 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
   val input = Table(
     ("Test Description", "isStatePensionAge", "taxCalcResource", "taxCode", "grossPayPence", "payPeriod", "hoursIn", "expectedJson"),
-    ("return a annual TaxCalc response", "false", taxYear_2017_2018, "1100T", 1000000, Annually, -1, "/data/2017_2018/2017_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response", "false", taxYear_2017_2018, "1100T", 1000000, "annual", -1, "/data/2017_2018/2017_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true",
       taxYear_2017_2018,
       "1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_no_NIC_Contribution_section_response.json"),
     (
@@ -46,7 +46,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "NT",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_NT_TaxCode_Response.json"),
     (
@@ -55,7 +55,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "BR",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_BR_TaxCode_Response.json"),
     (
@@ -64,7 +64,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "D0",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_D0_TaxCode_Response.json"),
     (
@@ -73,7 +73,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "D1",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_D1_TaxCode_Response.json"),
     (
@@ -82,7 +82,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "1100T",
       9615,
-      Annually,
+      "annual",
       40,
       "/data/2017_2018/2017_Hourly_Rate_Response.json"),
     (
@@ -91,7 +91,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "1150L",
       221200,
-      Weekly,
+      "weekly",
       -1,
       "/data/2017_2018/2017_Tapering_Emergency_TaxCode_Response.json"),
     (
@@ -100,7 +100,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "K4000",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_Max_Tax_Response.json"),
     (
@@ -109,7 +109,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2017_2018,
       "K1100",
       100000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_Max_Tax_Edge_Case_Response.json"),
     (
@@ -118,7 +118,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "S1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_Scottish_TaxCalcResponse.json"),
     (
@@ -127,7 +127,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_Scottish_no_NIC_Contribution_section_response.json"),
     (
@@ -136,7 +136,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "SBR",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_SBR_TaxCode_Response.json"),
     (
@@ -145,7 +145,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "SD0",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_SD0_TaxCode_Response.json"),
     (
@@ -154,7 +154,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "SD1",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_SD1_TaxCode_Response.json"),
     (
@@ -163,7 +163,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "S1100T",
       9615,
-      Annually,
+      "annual",
       40,
       "/data/2017_2018/2017_Scottish_Hourly_Rate_Response.json"),
     (
@@ -172,7 +172,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "S1150L",
       221200,
-      Weekly,
+      "weekly",
       -1,
       "/data/2017_2018/2017_Scottish_Tapering_Emergency_TaxCode_Response.json"),
     (
@@ -181,7 +181,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "SK4000",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_Scottish_Max_Tax_Response.json"),
     (
@@ -190,17 +190,17 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2017_2018,
       "SK1100",
       100000,
-      Annually,
+      "annual",
       -1,
       "/data/2017_2018/2017_Scottish_Max_Tax_Edge_Case_Response.json"),
-    ("return a annual TaxCalc response", "false", taxYear_2018_2019, "1100T", 1000008, Annually, -1, "/data/2018_2019/2018_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response", "false", taxYear_2018_2019, "1100T", 1000008, "annual", -1, "/data/2018_2019/2018_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true",
       taxYear_2018_2019,
       "1100T",
       1000008,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_no_NIC_Contribution_section_response.json"),
     (
@@ -209,7 +209,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "nt",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_NT_TaxCode_Response.json"),
     (
@@ -218,7 +218,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "BR",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_BR_TaxCode_Response.json"),
     (
@@ -227,7 +227,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "D0",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_D0_TaxCode_Response.json"),
     (
@@ -236,7 +236,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "D1",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_D1_TaxCode_Response.json"),
     (
@@ -245,7 +245,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "1100T",
       9615,
-      Annually,
+      "annual",
       40,
       "/data/2018_2019/2018_Hourly_Rate_Response.json"),
     (
@@ -254,7 +254,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "K4000",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_Max_Tax_Response.json"),
     (
@@ -263,7 +263,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2018_2019,
       "K1100",
       100000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_Max_Tax_Edge_Case_Response.json"),
     (
@@ -272,7 +272,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "S1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_Scottish_TaxCalcResponse.json"),
     (
@@ -281,7 +281,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "S1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_Scottish_no_NIC_Contribution_section_response.json"),
     (
@@ -290,7 +290,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "SBR",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_SBR_TaxCode_Response.json"),
     (
@@ -299,7 +299,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "SD0",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_SD0_TaxCode_Response.json"),
     (
@@ -308,7 +308,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "SD1",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_SD1_TaxCode_Response.json"),
     (
@@ -317,7 +317,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "SD2",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_SD2_TaxCode_Response.json"),
     (
@@ -326,7 +326,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "S1100T",
       9615,
-      Annually,
+      "annual",
       40,
       "/data/2018_2019/2018_Scottish_Hourly_Rate_Response.json"),
     (
@@ -335,7 +335,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "S1185L",
       221200,
-      Weekly,
+      "weekly",
       -1,
       "/data/2018_2019/2018_Scottish_Tapering_Emergency_TaxCode_Response.json"),
     (
@@ -344,7 +344,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "SK4000",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_Scottish_Max_Tax_Response.json"),
     (
@@ -353,17 +353,17 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2018_2019,
       "SK1185",
       100000,
-      Annually,
+      "annual",
       -1,
       "/data/2018_2019/2018_Scottish_Max_Tax_Edge_Case_Response.json"),
-    ("return a annual TaxCalc response", "false", taxYear_2019_2020, "1100T", 1000008, Annually, -1, "/data/2019_2020/2019_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response", "false", taxYear_2019_2020, "1100T", 1000008, "annual", -1, "/data/2019_2020/2019_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true",
       taxYear_2019_2020,
       "1100T",
       1000008,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_no_NIC_Contribution_section_response.json"),
     (
@@ -372,7 +372,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "nt",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_NT_TaxCode_Response.json"),
     (
@@ -381,7 +381,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "BR",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_BR_TaxCode_Response.json"),
     (
@@ -390,7 +390,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "D0",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_D0_TaxCode_Response.json"),
     (
@@ -399,7 +399,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "D1",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_D1_TaxCode_Response.json"),
     (
@@ -408,7 +408,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "1100T",
       9615,
-      Annually,
+      "annual",
       40,
       "/data/2019_2020/2019_Hourly_Rate_Response.json"),
     (
@@ -417,7 +417,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "K4000",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_Max_Tax_Response.json"),
     (
@@ -426,7 +426,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       taxYear_2019_2020,
       "K1100",
       100000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_Max_Tax_Edge_Case_Response.json"),
     (
@@ -435,7 +435,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "S1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_Scottish_TaxCalcResponse.json"),
     (
@@ -444,7 +444,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "S1100T",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_Scottish_no_NIC_Contribution_section_response.json"),
     (
@@ -453,7 +453,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "SBR",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_SBR_TaxCode_Response.json"),
     (
@@ -462,7 +462,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "SD0",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_SD0_TaxCode_Response.json"),
     (
@@ -471,7 +471,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "SD1",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_SD1_TaxCode_Response.json"),
     (
@@ -480,7 +480,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "SD2",
       20000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_SD2_TaxCode_Response.json"),
     (
@@ -489,7 +489,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "S1100T",
       9615,
-      Annually,
+      "annual",
       40,
       "/data/2019_2020/2019_Scottish_Hourly_Rate_Response.json"),
     (
@@ -498,7 +498,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "S1250L",
       221200,
-      Weekly,
+      "weekly",
       -1,
       "/data/2019_2020/2019_Scottish_Tapering_Emergency_TaxCode_Response.json"),
     (
@@ -507,7 +507,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "SK4000",
       1000000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_Scottish_Max_Tax_Response.json"),
     (
@@ -516,7 +516,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       scottish_TaxYear_2019_2020,
       "SK1185",
       100000,
-      Annually,
+      "annual",
       -1,
       "/data/2019_2020/2019_Scottish_Max_Tax_Edge_Case_Response.json")
   )
@@ -532,7 +532,6 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
         result shouldBe expected
       }
     }
-
   }
 
   "fail with exception max amount exceeded when greater than 999999999" in new LiveTaxCalcServiceSuccess {
@@ -542,7 +541,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
         taxCalcResource   = taxYear_2018_2019,
         taxCode           = "SK1100",
         grossPayPence     = 1999999999,
-        payPeriod         = Annually,
+        payPeriod         = "annual",
         hoursIn           = -1)
     }
   }
