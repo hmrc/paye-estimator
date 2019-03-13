@@ -24,8 +24,8 @@ trait Calculator {
 
   def calculate(): CalculatorResponse
 
-  protected def isAnnual(payPeriod: String): Boolean =
-    payPeriod.equals("annual")
+  protected def isAnnual(payPeriod: PayPeriod): Boolean =
+    payPeriod.equals(Annually)
 
 }
 

@@ -46,7 +46,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       taxCalcResource   = taxCalcResource,
       taxCode           = taxCode,
       grossPayPence     = grossPayPence,
-      payPeriod         = payPeriod,
+      payPeriod         = convertToPayPeriod(payPeriod),
       hoursIn           = hoursIn)
     write(taxCalResult)
   }
