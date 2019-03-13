@@ -59,7 +59,7 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       taxCalcResource   = taxCalcResource,
       taxCode           = taxCode,
       grossPayPence     = grossPayPence,
-      payPeriod         = payPeriod,
+      payPeriod         = convertToPayPeriod(payPeriod),
       hoursIn           = hoursIn)
     write(taxCalResult)
   }
@@ -69,11 +69,11 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
     taxCalcResource:   TaxCalcResource,
     taxCode:           String,
     grossPayPence:     Int,
-    payPeriod:         String,
+    payPeriod:         PayPeriod,
     hoursIn:           Int): TaxCalc = {
     val hours            = if (hoursIn > 0) Some(hoursIn) else None
     val isPensionAge     = convertToBoolean(isStatePensionAge)
-    val updatedPayPeriod = if (hours.getOrElse(-1) > 0) "annual" else payPeriod
+    val updatedPayPeriod = if (hours.getOrElse(-1) > 0) Annually else payPeriod
 
     val rateType       = if (taxCalcResource.isScottish) Some("SCOTLAND") else None
     val grossPay       = annualiseGrossPay(grossPayPence, hours, updatedPayPeriod)
@@ -135,14 +135,14 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
   }
 
-  def annualiseGrossPay(grossPayPence: Long, hours: Option[Int], payPeriod: String): Money = {
+  def annualiseGrossPay(grossPayPence: Long, hours: Option[Int], payPeriod: PayPeriod): Money = {
     val grossPay = hours match {
       case Some(value: Int) => Money(((BigDecimal(grossPayPence) * value) / 100) * BigDecimal(52), 2, roundingUp = true)
       case _ =>
         payPeriod match {
-          case "weekly"  => Money((BigDecimal(grossPayPence) * BigDecimal(52)) / 100, 2, roundingUp = true)
-          case "monthly" => Money((BigDecimal(grossPayPence) * BigDecimal(12)) / 100, 2, roundingUp = true)
-          case "annual"  => Money(BigDecimal(grossPayPence) / 100, 2, roundingUp = true)
+          case Weekly  => Money((BigDecimal(grossPayPence) * BigDecimal(52)) / 100, 2, roundingUp = true)
+          case Monthly => Money((BigDecimal(grossPayPence) * BigDecimal(12)) / 100, 2, roundingUp = true)
+          case Annually  => Money(BigDecimal(grossPayPence) / 100, 2, roundingUp = true)
           case other => throw new RuntimeException(s"payPeriod MatchError for object: $other")
         }
     }
@@ -158,6 +158,14 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       case "true"  => true
       case "false" => false
       case _       => throw new Exception("Invalid value")
+    }
+
+  def convertToPayPeriod(payPeriod: String): PayPeriod =
+    payPeriod.toLowerCase() match {
+      case "annual"  => Annually
+      case "monthly" => Monthly
+      case "weekly" => Weekly
+      case _       => throw new Exception("Invalid Pay Period value")
     }
 
   def calculateAverageAnnualTaxRate(annualTaxBreakdown: Option[TaxBreakdown]): Money =
