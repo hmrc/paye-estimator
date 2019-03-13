@@ -5,6 +5,8 @@ import uk.gov.hmrc.SbtArtifactory
 
 enablePlugins(SbtGitVersioning, ScalaJSPlugin, UniversalPlugin, SbtArtifactory)
 
+makePublicallyAvailableOnBintray := true
+
 name := "paye-estimator"
 
 LocalTempBuildSettings.localDefaultSettings
