@@ -3,7 +3,7 @@
   "taxCode": "1100T",
   "payPerHour": 96.15,
   "hours": 40,
-  "averageAnnualTaxRate": 36.5,
+  "averageAnnualTaxRate": 39,
   "marginalTaxRate": 47,
   "maxTaxRate": 50,
   "payeBand": 45,
@@ -20,7 +20,7 @@
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 65042.35,
+          "total": 70042.35,
           "aggregation": [
             {
               "percentage": 20,
@@ -28,7 +28,7 @@
             },
             {
               "percentage": 40,
-              "amount": 40000
+              "amount": 45000
             },
             {
               "percentage": 45,
@@ -61,8 +61,8 @@
           ]
         }
       ],
-      "totalDeductions": 73006.35,
-      "takeHomePay": 126985.65
+      "totalDeductions": 78006.35,
+      "takeHomePay": 121985.65
     },
     {
       "period": "monthly",
@@ -74,7 +74,7 @@
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 5420.2,
+          "total": 5836.86,
           "aggregation": [
             {
               "percentage": 20,
@@ -82,7 +82,7 @@
             },
             {
               "percentage": 40,
-              "amount": 3333.33
+              "amount": 3750
             },
             {
               "percentage": 45,
@@ -115,8 +115,8 @@
           ]
         }
       ],
-      "totalDeductions": 6083.87,
-      "takeHomePay": 10582.13
+      "totalDeductions": 6500.53,
+      "takeHomePay": 10165.47
     },
     {
       "period": "weekly",
@@ -128,7 +128,7 @@
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 1250.81,
+          "total": 1346.97,
           "aggregation": [
             {
               "percentage": 20,
@@ -136,7 +136,7 @@
             },
             {
               "percentage": 40,
-              "amount": 769.23
+              "amount": 865.38
             },
             {
               "percentage": 45,
@@ -169,8 +169,8 @@
           ]
         }
       ],
-      "totalDeductions": 1403.96,
-      "takeHomePay": 2442.04
+      "totalDeductions": 1500.12,
+      "takeHomePay": 2345.88
     }
   ]
 }

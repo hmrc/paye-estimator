@@ -362,8 +362,8 @@ class PAYEAggregateBuilderSpec extends WordSpecLike with Matchers with TaxYearCh
       val result = PAYEAggregateBuilder("Any Code", 4, Money(160000, 2, roundingUp = true), taxYear).build()
       println("result " + result)
       result.aggregation.head.amount shouldBe 7500
-      result.aggregation(1).amount   shouldBe 40000
-      result.aggregation(2).amount   shouldBe 112500
+      result.aggregation(1).amount   shouldBe 45000
+      result.aggregation(2).amount   shouldBe 107500
     }
   }
 

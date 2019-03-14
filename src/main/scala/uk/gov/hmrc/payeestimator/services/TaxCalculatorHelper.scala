@@ -27,21 +27,22 @@ trait TaxCalculatorHelper {
       isValidScottishTaxCode(taxCode) ||
       isUnTaxedIncomeTaxCode(taxCode)
 
+  //TODO Remove C from regex when Wales has its own band
   def isStandardTaxCode(taxCode: String): Boolean =
-    taxCode.matches("([0-9]{1,4}[L-N,T]{1}){1}")
+    taxCode.matches("(C)?([0-9]{1,4}[L-N,T]{1}){1}")
 
   def isTaxableCode(taxCode: String, isScottish: Boolean = false): Boolean =
     !taxCode.matches("([N][T]){1}") && !isBasicRateTaxCode(taxCode, isScottish)
 
   def isBasicRateTaxCode(taxCode: String, isScottish: Boolean = false): Boolean =
-    taxCode.matches("([B][R]){1}") ||
-      taxCode.matches(s"([D][0,1${if (isScottish) { ",2" } else { "" }}])")
+    taxCode.matches("(C)?([B][R]){1}") ||
+      taxCode.matches(s"(C)?([D][0,1${if (isScottish) { ",2" } else { "" }}])")
 
   def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
-    taxCode.equalsIgnoreCase(taxCalcResource.emergencyTaxCode)
+    taxCode.matches("(C|S)?" + taxCalcResource.emergencyTaxCode)
 
   def isAdjustedTaxCode(taxCode: String): Boolean =
-    taxCode.matches("([0-9]+[.]{1}[0-9]{2}[L]{1}){1}")
+    taxCode.matches("(C)?([0-9]+[.]{1}[0-9]{2}[L]{1}){1}")
 
   def isValidScottishTaxCode(taxCode: String): Boolean =
     taxCode.matches("([S]{1}[0-9]{1,4}[L-N,T]{1}){1}") ||
@@ -50,7 +51,7 @@ trait TaxCalculatorHelper {
       taxCode.matches("([S][K][0-9]{1,4}){1}")
 
   def isUnTaxedIncomeTaxCode(taxCode: String): Boolean =
-    taxCode matches "([S]?[K]{1}[0-9]{1,4}){1}"
+    taxCode matches "(C|S)?([K]{1}[0-9]{1,4}){1}"
 
   def rateLimit(limitType: String): PartialFunction[RateLimit, Money] = {
     case rateLimit: RateLimit if rateLimit.rateLimitType.equals(limitType) =>
@@ -65,8 +66,14 @@ trait TaxCalculatorHelper {
     } else
       taxCode
 
-  def removeScottishElement(taxCode: String): String =
+  def removeCountryElementFromTaxCode(taxCode: String): String =
     if (isValidScottishTaxCode(taxCode)) {
       taxCode.toUpperCase.stripPrefix("S")
-    } else taxCode
+    } else {
+      if (taxCode.toUpperCase.startsWith("C")) {
+        taxCode.toUpperCase.stripPrefix("C")
+      } else {
+        taxCode
+      }
+    }
 }

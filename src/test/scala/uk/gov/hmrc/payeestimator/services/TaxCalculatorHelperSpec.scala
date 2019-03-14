@@ -18,6 +18,8 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isStandardTaxCode("100M")  shouldBe true
       helper.isStandardTaxCode("88N")   shouldBe true
       helper.isStandardTaxCode("t999")  shouldBe false
+
+      helper.isStandardTaxCode("C9999L") shouldBe true
     }
   }
   "TaxCalculatorHelper isTaxableCode" should {
@@ -39,6 +41,11 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isBasicRateTaxCode("D2") shouldBe false
       helper.isBasicRateTaxCode("D2", isScottish = true) shouldBe true
       helper.isBasicRateTaxCode("NT") shouldBe false
+
+      helper.isBasicRateTaxCode("CBR") shouldBe true
+      helper.isBasicRateTaxCode("CD0") shouldBe true
+      helper.isBasicRateTaxCode("CD1") shouldBe true
+      helper.isBasicRateTaxCode("CD2") shouldBe false
     }
   }
 
@@ -52,6 +59,10 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     ("11850L", TaxYear_2018_2019, false, "1185L"),
     ("11185L", TaxYear_2018_2019, false, "1185L"),
     ("1250L", TaxYear_2019_2020, true, "1250L"),
+    ("C1250L", TaxYear_2019_2020, true, "S1250L"),
+    ("CS1250L", TaxYear_2019_2020, false, "CS1250L"),
+    ("SC1250L", TaxYear_2019_2020, false, "SC1250L"),
+    ("S1250L", TaxYear_2019_2020, true, "C1250L"),
     ("12500L", TaxYear_2018_2019, false, "1250L"),
     ("12250L", TaxYear_2018_2019, false, "1250L"),
     ("1185T", TaxYear_2018_2019, false, "1250L")
@@ -61,15 +72,19 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     forAll(input) { (taxCode, taxCalcResource, expectedResult, actualEmergencyTaxCode) =>
       s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode if the tax code matches $actualEmergencyTaxCode" in new TaxCalculatorHelperSetup {
         helper.isEmergencyTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
+
       }
     }
   }
 
   "TaxCalculatorHelper isAdjustedTaxCode" should {
     "return true if the tax code contains a decimal place with an appended L" in new TaxCalculatorHelperSetup {
-      helper.isAdjustedTaxCode("1234.98L") shouldBe true
-      helper.isAdjustedTaxCode("1234.98T") shouldBe false
-      helper.isAdjustedTaxCode("1234L")    shouldBe false
+      helper.isAdjustedTaxCode("1234.98L")  shouldBe true
+      helper.isAdjustedTaxCode("1234.98T")  shouldBe false
+      helper.isAdjustedTaxCode("1234L")     shouldBe false
+      helper.isAdjustedTaxCode("C1234.98L") shouldBe true
+      helper.isAdjustedTaxCode("C1234.98T") shouldBe false
+      helper.isAdjustedTaxCode("C1234L")    shouldBe false
     }
   }
   "TaxCalculatorHelper isValidScottishTaxCode" should {
@@ -86,19 +101,27 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
   }
   "TaxCalculatorHelper isUnTaxedIncomeTaxCode" should {
     "return true if the tax code begins with SK or K and the last digits are between 0-9999" in new TaxCalculatorHelperSetup {
-      helper.isUnTaxedIncomeTaxCode("K100")  shouldBe true
-      helper.isUnTaxedIncomeTaxCode("SK100") shouldBe true
-      helper.isUnTaxedIncomeTaxCode("KS100") shouldBe false
-      helper.isUnTaxedIncomeTaxCode("S100")  shouldBe false
-
+      helper.isUnTaxedIncomeTaxCode("K100")   shouldBe true
+      helper.isUnTaxedIncomeTaxCode("SK100")  shouldBe true
+      helper.isUnTaxedIncomeTaxCode("CK100")  shouldBe true
+      helper.isUnTaxedIncomeTaxCode("CSK100") shouldBe false
+      helper.isUnTaxedIncomeTaxCode("SCK100") shouldBe false
+      helper.isUnTaxedIncomeTaxCode("KS100")  shouldBe false
+      helper.isUnTaxedIncomeTaxCode("S100")   shouldBe false
+      helper.isUnTaxedIncomeTaxCode("C100")   shouldBe false
     }
   }
   "TaxCalculatorHelper removeScottishElement" should {
     "removes the leading 'S' from the taxCode if it is a valid Scottish TaxCode" in new TaxCalculatorHelperSetup {
-      helper.removeScottishElement("S7893N") shouldBe "7893N"
-      helper.removeScottishElement("SBR")    shouldBe "BR"
-      helper.removeScottishElement("SNT")    shouldBe "SNT"
-      helper.removeScottishElement("ST9009") shouldBe "ST9009"
+      helper.removeCountryElementFromTaxCode("S7893N") shouldBe "7893N"
+      helper.removeCountryElementFromTaxCode("SBR")    shouldBe "BR"
+      helper.removeCountryElementFromTaxCode("SNT")    shouldBe "SNT"
+      helper.removeCountryElementFromTaxCode("C7893N") shouldBe "7893N"
+      helper.removeCountryElementFromTaxCode("CBR")    shouldBe "BR"
+      helper.removeCountryElementFromTaxCode("CNT")    shouldBe "NT"
+      helper.removeCountryElementFromTaxCode("7893N")  shouldBe "7893N"
+      helper.removeCountryElementFromTaxCode("BR")     shouldBe "BR"
+      helper.removeCountryElementFromTaxCode("NT")     shouldBe "NT"
     }
   }
 }

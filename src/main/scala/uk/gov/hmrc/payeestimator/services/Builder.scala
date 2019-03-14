@@ -66,7 +66,7 @@ case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Mon
       val amount = if (payeTaxAmount.value <= total) Money(0) else payeTaxAmount - total
       val append = Seq(Aggregation(taxbands.taxBands.last.rate, amount.value))
       AggregationBuildResult(result.aggregation ++ append)
-    } else{
+    } else {
       result
     }
 

@@ -83,7 +83,7 @@ case class TaxYear_2019_2020(isScottish: Boolean = false) extends TaxCalcResourc
     band           = 3,
     bandwidth      = BigDecimal(112500.00),
     rate           = 40,
-    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 150000.00, cumulativeMaxTax = 47500, maxTax = 40000.00),
+    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 150000.00, cumulativeMaxTax = 52500.00, maxTax = 45000.00),
     specialTaxCode = Some("D0")
   )
   val taxBands4 = Band(

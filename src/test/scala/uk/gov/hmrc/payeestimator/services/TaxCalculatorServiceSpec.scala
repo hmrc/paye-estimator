@@ -358,6 +358,15 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "/data/2018_2019/2018_Scottish_Max_Tax_Edge_Case_Response.json"),
     ("return a annual TaxCalc response", "false", taxYear_2019_2020, "1100T", 1000008, "annual", -1, "/data/2019_2020/2019_TaxCalcResponse.json"),
     (
+      "return a annual TaxCalc response when Welsh",
+      "false",
+      taxYear_2019_2020,
+      "C1100T",
+      1000008,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_TaxCalcResponse_Welsh.json"),
+    (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true",
       taxYear_2019_2020,
@@ -528,7 +537,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
         val result: TaxCalc = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
 
         val expected: TaxCalc = taxCalcFromJson(expectedJson)
-
+        print(Json.toJson(result))
         result shouldBe expected
       }
     }
