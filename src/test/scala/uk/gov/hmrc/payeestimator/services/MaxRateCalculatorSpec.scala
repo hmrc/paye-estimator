@@ -19,10 +19,11 @@ package uk.gov.hmrc.payeestimator.services
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain._
 
-class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChanges {
+class MaxRateCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
   val TaxYear_2017_2018 = new TaxYear_2017_2018(false)
   val TaxYear_2018_2019 = new TaxYear_2018_2019(false)
+  val TaxYear_2019_2020 = new TaxYear_2019_2020(false)
 
   import org.scalatest.prop.TableDrivenPropertyChecks._
 
@@ -31,19 +32,17 @@ class MaxRateCalculatorSpec extends WordSpecLike with Matchers  with TaxYearChan
     (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2017_2018, BigDecimal(5000.00)),
     (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2017_2018, BigDecimal(-1)),
     (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2018_2019, BigDecimal(5000.00)),
-    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2018_2019, BigDecimal(-1))
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2018_2019, BigDecimal(-1)),
+    (BigDecimal(8000.00), BigDecimal(10000.00), TaxYear_2019_2020, BigDecimal(5000.00)),
+    (BigDecimal(8000.00), BigDecimal(20000.00), TaxYear_2019_2020, BigDecimal(-1))
   )
 
   s"MaxRateCalculator calculate() " should {
-    forAll(input) {
-
-      (payeAmount, grossPay, taxCalcResource, expectedResult) =>
-
-        s"should return $expectedResult for taxYear[${taxCalcResource.taxYear}], when paye[$payeAmount] and grossYear[$grossPay] " in {
-
-          val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
-          result.value shouldBe expectedResult
-        }
+    forAll(input) { (payeAmount, grossPay, taxCalcResource, expectedResult) =>
+      s"should return $expectedResult for taxYear[${taxCalcResource.taxYear}], when paye[$payeAmount] and grossYear[$grossPay] " in {
+        val result = MaxRateCalculator(Money(payeAmount), Money(grossPay), taxCalcResource).calculate().result
+        result.value shouldBe expectedResult
+      }
     }
   }
 }

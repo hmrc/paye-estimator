@@ -34,31 +34,33 @@ package uk.gov.hmrc.payeestimator.services
 
 import java.time.LocalDate
 
-import uk.gov.hmrc.payeestimator.domain.{TaxYear_2017_2018, TaxYear_2018_2019}
+import uk.gov.hmrc.payeestimator.domain.{TaxYear_2017_2018, TaxYear_2018_2019, TaxYear_2019_2020}
 
 trait LivePAYETaxCalcServiceSuccess {
-  val service = new PAYETaxCalculatorService {
-  }
+  val service: PAYETaxCalculatorService = new PAYETaxCalculatorService {}
 
-  val taxCalcResource2017 = new TaxYear_2017_2018(false)
-  val taxCalcResource2018 = new TaxYear_2018_2019(false)
-  val taxCalcResource2018Scottish = new TaxYear_2018_2019(true)
+  val taxCalcResource2017         = TaxYear_2017_2018()
+  val taxCalcResource2018         = TaxYear_2018_2019()
+  val taxCalcResource2019         = TaxYear_2019_2020()
+  val taxCalcResource2017Scottish = TaxYear_2017_2018(isScottish = true)
+  val taxCalcResource2018Scottish = TaxYear_2018_2019(isScottish = true)
+  val taxCalcResource2019Scottish = TaxYear_2019_2020(isScottish = true)
+
 }
 
 trait LiveNICTaxCalcServiceSuccess {
-  val service = new NICTaxCalculatorService {
-  }
+  val service: NICTaxCalculatorService = new NICTaxCalculatorService {}
 }
 
 trait LiveTaxCalcServiceSuccess {
-  val service = new TaxCalculatorService {
-    override val nicTaxCalculatorService: NICTaxCalculatorService = new NICTaxCalculatorService {}
+  val service: TaxCalculatorService = new TaxCalculatorService {
+    override val nicTaxCalculatorService:  NICTaxCalculatorService  = new NICTaxCalculatorService {}
     override val payeTaxCalculatorService: PAYETaxCalculatorService = new PAYETaxCalculatorService {}
   }
 
-  val date = LocalDate.now()
+  val date: LocalDate = LocalDate.now()
 }
 
 trait TaxCalculatorHelperSetup {
-  val helper = new TaxCalculatorHelper {}
+  val helper: TaxCalculatorHelper = new TaxCalculatorHelper {}
 }

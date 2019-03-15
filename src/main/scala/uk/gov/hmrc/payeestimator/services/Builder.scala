@@ -24,56 +24,51 @@ trait Builder {
 
   def build(): BuildResult
 
-  protected def calculateAggregationTotal(aggregation: Seq[Aggregation]) : BigDecimal = {
+  protected def calculateAggregationTotal(aggregation: Seq[Aggregation]): BigDecimal =
     aggregation match {
       case aggregate: Seq[Aggregation] => aggregate.foldLeft(BigDecimal(0.0))(_ + _.amount)
       case _ => BigDecimal(0.0)
     }
-  }
 }
 
-case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Money, taxCalcResource: TaxCalcResource) extends Builder with TaxCalculatorHelper {
+case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Money, taxCalcResource: TaxCalcResource)
+    extends Builder
+    with TaxCalculatorHelper {
 
   private val taxbands = taxCalcResource.taxBands
   private val numberOfBands: Int = taxbands.taxBands.size
 
-
-  override def build(): AggregationBuildResult = {
+  override def build(): AggregationBuildResult =
     if (isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) {
       AggregationBuildResult(taxbands.taxBands.filter(_.band != 1).collect(BasicRatePAYEAggregationFunc()))
-    }
-    else
+    } else
       appendAggregate(AggregationBuildResult(taxbands.taxBands.collect(PAYEAggregationFunc())))
-  }
 
-  private def PAYEAggregationFunc() : PartialFunction[Band, Aggregation] = {
-    case taxBand if taxBand.band == bandId && payeTaxAmount != Money(0) && taxBand.band != numberOfBands => {
+  private def PAYEAggregationFunc(): PartialFunction[Band, Aggregation] = {
+    case taxBand if taxBand.band == bandId && payeTaxAmount != Money(0) && taxBand.band != numberOfBands =>
       val sum = taxbands.taxBands.filter(_.band < bandId).collect(previousBandMaxTaxFunction()).foldLeft(BigDecimal(0.0))(_ + _)
       Aggregation(taxBand.rate, (payeTaxAmount - sum).value)
-    }
     case taxBand if taxBand.band < bandId && taxBand.band != 1 && payeTaxAmount != Money(0) => createPAYEAggregation(taxBand)
-    case taxBand if taxBand.band != 1 && payeTaxAmount == Money(0) => Aggregation(taxBand.rate, BigDecimal(0.0))
-    case taxBand if taxBand.band > bandId && taxBand.band != numberOfBands => Aggregation(taxBand.rate, BigDecimal(0.0))
+    case taxBand if taxBand.band != 1 && payeTaxAmount == Money(0)                          => Aggregation(taxBand.rate, BigDecimal(0.0))
+    case taxBand if taxBand.band > bandId && taxBand.band != numberOfBands                  => Aggregation(taxBand.rate, BigDecimal(0.0))
   }
 
-  private def previousBandMaxTaxFunction() : PartialFunction[Band, BigDecimal] = {
+  private def previousBandMaxTaxFunction(): PartialFunction[Band, BigDecimal] = {
     case taxBand => taxBand.period.maxTax
   }
 
-  private def createPAYEAggregation(taxBand: Band): Aggregation = {
-    Aggregation(taxBand.rate, Money(taxBand.period.maxTax, 2, true).value)
-  }
+  private def createPAYEAggregation(taxBand: Band): Aggregation =
+    Aggregation(taxBand.rate, Money(taxBand.period.maxTax, 2, roundingUp = true).value)
 
-  private def appendAggregate(result: AggregationBuildResult): AggregationBuildResult = {
-    if(payeTaxAmount != Money(0)){
-      val total = calculateAggregationTotal(result.aggregation)
+  private def appendAggregate(result: AggregationBuildResult): AggregationBuildResult =
+    if (payeTaxAmount != Money(0)) {
+      val total  = calculateAggregationTotal(result.aggregation)
       val amount = if (payeTaxAmount.value <= total) Money(0) else payeTaxAmount - total
-      val append = Seq(Aggregation(taxbands.taxBands.last.rate, (amount).value))
-      AggregationBuildResult(result.aggregation++append)
-    }
-    else
+      val append = Seq(Aggregation(taxbands.taxBands.last.rate, amount.value))
+      AggregationBuildResult(result.aggregation ++ append)
+    } else {
       result
-  }
+    }
 
   private def BasicRatePAYEAggregationFunc(): PartialFunction[Band, Aggregation] = {
     case taxBand if taxBand.band == bandId => Aggregation(taxBand.rate, payeTaxAmount.value)
@@ -83,12 +78,12 @@ case class PAYEAggregateBuilder(taxCode: String, bandId: Int, payeTaxAmount: Mon
 
 case class NICTaxCategoryBuilder(taxResult: NICTaxResult) extends Builder {
 
-  override def build(): TaxCategoryBuildResult = {
-    TaxCategoryBuildResult(Seq(
-      TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
-      TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC))
-    )
-  }
+  override def build(): TaxCategoryBuildResult =
+    TaxCategoryBuildResult(
+      Seq(
+        TaxCategory(taxType = "employeeNationalInsurance", calculateAggregationTotal(taxResult.employeeNIC), taxResult.employeeNIC),
+        TaxCategory(taxType = "employerNationalInsurance", calculateAggregationTotal(taxResult.employerNIC), taxResult.employerNIC)
+      ))
 }
 
 trait BuildResult

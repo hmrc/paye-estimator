@@ -32,7 +32,7 @@
 
 package uk.gov.hmrc.payeestimator.domain
 
-import org.scalatest.{WordSpecLike, Matchers}
+import org.scalatest.{Matchers, WordSpecLike}
 
 class MoneySpec extends WordSpecLike with Matchers {
 

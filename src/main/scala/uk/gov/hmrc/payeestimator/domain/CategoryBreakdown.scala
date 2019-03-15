@@ -16,9 +16,12 @@
 
 package uk.gov.hmrc.payeestimator.domain
 
-case class CategoryBreakdown(categoryBreakdown: Seq[Category], expenditureOnServices: BigDecimal, accountingAdjustments: BigDecimal, totalExpenditure: BigDecimal)
+case class CategoryBreakdown(
+  categoryBreakdown:     Seq[Category],
+  expenditureOnServices: BigDecimal,
+  accountingAdjustments: BigDecimal,
+  totalExpenditure:      BigDecimal)
 
-case class Category(category: String, allocation: BigDecimal ,subCategory: Seq[Category])
+case class Category(category: String, allocation: BigDecimal, subCategory: Seq[Category])
 
 case class CategoryUsage(category: String, allocation: BigDecimal, subCategory: Seq[CategoryUsage], percentage: BigDecimal)
-

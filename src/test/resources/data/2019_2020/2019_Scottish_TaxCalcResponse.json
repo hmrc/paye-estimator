@@ -1,14 +1,14 @@
 {
-  "statePensionAge": true,
-  "taxCode": "1100T",
+  "statePensionAge": false,
+  "taxCode": "S1100T",
   "payPerHour": -1,
   "hours": -1,
-  "averageAnnualTaxRate": 0,
+  "averageAnnualTaxRate": 1.64,
   "rateType": "SCOTLAND",
-  "marginalTaxRate": 0,
+  "marginalTaxRate": 12,
   "maxTaxRate": 50,
   "payeBand": 0,
-  "employeeNICBand": 0,
+  "employeeNICBand": 12,
   "tapered": false,
   "taxBreakdown": [
     {
@@ -24,36 +24,50 @@
           "total": 0,
           "aggregation": [
             {
+              "percentage": 19,
+              "amount": 0
+            },
+            {
               "percentage": 20,
               "amount": 0
             },
             {
-              "percentage": 40,
+              "percentage": 21,
               "amount": 0
             },
             {
-              "percentage": 45,
+              "percentage": 41,
+              "amount": 0
+            },
+            {
+              "percentage": 46,
               "amount": 0
             }
           ]
         },
         {
           "taxType": "employeeNationalInsurance",
-          "total": 0,
+          "total": 164.16,
           "aggregation": [
-
+            {
+              "percentage": 12,
+              "amount": 164.16
+            }
           ]
         },
         {
           "taxType": "employerNationalInsurance",
-          "total": 0,
+          "total": 188.78,
           "aggregation": [
-
+            {
+              "percentage": 13.8,
+              "amount": 188.78
+            }
           ]
         }
       ],
-      "totalDeductions": 0,
-      "takeHomePay": 10000
+      "totalDeductions": 164.16,
+      "takeHomePay": 9835.84
     },
     {
       "period": "monthly",
@@ -68,36 +82,50 @@
           "total": 0,
           "aggregation": [
             {
+              "percentage": 19,
+              "amount": 0
+            },
+            {
               "percentage": 20,
               "amount": 0
             },
             {
-              "percentage": 40,
+              "percentage": 21,
               "amount": 0
             },
             {
-              "percentage": 45,
+              "percentage": 41,
+              "amount": 0
+            },
+            {
+              "percentage": 46,
               "amount": 0
             }
           ]
         },
         {
           "taxType": "employeeNationalInsurance",
-          "total": 0,
+          "total": 13.68,
           "aggregation": [
-
+            {
+              "percentage": 12,
+              "amount": 13.68
+            }
           ]
         },
         {
           "taxType": "employerNationalInsurance",
-          "total": 0,
+          "total": 15.73,
           "aggregation": [
-
+            {
+              "percentage": 13.8,
+              "amount": 15.73
+            }
           ]
         }
       ],
-      "totalDeductions": 0,
-      "takeHomePay": 833.33
+      "totalDeductions": 13.68,
+      "takeHomePay": 819.65
     },
     {
       "period": "weekly",
@@ -112,36 +140,50 @@
           "total": 0,
           "aggregation": [
             {
+              "percentage": 19,
+              "amount": 0
+            },
+            {
               "percentage": 20,
               "amount": 0
             },
             {
-              "percentage": 40,
+              "percentage": 21,
               "amount": 0
             },
             {
-              "percentage": 45,
+              "percentage": 41,
+              "amount": 0
+            },
+            {
+              "percentage": 46,
               "amount": 0
             }
           ]
         },
         {
           "taxType": "employeeNationalInsurance",
-          "total": 0,
+          "total": 3.16,
           "aggregation": [
-
+            {
+              "percentage": 12,
+              "amount": 3.16
+            }
           ]
         },
         {
           "taxType": "employerNationalInsurance",
-          "total": 0,
+          "total": 3.63,
           "aggregation": [
-
+            {
+              "percentage": 13.8,
+              "amount": 3.63
+            }
           ]
         }
       ],
-      "totalDeductions": 0,
-      "takeHomePay": 192.31
+      "totalDeductions": 3.16,
+      "takeHomePay": 189.15
     }
   ]
 }

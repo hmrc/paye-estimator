@@ -16,83 +16,68 @@
 
 package uk.gov.hmrc.payeestimator.domain
 
+import scala.math.BigDecimal
 import scala.math.BigDecimal.RoundingMode
 
-class Money(amount: BigDecimal, decimalPlaces: Int, roundingUp: Boolean){
+class Money(amount: BigDecimal, decimalPlaces: Int, roundingUp: Boolean) {
 
-  val roundingMode =  if (roundingUp) RoundingMode.HALF_UP else RoundingMode.DOWN
+  val roundingMode: BigDecimal.RoundingMode.Value = if (roundingUp) RoundingMode.HALF_UP else RoundingMode.DOWN
 
-  def value: BigDecimal = {
-    if(decimalPlaces >= 0) {
+  def value: BigDecimal =
+    if (decimalPlaces >= 0) {
       val scaledAmount = amount.setScale(decimalPlaces, roundingMode)
       scaledAmount
     } else {
       amount
     }
-  }
 
-  def /(that: Money): Money = {
+  def /(that: Money): Money =
     Money(value./(that.value), decimalPlaces, roundingUp)
-  }
-  def /(that: BigDecimal): Money = {
+  def /(that: BigDecimal): Money =
     Money(value./(that), decimalPlaces, roundingUp)
-  }
 
-  def *(that: Money): Money = {
+  def *(that: Money): Money =
     Money(value.*(that.value), decimalPlaces, roundingUp)
-  }
-  def *(that: BigDecimal): Money = {
+  def *(that: BigDecimal): Money =
     Money(value.*(that), decimalPlaces, roundingUp)
-  }
 
-  def -(that: Money): Money = {
+  def -(that: Money): Money =
     Money(value.-(that.value), decimalPlaces, roundingUp)
-  }
 
-  def -(that: BigDecimal): Money = {
+  def -(that: BigDecimal): Money =
     Money(value.-(that), decimalPlaces, roundingUp)
-  }
 
-  def +(that: Money): Money = {
+  def +(that: Money): Money =
     Money(value.+(that.value), decimalPlaces, roundingUp)
-  }
 
-  def +(that: BigDecimal): Money = {
+  def +(that: BigDecimal): Money =
     Money(value.+(that), decimalPlaces, roundingUp)
-  }
 
-  def >(that: Money): Boolean = {
+  def >(that: Money): Boolean =
     value > that.value
-  }
-  def >(that: BigDecimal): Boolean = {
+  def >(that: BigDecimal): Boolean =
     value > that
-  }
 
-  def <(that: Money): Boolean = {
+  def <(that: Money): Boolean =
     value < that.value
-  }
 
-  def >=(that: Money): Boolean = {
+  def >=(that: Money): Boolean =
     value >= that.value
-  }
 
-  def <=(that: Money): Boolean = {
+  def <=(that: Money): Boolean =
     value <= that.value
-  }
 
-  def ==(that: Money): Boolean = {
+  def ==(that: Money): Boolean =
     value == that.value
-  }
 
-  def !=(that: Money): Boolean = {
+  def !=(that: Money): Boolean =
     value != that.value
-  }
 
 }
 
 object Money {
   def apply(amount: Money, decimalPlaces: Int, roundingUp: Boolean): Money = new Money(amount.value, decimalPlaces, roundingUp)
   def apply(amount: Money): Money = new Money(amount.value, -1, false)
-  def apply(value: BigDecimal, decimalPlaces: Int, roundingUp: Boolean): Money = new Money(value, decimalPlaces, roundingUp)
-  def apply(value: BigDecimal): Money = new Money(value, -1, false)
+  def apply(value:  BigDecimal, decimalPlaces: Int, roundingUp: Boolean): Money = new Money(value, decimalPlaces, roundingUp)
+  def apply(value:  BigDecimal): Money = new Money(value, -1, false)
 }

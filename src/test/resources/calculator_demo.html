@@ -11,24 +11,24 @@ This file will be removed once the build is being uploaded.
 <script type="text/javascript" src="paye-estimator-opt.js"></script>
 <script type="text/javascript">
 
-function calculate() {
-    var isStatePensionAge = $('input[name="StatePensionAge"]:checked').val();
-    var date = 2016;
-    var taxCode = $('input[name="TaxCode"]').val();
-    var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
-    var grossPayType = $("#GrossPayType").val();
-    var numberOfHours = parseInt($('input[name="NumberOfHours"]').val(), 10);
+    function calculate() {
+        var isStatePensionAge = $('input[name="StatePensionAge"]:checked').val();
+        var taxYear = '2019-05-01';
+        var taxCode = $('input[name="TaxCode"]').val();
+        var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
+        var grossPayType = $("#GrossPayType").val();
+        var numberOfHours = parseInt($('input[name="NumberOfHours"]').val(), 10);
 
-    var result = uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
-        isStatePensionAge,
-        taxYear,
-        taxCode,
-        grossPayPence,
-        grossPayType,
-        numberOfHours);
+        var result = uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
+            isStatePensionAge,
+            taxYear,
+            taxCode,
+            grossPayPence,
+            grossPayType,
+            numberOfHours);
 
-    document.querySelector('.results').innerHTML = result;
-}
+        document.querySelector('.results').innerHTML = result;
+    }
 
 </script>
 

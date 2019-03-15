@@ -20,26 +20,33 @@ import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxCalcResource}
 
 trait PAYETaxCalculatorService extends TaxCalculatorHelper {
 
-
   def calculatePAYETax(taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource): PAYETaxResult = {
 
-    def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] = {
+    def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] =
       taxCalcResource.getPreviousTaxBand(band).map(_.period.cumulativeMaxTax)
-    }
 
     if (!isValidTaxCode(taxCode, taxCalcResource)) throw new TaxCalculatorConfigException("Invalid Tax Code!")
     else {
-      val taxablePay = TaxablePayCalculator(taxCode, grossPay, taxCalcResource).calculate()
-      val taxBand = TaxBandCalculator(taxCode, taxablePay.result, taxCalcResource).calculate().result
-      val excessPay = ExcessPayCalculator(taxCode, taxBand.band, taxablePay.result, taxCalcResource).calculate().result
-      val finalBandTaxedAmount = Money(excessPay * (taxBand.rate / (100)), 2, true)
-      val previousBandMaxTax = if (taxBand.band > 1 && !isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) Money(getPreviousBandMaxTaxAmount(taxBand.band).get, 2, true) else Money(0)
+      val taxablePay           = TaxablePayCalculator(taxCode, grossPay, taxCalcResource).calculate()
+      val taxBand              = TaxBandCalculator(taxCode, taxablePay.result, taxCalcResource).calculate().result
+      val excessPay            = ExcessPayCalculator(taxCode, taxBand.band, taxablePay.result, taxCalcResource).calculate().result
+      val finalBandTaxedAmount = Money(excessPay * (taxBand.rate / 100), 2, roundingUp = true)
+      val previousBandMaxTax =
+        if (taxBand.band > 1 && !isBasicRateTaxCode(taxCode, taxCalcResource.isScottish))
+          Money(getPreviousBandMaxTaxAmount(taxBand.band).get, 2, roundingUp = true)
+        else Money(0)
       val rate = if (taxablePay.result.value == 0) BigDecimal(0) else taxBand.rate
-      PAYETaxResult(taxablePay.result, excessPay, finalBandTaxedAmount, taxBand.band, previousBandMaxTax, rate, taxablePay.isTapered, taxablePay.additionalTaxablePay)
+      PAYETaxResult(
+        taxablePay.result,
+        excessPay,
+        finalBandTaxedAmount,
+        taxBand.band,
+        previousBandMaxTax,
+        rate,
+        taxablePay.isTapered,
+        taxablePay.additionalTaxablePay)
     }
   }
 }
 
-
-object LivePAYETaxCalculatorService extends PAYETaxCalculatorService {
-}
+object LivePAYETaxCalculatorService extends PAYETaxCalculatorService {}

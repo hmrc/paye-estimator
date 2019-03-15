@@ -12,8 +12,8 @@
   "taxBreakdown": [
     {
       "period": "annual",
-      "grossPay": "10000.08",
-      "taxFreePay": "10000.08",
+      "grossPay": "10000.00",
+      "taxFreePay": "10000.00",
       "taxablePay": "0.00",
       "additionalTaxablePay": "0.00",
       "maxTaxAmount": "-1",
@@ -40,24 +40,22 @@
           "taxType": "employeeNationalInsurance",
           "total": "0",
           "aggregation": [
-
           ]
         },
         {
           "taxType": "employerNationalInsurance",
           "total": "0",
           "aggregation": [
-
           ]
         }
       ],
       "totalDeductions": "0.00",
-      "takeHomePay": "10000.08"
+      "takeHomePay": "10000.00"
     },
     {
       "period": "monthly",
-      "grossPay": "833.34",
-      "taxFreePay": "833.34",
+      "grossPay": "833.33",
+      "taxFreePay": "833.33",
       "taxablePay": "0.00",
       "additionalTaxablePay": "0.00",
       "maxTaxAmount": "-1",
@@ -84,19 +82,17 @@
           "taxType": "employeeNationalInsurance",
           "total": "0",
           "aggregation": [
-
           ]
         },
         {
           "taxType": "employerNationalInsurance",
           "total": "0",
           "aggregation": [
-
           ]
         }
       ],
       "totalDeductions": "0.00",
-      "takeHomePay": "833.34"
+      "takeHomePay": "833.33"
     },
     {
       "period": "weekly",
@@ -128,14 +124,12 @@
           "taxType": "employeeNationalInsurance",
           "total": "0",
           "aggregation": [
-
           ]
         },
         {
           "taxType": "employerNationalInsurance",
           "total": "0",
           "aggregation": [
-
           ]
         }
       ],

@@ -16,18 +16,45 @@
 
 package uk.gov.hmrc.payeestimator.domain
 
-case class PAYETaxResult(taxablePay: Money, excessPay: Money, finalBandTaxedAmount: Money, band: Int, previousBandMaxTax: Money, bandRate: BigDecimal, isTapered: Boolean, additionalTaxablePay: Money){
-  val payeTaxAmount = if(band > 1) finalBandTaxedAmount+previousBandMaxTax else finalBandTaxedAmount
+case class PAYETaxResult(
+  taxablePay:           Money,
+  excessPay:            Money,
+  finalBandTaxedAmount: Money,
+  band:                 Int,
+  previousBandMaxTax:   Money,
+  bandRate:             BigDecimal,
+  isTapered:            Boolean,
+  additionalTaxablePay: Money) {
+  val payeTaxAmount: Money = if (band > 1) finalBandTaxedAmount + previousBandMaxTax else finalBandTaxedAmount
 }
 
 case class NICTaxResult(employeeNICBandRate: BigDecimal, employeeNIC: Seq[Aggregation], employerNIC: Seq[Aggregation])
 
-case class TaxCalc(statePensionAge: Boolean, taxCode: String, payPerHour: BigDecimal, hours: Int, averageAnnualTaxRate: BigDecimal, rateType: Option[String],
-                   marginalTaxRate: BigDecimal, maxTaxRate: BigDecimal, payeBand: BigDecimal, employeeNICBand: BigDecimal, tapered: Boolean, taxBreakdown: Seq[TaxBreakdown])
+case class TaxCalc(
+  statePensionAge:      Boolean,
+  taxCode:              String,
+  payPerHour:           BigDecimal,
+  hours:                Int,
+  averageAnnualTaxRate: BigDecimal,
+  rateType:             Option[String],
+  marginalTaxRate:      BigDecimal,
+  maxTaxRate:           BigDecimal,
+  payeBand:             BigDecimal,
+  employeeNICBand:      BigDecimal,
+  tapered:              Boolean,
+  taxBreakdown:         Seq[TaxBreakdown])
 
-case class TaxBreakdown(period: String, grossPay: BigDecimal, taxFreePay: BigDecimal, taxablePay: BigDecimal, additionalTaxablePay: BigDecimal, scottishElement: Option[BigDecimal], maxTaxAmount: BigDecimal,
-                        taxCategories: Seq[TaxCategory], totalDeductions: BigDecimal, takeHomePay: BigDecimal)
-
+case class TaxBreakdown(
+  period:               String,
+  grossPay:             BigDecimal,
+  taxFreePay:           BigDecimal,
+  taxablePay:           BigDecimal,
+  additionalTaxablePay: BigDecimal,
+  scottishElement:      Option[BigDecimal],
+  maxTaxAmount:         BigDecimal,
+  taxCategories:        Seq[TaxCategory],
+  totalDeductions:      BigDecimal,
+  takeHomePay:          BigDecimal)
 
 case class TaxCategory(taxType: String, total: BigDecimal, aggregation: Seq[Aggregation])
 
