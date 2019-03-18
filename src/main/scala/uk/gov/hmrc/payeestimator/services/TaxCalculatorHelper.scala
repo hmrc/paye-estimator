@@ -62,13 +62,17 @@ trait TaxCalculatorHelper {
       Money(rateLimit.limit)
   }
 
-  def splitTaxCode(taxCode: String): String =
-    if (isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode))
+  def splitTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): String = {
+    if (isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode)) {
       taxCode.stripSuffix(taxCode.substring(taxCode.length - 1, taxCode.length))
-    else if (isUnTaxedIncomeTaxCode(taxCode) && (taxCode.toUpperCase.contains("S") || taxCode.toUpperCase.contains("K"))) {
+    } else if (isEmergencyTaxCode(taxCode, taxCalcResource)) {
+      taxCode.replace(" ", "").toUpperCase().stripSuffix("W1").stripSuffix("M1").stripSuffix("X").stripSuffix("L")
+    } else if (isUnTaxedIncomeTaxCode(taxCode) && (taxCode.toUpperCase.contains("S") || taxCode.toUpperCase.contains("K"))) {
       taxCode.toUpperCase.stripPrefix("S").stripPrefix("K")
-    } else
+    } else {
       taxCode
+    }
+  }
 
   def removeCountryElementFromTaxCode(taxCode: String): String =
     if (isValidScottishTaxCode(taxCode)) {

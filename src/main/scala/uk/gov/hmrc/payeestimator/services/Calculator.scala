@@ -51,12 +51,12 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
     ExcessPayResponse(success, excessPay)
 }
 
-case class AllowanceCalculator(taxCode: String) extends Calculator with TaxCalculatorHelper {
+case class AllowanceCalculator(taxCode: String, taxCalcResource: TaxCalcResource) extends Calculator with TaxCalculatorHelper {
 
   override def calculate(): AllowanceResponse =
     taxCode match {
       case "ZERO" | "K0" | "0L" => applyResponse(success = true, ZeroAllowance())
-      case _                    => applyResponse(success = true, AnnualAllowance(taxCode, BigDecimal(splitTaxCode(taxCode).toDouble)))
+      case _                    => applyResponse(success = true, AnnualAllowance(taxCode, BigDecimal(splitTaxCode(taxCode, taxCalcResource).toDouble)))
     }
 
   def applyResponse(success: Boolean, allowance: Allowance): AllowanceResponse =
@@ -74,7 +74,7 @@ case class TaxablePayCalculator(taxCode: String, grossPay: Money, taxCalcResourc
       grossPay
     } else {
       if (isTaxableCode(taxCode, taxCalcResource.isScottish)) {
-        val allowance = AllowanceCalculator(updatedTaxCode).calculate().result
+        val allowance = AllowanceCalculator(updatedTaxCode, taxCalcResource).calculate().result
         if (isUnTaxedIncomeTaxCode(taxCode))
           Money(grossPay + allowance.allowance)
         else Money(grossPay - allowance.allowance)
@@ -193,7 +193,7 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, grossPay: Money, t
 
     if (basicTax && overAnnualThresh) {
         val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, roundingUp = true)
-      val taxCodeNumber     = Money(BigDecimal(splitTaxCode(removeCountryElementFromTaxCode(taxCode)).toInt), 2, roundingUp   = true)
+      val taxCodeNumber     = Money(BigDecimal(splitTaxCode(removeCountryElementFromTaxCode(taxCode), taxCalcResource).toInt), 2, roundingUp   = true)
       if (taperingDeduction < taxCodeNumber) {
         TaperingResponse(success = true, s"${(taxCodeNumber - taperingDeduction).value}L", isTapered = true)
       } else {

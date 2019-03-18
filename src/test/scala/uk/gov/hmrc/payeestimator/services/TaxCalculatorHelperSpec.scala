@@ -50,6 +50,30 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     }
   }
 
+  val basicTaxCodes = Table(
+    ("taxCode", "taxCalcResource", "expectedResult"),
+    //2017-2018
+    ("1150L", TaxYear_2017_2018, true),
+    ("1150", TaxYear_2017_2018, false),
+    ("1150LL", TaxYear_2017_2018, false),
+    //2018-2019
+    ("1185L", TaxYear_2018_2019, true),
+    ("1185", TaxYear_2018_2019, false),
+    ("1185LL", TaxYear_2018_2019, false),
+    //2018-2019
+    ("1250L", TaxYear_2019_2020, true),
+    ("1250", TaxYear_2019_2020, false),
+    ("1250LL", TaxYear_2019_2020, false)
+  )
+
+  s"TaxCalculatorHelper isMainTaxCode()" should {
+    forAll(basicTaxCodes) { (taxCode, taxCalcResource, expectedResult) =>
+      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode" in new TaxCalculatorHelperSetup {
+        helper.isMainTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
+      }
+    }
+  }
+
   val input = Table(
     ("taxCode", "taxCalcResource", "expectedResult"),
     //2017-2018
@@ -77,45 +101,27 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     ("1250M1", TaxYear_2019_2020, true),
     ("1250 X", TaxYear_2019_2020, true),
     ("1250L X", TaxYear_2019_2020, true),
+    ("1250X", TaxYear_2019_2020, true),
+    ("1250LX", TaxYear_2019_2020, true),
     ("C1250 W1", TaxYear_2019_2020, true),
     ("C1250 M1", TaxYear_2019_2020, true),
     ("C1250W1", TaxYear_2019_2020, true),
     ("C1250M1", TaxYear_2019_2020, true),
     ("C1250 X", TaxYear_2019_2020, true),
     ("C1250L X", TaxYear_2019_2020, true),
+    ("C1250X", TaxYear_2019_2020, true),
+    ("C1250LX", TaxYear_2019_2020, true),
     ("S1250 W1", Scottish_TaxYear_2019_2020, true),
     ("S1250 M1", Scottish_TaxYear_2019_2020, true),
     ("S1250W1", Scottish_TaxYear_2019_2020, true),
     ("S1250M1", Scottish_TaxYear_2019_2020, true),
     ("S1250 X", Scottish_TaxYear_2019_2020, true),
-    ("S1250L X", Scottish_TaxYear_2019_2020, true)
+    ("S1250L X", Scottish_TaxYear_2019_2020, true),
+    ("S1250X", TaxYear_2019_2020, true),
+    ("S1250LX", TaxYear_2019_2020, true)
   )
 
-  val basicTaxCodes = Table(
-    ("taxCode", "taxCalcResource", "expectedResult"),
-    //2017-2018
-    ("1150L", TaxYear_2017_2018, true),
-    ("1150", TaxYear_2017_2018, false),
-    ("1150LL", TaxYear_2017_2018, false),
-    //2018-2019
-    ("1185L", TaxYear_2018_2019, true),
-    ("1185", TaxYear_2018_2019, false),
-    ("1185LL", TaxYear_2018_2019, false),
-    //2018-2019
-    ("1250L", TaxYear_2019_2020, true),
-    ("1250", TaxYear_2019_2020, false),
-    ("1250LL", TaxYear_2019_2020, false)
-  )
-
-  s"TaxCalculatorHelper isMainTaxCode()" should {
-    forAll(basicTaxCodes) { (taxCode, taxCalcResource, expectedResult) =>
-      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode" in new TaxCalculatorHelperSetup {
-        helper.isMainTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
-      }
-    }
-  }
-
-  s"TaxCalculatorHelper isBasicTaxCode()" should {
+  s"TaxCalculatorHelper isEmergencyTaxCode()" should {
     forAll(input) { (taxCode, taxCalcResource, expectedResult) =>
       s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode" in new TaxCalculatorHelperSetup {
         helper.isEmergencyTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
@@ -157,17 +163,54 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isUnTaxedIncomeTaxCode("C100")   shouldBe false
     }
   }
-  "TaxCalculatorHelper removeScottishElement" should {
-    "removes the leading 'S' from the taxCode if it is a valid Scottish TaxCode" in new TaxCalculatorHelperSetup {
+  "TaxCalculatorHelper removeCountryElement" should {
+    "removes the leading 'S' or 'C from the taxCode if it is a valid Scottish or Welsh TaxCode" in new TaxCalculatorHelperSetup {
       helper.removeCountryElementFromTaxCode("S7893N") shouldBe "7893N"
       helper.removeCountryElementFromTaxCode("SBR")    shouldBe "BR"
       helper.removeCountryElementFromTaxCode("SNT")    shouldBe "SNT"
       helper.removeCountryElementFromTaxCode("C7893N") shouldBe "7893N"
       helper.removeCountryElementFromTaxCode("CBR")    shouldBe "BR"
-      helper.removeCountryElementFromTaxCode("CNT")    shouldBe "NT"
       helper.removeCountryElementFromTaxCode("7893N")  shouldBe "7893N"
       helper.removeCountryElementFromTaxCode("BR")     shouldBe "BR"
       helper.removeCountryElementFromTaxCode("NT")     shouldBe "NT"
+      helper.removeCountryElementFromTaxCode("C1250 W1") shouldBe "1250 W1"
+      helper.removeCountryElementFromTaxCode("C1250 M1") shouldBe "1250 M1"
+      helper.removeCountryElementFromTaxCode("C1250M1") shouldBe "1250M1"
+      helper.removeCountryElementFromTaxCode("C1250W1") shouldBe "1250W1"
+      helper.removeCountryElementFromTaxCode("C1250L X") shouldBe "1250L X"
+      helper.removeCountryElementFromTaxCode("C1250 X") shouldBe "1250 X"
+      helper.removeCountryElementFromTaxCode("C1250LX") shouldBe "1250LX"
+      helper.removeCountryElementFromTaxCode("C1250X") shouldBe "1250X"
+    }
+  }
+
+  val split = Table(
+    ("taxCode", "taxCalcResource", "expectedResult"),
+    //2017-2018
+    ("1150L", TaxYear_2017_2018, "1150"),
+    ("1150", TaxYear_2017_2018, "1150"),
+    //2018-2019
+    ("1185L", TaxYear_2018_2019, "1185"),
+    ("1185", TaxYear_2018_2019, "1185"),
+    //2018-2019
+    ("1250L", TaxYear_2019_2020, "1250"),
+    ("1250", TaxYear_2019_2020, "1250"),
+    //Emergency Tax
+    ("1250 W1", TaxYear_2019_2020, "1250"),
+    ("1250 M1", TaxYear_2019_2020, "1250"),
+    ("1250 X", TaxYear_2019_2020, "1250"),
+    ("1250W1", TaxYear_2019_2020, "1250"),
+    ("1250M1", TaxYear_2019_2020, "1250"),
+    ("1250X", TaxYear_2019_2020, "1250"),
+    ("1250LX", TaxYear_2019_2020, "1250"),
+    ("1250L X", TaxYear_2019_2020, "1250")
+  )
+
+  "TaxCalculatorHelper splitTaxCode" should {
+    forAll(split) { (taxCode, taxCalcResource, expectedResult) =>
+      s"Take $taxCode and returns $expectedResult" in new TaxCalculatorHelperSetup {
+        helper.splitTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
+      }
     }
   }
 }

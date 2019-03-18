@@ -21,6 +21,8 @@ import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxCalcResource}
 trait PAYETaxCalculatorService extends TaxCalculatorHelper {
 
   def calculatePAYETax(taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource): PAYETaxResult = {
+    print(taxCode)
+
 
     def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] =
       taxCalcResource.getPreviousTaxBand(band).map(_.period.cumulativeMaxTax)

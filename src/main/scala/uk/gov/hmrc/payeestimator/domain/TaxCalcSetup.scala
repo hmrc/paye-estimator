@@ -65,7 +65,7 @@ object TaxCalcResourceBuilder {
 case class TaxYear_2019_2020(isScottish: Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String    = "1250"
-  override val emergencyRegex: String    = "(C|S)?"+ emergencyTaxCode.stripSuffix("L") +"(((L)?( X)|(( )?(W1|M1))))"
+  override val emergencyRegex: String    = "(C|S)?"+ emergencyTaxCode + "((((L)?( )?(X))|(( )?(W1|M1))))"
 
   override val startDate:        LocalDate = LocalDate.of(2019, 4, 6)
   override val endDate:          LocalDate = LocalDate.of(2020, 4, 5)

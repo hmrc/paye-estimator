@@ -17,7 +17,9 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxYearChanges}
+import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxYearChanges, TaxYear_2019_2020}
+import org.scalatest.prop.TableDrivenPropertyChecks._
+import org.scalatest.prop.Tables.Table
 
 class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
@@ -254,9 +256,34 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
       result.payeTaxAmount.value shouldBe BigDecimal(36000.00)
     }
 
-    "Calculate Annual PAYE tax for a gross salary of 43000.00 in Scottish tax band 4 for 2019" in new LivePAYETaxCalcServiceSuccess {
-      val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(43000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(6258.18)
+    // No need to test country prefixes as these have been stripped out by this point
+    val emergencyTax = Table(("taxCode", "Earnings", "totalPayeAmount", "taxResource"),
+      ("1250 W1",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250W1",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250 M1",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250M1",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250L X",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250LX",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250 X",20000.00,1498.20, TaxYear_2019_2020()),
+      ("1250X",20000.00,1498.20, TaxYear_2019_2020()),
+
+      ("1250 W1",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250W1",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250 M1",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250M1",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250L X",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250LX",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250 X",20000.00,1477.71, TaxYear_2019_2020(true)),
+      ("1250X",20000.00,1477.71, TaxYear_2019_2020(true))
+    )
+
+    s"Emergency Tax Calc" should {
+      forAll(emergencyTax) { (taxCode,earnings, totalPayeAmount, taxResource) =>
+        s"return $totalPayeAmount for for $taxCode" in new LivePAYETaxCalcServiceSuccess{
+          val result: PAYETaxResult = service.calculatePAYETax(taxCode, Money(earnings), taxResource)
+          result.payeTaxAmount.value shouldBe BigDecimal(totalPayeAmount)
+        }
+      }
     }
 
     "Calculate Annual PAYE tax for a gross salary of 75500.00 in Scottish tax band 5 for 2019" in new LivePAYETaxCalcServiceSuccess {
