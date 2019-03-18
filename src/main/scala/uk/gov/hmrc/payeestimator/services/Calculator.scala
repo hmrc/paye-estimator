@@ -187,8 +187,12 @@ case class AnnualTaperingDeductionCalculator(taxCode: String, grossPay: Money, t
 
   override def calculate(): TaperingResponse = {
     val annualIncomeThreshold = taxCalcResource.taxBands.annualIncomeThreshold
-    if (isEmergencyTaxCode(taxCode, taxCalcResource) && grossPay > annualIncomeThreshold) {
-      val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, roundingUp = true)
+   // if (isEmergencyTaxCode(taxCode, taxCalcResource) && grossPay > annualIncomeThreshold) {
+    val basicTax = isMainTaxCode(taxCode, taxCalcResource)
+    val overAnnualThresh = grossPay > annualIncomeThreshold
+
+    if (basicTax && overAnnualThresh) {
+        val taperingDeduction = Money(((grossPay.value - annualIncomeThreshold) / 2).intValue() / BigDecimal(10), 2, roundingUp = true)
       val taxCodeNumber     = Money(BigDecimal(splitTaxCode(removeCountryElementFromTaxCode(taxCode)).toInt), 2, roundingUp   = true)
       if (taperingDeduction < taxCodeNumber) {
         TaperingResponse(success = true, s"${(taxCodeNumber - taperingDeduction).value}L", isTapered = true)

@@ -77,7 +77,7 @@ class ExcessPayCalculatorSpec extends WordSpecLike with Matchers with TaxYearCha
     ("D1", scottishTaxYear_2019_2020, 1, Money(60000.00), Money(60000.00)),
     ("1100T", scottishTaxYear_2019_2020, 2, Money(60000.00), Money(60000.00)),
     ("1100T", scottishTaxYear_2019_2020, 3, Money(60000.00), Money(57951.00)),
-    ("1100T", scottishTaxYear_2019_2020, 4, Money(60000.00), Money(47555.00)),
+    ("1100T", scottishTaxYear_2019_2020, 4, Money(60000.00), Money(47556.00)),
     ("1100T", scottishTaxYear_2019_2020, 5, Money(60000.00), Money(29070.00)),
     ("1100T", scottishTaxYear_2019_2020, 6, Money(160000.00), Money(10000.00))
   )

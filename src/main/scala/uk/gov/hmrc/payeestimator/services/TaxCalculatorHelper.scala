@@ -38,8 +38,12 @@ trait TaxCalculatorHelper {
     taxCode.matches("(C)?([B][R]){1}") ||
       taxCode.matches(s"(C)?([D][0,1${if (isScottish) { ",2" } else { "" }}])")
 
+  // 1150L, 1185L or 1250L
+  def isMainTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
+    taxCode.matches(taxCalcResource.emergencyTaxCode.stripSuffix("L") + "L") //Stripping so that we can easily use the code for all years
+
   def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
-    taxCode.matches("(C|S)?" + taxCalcResource.emergencyTaxCode)
+    taxCode.matches(taxCalcResource.emergencyRegex)
 
   def isAdjustedTaxCode(taxCode: String): Boolean =
     taxCode.matches("(C)?([0-9]+[.]{1}[0-9]{2}[L]{1}){1}")

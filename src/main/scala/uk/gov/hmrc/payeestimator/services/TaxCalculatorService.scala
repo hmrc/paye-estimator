@@ -285,10 +285,12 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
 
   private def evalMaxTaxCategory(isMaxTax: Boolean, taxCategory: TaxCategory) = {
     val validCategory = !taxCategory.taxType.equals("employerNationalInsurance")
-    if (isMaxTax)
+    if (isMaxTax) {
       validCategory && !taxCategory.taxType.equals("incomeTax")
-    else
+    }
+    else {
       validCategory
+    }
   }
 
   private def getHourlyGrossPay(hours: Option[Int], grossPay: BigDecimal): BigDecimal =
@@ -296,7 +298,6 @@ trait TaxCalculatorService extends TaxCalculatorHelper {
       case Some(_: Int) => grossPay / 100
       case _ => -1
     }
-
 }
 
 @JSExport

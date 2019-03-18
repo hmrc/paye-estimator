@@ -7,9 +7,10 @@ import uk.gov.hmrc.payeestimator.domain._
 
 class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
-  val TaxYear_2017_2018 = new TaxYear_2017_2018(isScottish = false)
-  val TaxYear_2018_2019 = new TaxYear_2018_2019(isScottish = false)
-  val TaxYear_2019_2020 = new TaxYear_2019_2020(isScottish = false)
+  val TaxYear_2017_2018          = new TaxYear_2017_2018(isScottish = false)
+  val TaxYear_2018_2019          = new TaxYear_2018_2019(isScottish = false)
+  val TaxYear_2019_2020          = new TaxYear_2019_2020(isScottish = false)
+  val Scottish_TaxYear_2019_2020 = new TaxYear_2019_2020(isScottish = true)
 
   "TaxCalculatorHelper isStandardTaxCode" should {
     "return true if the code matches the format where the first 4 digits are between 0-9999 and the last is L,M,N or T" in new TaxCalculatorHelperSetup {
@@ -50,29 +51,74 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
   }
 
   val input = Table(
-    ("taxCode", "taxCalcResource", "expectedResult", "actualEmergencyTaxCode"),
-    ("1150L", TaxYear_2017_2018, true, "1150L"),
-    ("11500L", TaxYear_2017_2018, false, "1150L"),
-    ("11150L", TaxYear_2017_2018, false, "1150L"),
-    ("1150T", TaxYear_2017_2018, false, "1150L"),
-    ("1185L", TaxYear_2018_2019, true, "1185L"),
-    ("11850L", TaxYear_2018_2019, false, "1185L"),
-    ("11185L", TaxYear_2018_2019, false, "1185L"),
-    ("1250L", TaxYear_2019_2020, true, "1250L"),
-    ("C1250L", TaxYear_2019_2020, true, "S1250L"),
-    ("CS1250L", TaxYear_2019_2020, false, "CS1250L"),
-    ("SC1250L", TaxYear_2019_2020, false, "SC1250L"),
-    ("S1250L", TaxYear_2019_2020, true, "C1250L"),
-    ("12500L", TaxYear_2018_2019, false, "1250L"),
-    ("12250L", TaxYear_2018_2019, false, "1250L"),
-    ("1185T", TaxYear_2018_2019, false, "1250L")
+    ("taxCode", "taxCalcResource", "expectedResult"),
+    //2017-2018
+    ("1150L", TaxYear_2017_2018, true),
+    ("11500L", TaxYear_2017_2018, false),
+    ("11150L", TaxYear_2017_2018, false),
+    ("1150T", TaxYear_2017_2018, false),
+    //2018-2019
+    ("1185L", TaxYear_2018_2019, true),
+    ("11850L", TaxYear_2018_2019, false),
+    ("11185L", TaxYear_2018_2019, false),
+    ("12500L", TaxYear_2018_2019, false),
+    ("12250L", TaxYear_2018_2019, false),
+    ("1185T", TaxYear_2018_2019, false),
+    //2019-2020
+    ("1250L", TaxYear_2019_2020, false),
+    ("C1250L", TaxYear_2019_2020, false),
+    ("CS1250L", TaxYear_2019_2020, false),
+    ("SC1250L", Scottish_TaxYear_2019_2020, false),
+    ("SC1250L", TaxYear_2019_2020, false),
+    ("S1250L", Scottish_TaxYear_2019_2020, false),
+    ("1250 W1", TaxYear_2019_2020, true),
+    ("1250 M1", TaxYear_2019_2020, true),
+    ("1250W1", TaxYear_2019_2020, true),
+    ("1250M1", TaxYear_2019_2020, true),
+    ("1250 X", TaxYear_2019_2020, true),
+    ("1250L X", TaxYear_2019_2020, true),
+    ("C1250 W1", TaxYear_2019_2020, true),
+    ("C1250 M1", TaxYear_2019_2020, true),
+    ("C1250W1", TaxYear_2019_2020, true),
+    ("C1250M1", TaxYear_2019_2020, true),
+    ("C1250 X", TaxYear_2019_2020, true),
+    ("C1250L X", TaxYear_2019_2020, true),
+    ("S1250 W1", Scottish_TaxYear_2019_2020, true),
+    ("S1250 M1", Scottish_TaxYear_2019_2020, true),
+    ("S1250W1", Scottish_TaxYear_2019_2020, true),
+    ("S1250M1", Scottish_TaxYear_2019_2020, true),
+    ("S1250 X", Scottish_TaxYear_2019_2020, true),
+    ("S1250L X", Scottish_TaxYear_2019_2020, true)
   )
 
-  s"TaxCalculatorHelper isEmergencyTaxCode()" should {
-    forAll(input) { (taxCode, taxCalcResource, expectedResult, actualEmergencyTaxCode) =>
-      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode if the tax code matches $actualEmergencyTaxCode" in new TaxCalculatorHelperSetup {
-        helper.isEmergencyTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
+  val basicTaxCodes = Table(
+    ("taxCode", "taxCalcResource", "expectedResult"),
+    //2017-2018
+    ("1150L", TaxYear_2017_2018, true),
+    ("1150", TaxYear_2017_2018, false),
+    ("1150LL", TaxYear_2017_2018, false),
+    //2018-2019
+    ("1185L", TaxYear_2018_2019, true),
+    ("1185", TaxYear_2018_2019, false),
+    ("1185LL", TaxYear_2018_2019, false),
+    //2018-2019
+    ("1250L", TaxYear_2019_2020, true),
+    ("1250", TaxYear_2019_2020, false),
+    ("1250LL", TaxYear_2019_2020, false)
+  )
 
+  s"TaxCalculatorHelper isMainTaxCode()" should {
+    forAll(basicTaxCodes) { (taxCode, taxCalcResource, expectedResult) =>
+      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode" in new TaxCalculatorHelperSetup {
+        helper.isMainTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
+      }
+    }
+  }
+
+  s"TaxCalculatorHelper isBasicTaxCode()" should {
+    forAll(input) { (taxCode, taxCalcResource, expectedResult) =>
+      s"return $expectedResult for ${taxCalcResource.taxYear} for $taxCode" in new TaxCalculatorHelperSetup {
+        helper.isEmergencyTaxCode(taxCode, taxCalcResource) shouldBe expectedResult
       }
     }
   }

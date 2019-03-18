@@ -537,11 +537,9 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
         val result: TaxCalc = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
 
         val expected: TaxCalc = taxCalcFromJson(expectedJson)
-        print(Json.toJson(result))
         result shouldBe expected
       }
     }
-
   }
 
   "fail with exception max amount exceeded when greater than 999999999" in new LiveTaxCalcServiceSuccess {

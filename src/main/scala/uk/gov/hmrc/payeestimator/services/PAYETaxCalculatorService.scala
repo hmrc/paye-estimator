@@ -32,9 +32,11 @@ trait PAYETaxCalculatorService extends TaxCalculatorHelper {
       val excessPay            = ExcessPayCalculator(taxCode, taxBand.band, taxablePay.result, taxCalcResource).calculate().result
       val finalBandTaxedAmount = Money(excessPay * (taxBand.rate / 100), 2, roundingUp = true)
       val previousBandMaxTax =
-        if (taxBand.band > 1 && !isBasicRateTaxCode(taxCode, taxCalcResource.isScottish))
+        if (taxBand.band > 1 && !isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) {
           Money(getPreviousBandMaxTaxAmount(taxBand.band).get, 2, roundingUp = true)
-        else Money(0)
+        } else {
+          Money(0)
+        }
       val rate = if (taxablePay.result.value == 0) BigDecimal(0) else taxBand.rate
       PAYETaxResult(
         taxablePay.result,

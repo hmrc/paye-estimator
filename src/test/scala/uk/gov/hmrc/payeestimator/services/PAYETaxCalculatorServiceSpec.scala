@@ -256,27 +256,27 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
 
     "Calculate Annual PAYE tax for a gross salary of 43000.00 in Scottish tax band 4 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(43000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(6257.66)
+      result.payeTaxAmount.value shouldBe BigDecimal(6258.18)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 75500.00 in Scottish tax band 5 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("980L", Money(75500.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(20602.31)
+      result.payeTaxAmount.value shouldBe BigDecimal(20602.38)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 119000.00 in Scottish tax band 5 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(119000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(41225.31)
+      result.payeTaxAmount.value shouldBe BigDecimal(41225.38)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 160000.00 in Scottish tax band 6 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(160000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(54644.50)
+      result.payeTaxAmount.value shouldBe BigDecimal(59769.07)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 45000.00 K code (untaxed income) Scottish for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("K100", Money(45000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(12532.69)
+      result.payeTaxAmount.value shouldBe BigDecimal(12532.76)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 50000.00 in Scottish No Tax (NT) code 2019" in new LivePAYETaxCalcServiceSuccess {
@@ -286,7 +286,7 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
 
     "Calculate Annual PAYE tax for a gross salary of 60000.00 in Scottish 0T (no personal allowance) code 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("0T", Money(60000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(18269.00)
+      result.payeTaxAmount.value shouldBe BigDecimal(18269.07)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 10000.00 in Scottish BR (basic rate) code 2019" in new LivePAYETaxCalcServiceSuccess {
