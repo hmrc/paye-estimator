@@ -16,10 +16,10 @@
 
 package uk.gov.hmrc.payeestimator.services
 
-import org.scalatest.{Matchers, WordSpecLike}
-import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxYearChanges, TaxYear_2019_2020}
 import org.scalatest.prop.TableDrivenPropertyChecks._
 import org.scalatest.prop.Tables.Table
+import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain._
 
 class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
@@ -54,7 +54,7 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
       service.isValidTaxCode("99999M", taxCalcResource2019Scottish) shouldBe false
     }
 
-    "return true for 0X which matched the pattern ([0-9]{1,4}[L-N,l-n,T,t,X,x]{1}){1}" in new LivePAYETaxCalcServiceSuccess {
+    "return false for 0X which matched the pattern ([0-9]{1,4}[L-N,l-n,T,t,X,x]{1}){1}" in new LivePAYETaxCalcServiceSuccess {
       service.isValidTaxCode("0X", taxCalcResource2017) shouldBe false
       service.isValidTaxCode("0X", taxCalcResource2018) shouldBe false
       service.isValidTaxCode("0X", taxCalcResource2019) shouldBe false
@@ -62,7 +62,67 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
       service.isValidTaxCode("0X", taxCalcResource2017Scottish) shouldBe false
       service.isValidTaxCode("0X", taxCalcResource2018Scottish) shouldBe false
       service.isValidTaxCode("0X", taxCalcResource2019Scottish) shouldBe false
+    }
 
+    val otherCodes = Table(
+      ("code", "resource", "valid"),
+      ("1250MX", TaxYear_2017_2018(), false),
+      ("1250MX", TaxYear_2018_2019(), false),
+      ("1250MX", TaxYear_2019_2020(), true),
+      ("C1250MX", TaxYear_2019_2020(), true),
+
+      ("BRX", TaxYear_2017_2018(), true),
+      ("BRX", TaxYear_2018_2019(), true),
+      ("BRX", TaxYear_2019_2020(), true),
+      ("CBRX", TaxYear_2019_2020(), true),
+
+      ("D0X", TaxYear_2017_2018(), true),
+      ("D0X", TaxYear_2018_2019(), true),
+      ("D0X", TaxYear_2019_2020(), true),
+      ("CD0X", TaxYear_2019_2020(), true),
+
+      ("K100X", TaxYear_2017_2018(), false),
+      ("K100X", TaxYear_2018_2019(), false),
+      ("K100X", TaxYear_2019_2020(), true),
+
+      ("S1250MX", TaxYear_2017_2018(true), true),
+      ("S1250MX", TaxYear_2018_2019(true), true),
+      ("S1250MX", TaxYear_2019_2020(true), true),
+
+      ("SBRX", TaxYear_2017_2018(true), true),
+      ("SBRX", TaxYear_2018_2019(true), true),
+      ("SBRX", TaxYear_2019_2020(true), true),
+
+      ("SD0X", TaxYear_2017_2018(true), true),
+      ("SD0X", TaxYear_2018_2019(true), true),
+      ("SD0X", TaxYear_2019_2020(true), true),
+
+      ("SK100X", TaxYear_2017_2018(true), true),
+      ("SK100X", TaxYear_2018_2019(true), true),
+      ("SK100X", TaxYear_2019_2020(true), true),
+
+      ("S1250M1", TaxYear_2017_2018(true), true),
+      ("S1250M1", TaxYear_2018_2019(true), true),
+      ("S1250M1", TaxYear_2019_2020(true), true),
+
+      ("S1250W1", TaxYear_2017_2018(true), true),
+      ("S1250W1", TaxYear_2018_2019(true), true),
+      ("S1250W1", TaxYear_2019_2020(true), true),
+
+      ("S1250 M1", TaxYear_2017_2018(true), true),
+      ("S1250 M1", TaxYear_2018_2019(true), true),
+      ("S1250 M1", TaxYear_2019_2020(true), true),
+
+      ("S1250 W1", TaxYear_2017_2018(true), true),
+      ("S1250 W1", TaxYear_2018_2019(true), true),
+      ("S1250 W1", TaxYear_2019_2020(true), true)
+    )
+
+    forAll(otherCodes) { (taxCode, resource, expectedResult) =>
+      s"Other random tax codes that need to work that were found as part of the 2019-2020 updates testing " +
+        s"$taxCode for ${if (resource.isScottish) "Scottish" else "English/Welsh"} ${resource.startDate.getYear} expected it to $expectedResult" in new LivePAYETaxCalcServiceSuccess {
+        service.isValidTaxCode(taxCode, resource) shouldBe expectedResult
+      }
     }
   }
 
@@ -257,29 +317,39 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
     }
 
     // No need to test country prefixes as these have been stripped out by this point
-    val emergencyTax = Table(("taxCode", "Earnings", "totalPayeAmount", "taxResource"),
-      ("1250 W1",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250W1",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250 M1",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250M1",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250L X",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250LX",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250 X",20000.00,1498.20, TaxYear_2019_2020()),
-      ("1250X",20000.00,1498.20, TaxYear_2019_2020()),
-
-      ("1250 W1",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250W1",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250 M1",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250M1",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250L X",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250LX",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250 X",20000.00,1477.71, TaxYear_2019_2020(true)),
-      ("1250X",20000.00,1477.71, TaxYear_2019_2020(true))
+    val emergencyTax = Table(
+      ("taxCode", "Earnings", "totalPayeAmount", "taxResource"),
+      ("1250 W1", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250W1", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250 M1", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250M1", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250L X", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250LX", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250 X", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250X", 20000.00, 1498.20, TaxYear_2019_2020()),
+      ("1250 W1", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250W1", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250 M1", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250M1", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250L X", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250LX", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250 X", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1250X", 20000.00, 1477.71, TaxYear_2019_2020(true)),
+      ("1500MX", 20000.00, 998.20, TaxYear_2019_2020()),
+      ("1500NX", 20000.00, 998.20, TaxYear_2019_2020()),
+      ("BRX", 20000.00, 4000.00, TaxYear_2019_2020()),
+      ("D0X", 20000.00, 8000.00, TaxYear_2019_2020()),
+      ("K100X", 20000.00, 3798.20, TaxYear_2019_2020()),
+      ("BRX", 20000.00, 4000.00, TaxYear_2019_2020(true)),
+      ("D0X", 20000.00, 4200.00, TaxYear_2019_2020(true)),
+      ("K100X", 20000.00, 3843.18, TaxYear_2019_2020(true)),
+      ("1500MX", 20000.00, 977.71, TaxYear_2019_2020(true)),
+      ("1500NX", 20000.00, 977.71, TaxYear_2019_2020(true))
     )
 
     s"Emergency Tax Calc" should {
-      forAll(emergencyTax) { (taxCode,earnings, totalPayeAmount, taxResource) =>
-        s"return $totalPayeAmount for for $taxCode" in new LivePAYETaxCalcServiceSuccess{
+      forAll(emergencyTax) { (taxCode, earnings, totalPayeAmount, taxResource) =>
+        s"return $totalPayeAmount for ${if (taxResource.isScottish) "Scottish" else "English/Welsh"} for $taxCode" in new LivePAYETaxCalcServiceSuccess {
           val result: PAYETaxResult = service.calculatePAYETax(taxCode, Money(earnings), taxResource)
           result.payeTaxAmount.value shouldBe BigDecimal(totalPayeAmount)
         }

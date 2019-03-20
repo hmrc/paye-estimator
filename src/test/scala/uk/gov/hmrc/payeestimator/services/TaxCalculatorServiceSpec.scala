@@ -527,16 +527,71 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       100000,
       "annual",
       -1,
-      "/data/2019_2020/2019_Scottish_Max_Tax_Edge_Case_Response.json")
-  )
+      "/data/2019_2020/2019_Scottish_Max_Tax_Edge_Case_Response.json"),
+    (
+      "ensure that the BRX code produces a valid JSON",
+      "false",
+      taxYear_2019_2020,
+      "BRX",
+      20000,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_TaxCalcResponse_BRX.json"),
+    (
+      "ensure that the D0X code produces a valid JSON",
+      "false",
+      taxYear_2019_2020,
+      "D0X",
+      20000,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_TaxCalcResponse_D0X.json"),
+    (
+      "ensure that the K100X code produces a valid JSON",
+      "false",
+      taxYear_2019_2020,
+      "K100X",
+      100000,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_TaxCalcResponse_K100X.json"),
+    (
+      "ensure that the SK100X code produces a valid JSON",
+      "false",
+      scottish_TaxYear_2019_2020,
+      "SK100X",
+      100000,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SK100X.json"),
+    (
+      "ensure that the SD0X code produces a valid JSON",
+      "false",
+      scottish_TaxYear_2019_2020,
+      "SD0X",
+      100000,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SD0X.json"),
+    (
+      "ensure that the SBRX code produces a valid JSON",
+      "false",
+      scottish_TaxYear_2019_2020,
+      "SBRX",
+      100000,
+      "annual",
+      -1,
+      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json")  )
 
   "LiveTaxCalculatorService calculate tax" should {
     forAll(input) { (testDescription, isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn, expectedJson) =>
       s"${taxCalcResource.taxYear} $testDescription" in new LiveTaxCalcServiceSuccess {
 
         val result: TaxCalc = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
-
         val expected: TaxCalc = taxCalcFromJson(expectedJson)
+
+        print(Json.toJson(result))
+
         result shouldBe expected
       }
     }

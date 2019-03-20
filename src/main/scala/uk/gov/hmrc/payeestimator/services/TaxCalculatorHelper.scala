@@ -19,14 +19,16 @@ import uk.gov.hmrc.payeestimator.domain._
 
 trait TaxCalculatorHelper {
 
-  def isValidTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
-    isStandardTaxCode(taxCode) ||
-      !isTaxableCode(taxCode, taxCalcResource.isScottish) ||
-      isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) ||
-      isEmergencyTaxCode(taxCode, taxCalcResource) ||
-      isValidScottishTaxCode(taxCode) ||
-      isUnTaxedIncomeTaxCode(taxCode)
+  def isValidTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean = {
+    println(s"Tax Code to validate $taxCode")
 
+    isStandardTaxCode(taxCode) ||
+    !isTaxableCode(taxCode, taxCalcResource.isScottish) ||
+    isBasicRateTaxCode(taxCode, taxCalcResource.isScottish) ||
+    isEmergencyTaxCode(taxCode, taxCalcResource) ||
+    isValidScottishTaxCode(taxCode) ||
+    isUnTaxedIncomeTaxCode(taxCode)
+  }
   //TODO Remove C from regex when Wales has its own band
   def isStandardTaxCode(taxCode: String): Boolean =
     taxCode.matches("(C)?([0-9]{1,4}[L-N,T]{1}){1}")
@@ -35,24 +37,29 @@ trait TaxCalculatorHelper {
     !taxCode.matches("([N][T]){1}") && !isBasicRateTaxCode(taxCode, isScottish)
 
   def isBasicRateTaxCode(taxCode: String, isScottish: Boolean = false): Boolean =
-    taxCode.matches("(C)?([B][R]){1}") ||
-      taxCode.matches(s"(C)?([D][0,1${if (isScottish) { ",2" } else { "" }}])")
+    taxCode.matches("([B][R]){1}(X)?") ||
+      taxCode.matches(s"([D][0,1${if (isScottish) { ",2" } else { "" }}](X)?)")
 
   // 1150L, 1185L or 1250L
   def isMainTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
     taxCode.matches(taxCalcResource.emergencyTaxCode.stripSuffix("L") + "L") //Stripping so that we can easily use the code for all years
 
   def isEmergencyTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): Boolean =
-    taxCode.matches(taxCalcResource.emergencyRegex)
+    if (taxCalcResource.startDate.getYear == 2019) {
+      (taxCode.toUpperCase.endsWith("X") || taxCode.toUpperCase.endsWith("M1") ||
+      taxCode.toUpperCase.endsWith("W1")) && !taxCode.matches("(C|S)?[0-9]{1}X")
+    } else {
+      taxCode.matches(taxCalcResource.emergencyTaxCode)
+    }
 
   def isAdjustedTaxCode(taxCode: String): Boolean =
     taxCode.matches("(C)?([0-9]+[.]{1}[0-9]{2}[L]{1}){1}")
 
   def isValidScottishTaxCode(taxCode: String): Boolean =
-    taxCode.matches("([S]{1}[0-9]{1,4}[L-N,T]{1}){1}") ||
-      taxCode.matches("([S][B][R]){1}") ||
-      taxCode.matches("([S][D][0,1,2]){1}") ||
-      taxCode.matches("([S][K][0-9]{1,4}){1}")
+    taxCode.matches("[S]{1}[0-9]{1,4}( )?([L-N,T,X,W,1]){1,2}") ||
+      taxCode.matches("([S][B][R]){1}(X)?") ||
+      taxCode.matches("([S][D][0,1,2]){1}(X)?") ||
+      taxCode.matches("([S][K][0-9]{1,4}){1}(X)?")
 
   def isUnTaxedIncomeTaxCode(taxCode: String): Boolean =
     taxCode matches "(C|S)?([K]{1}[0-9]{1,4}){1}"
@@ -62,17 +69,23 @@ trait TaxCalculatorHelper {
       Money(rateLimit.limit)
   }
 
-  def splitTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): String = {
+  def splitTaxCode(taxCode: String, taxCalcResource: TaxCalcResource): String =
     if (isStandardTaxCode(taxCode) || isAdjustedTaxCode(taxCode)) {
       taxCode.stripSuffix(taxCode.substring(taxCode.length - 1, taxCode.length))
     } else if (isEmergencyTaxCode(taxCode, taxCalcResource)) {
-      taxCode.replace(" ", "").toUpperCase().stripSuffix("W1").stripSuffix("M1").stripSuffix("X").stripSuffix("L")
+      taxCode.replace(" ", "").toUpperCase()
+        .stripPrefix("K")
+        .stripSuffix("W1")
+        .stripSuffix("M1")
+        .stripSuffix("X")
+        .stripSuffix("M")
+        .stripSuffix("N")
+        .stripSuffix("L")
     } else if (isUnTaxedIncomeTaxCode(taxCode) && (taxCode.toUpperCase.contains("S") || taxCode.toUpperCase.contains("K"))) {
       taxCode.toUpperCase.stripPrefix("S").stripPrefix("K")
     } else {
       taxCode
     }
-  }
 
   def removeCountryElementFromTaxCode(taxCode: String): String =
     if (isValidScottishTaxCode(taxCode)) {

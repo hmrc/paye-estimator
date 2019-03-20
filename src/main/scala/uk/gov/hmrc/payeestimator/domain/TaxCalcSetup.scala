@@ -31,7 +31,6 @@ case class RateLimit(rateLimitType: String, limit: BigDecimal)
 trait TaxCalcResource {
 
   val emergencyTaxCode: String
-  val emergencyRegex: String
   val taxBands:         TaxBands
   val startDate:        LocalDate
   val endDate:          LocalDate
@@ -64,9 +63,7 @@ object TaxCalcResourceBuilder {
 
 case class TaxYear_2019_2020(isScottish: Boolean = false) extends TaxCalcResource {
 
-  override val emergencyTaxCode: String    = "1250"
-  override val emergencyRegex: String    = "(C|S)?"+ emergencyTaxCode + "((((L)?( )?(X))|(( )?(W1|M1))))"
-
+  override val emergencyTaxCode: String    = "1250L"
   override val startDate:        LocalDate = LocalDate.of(2019, 4, 6)
   override val endDate:          LocalDate = LocalDate.of(2020, 4, 5)
 
@@ -173,7 +170,6 @@ case class TaxYear_2019_2020(isScottish: Boolean = false) extends TaxCalcResourc
 case class TaxYear_2018_2019(isScottish: Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String    = "1185L"
-  override val emergencyRegex: String    = emergencyTaxCode
   override val startDate:        LocalDate = LocalDate.of(2018, 4, 6)
   override val endDate:          LocalDate = LocalDate.of(2019, 4, 5)
 
@@ -281,7 +277,6 @@ case class TaxYear_2018_2019(isScottish: Boolean = false) extends TaxCalcResourc
 case class TaxYear_2017_2018(isScottish: Boolean = false) extends TaxCalcResource {
 
   override val emergencyTaxCode: String    = "1150L"
-  override val emergencyRegex: String    = emergencyTaxCode
   override val startDate:        LocalDate = LocalDate.of(2017, 4, 6)
   override val endDate:          LocalDate = LocalDate.of(2018, 4, 5)
 

@@ -42,11 +42,6 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isBasicRateTaxCode("D2") shouldBe false
       helper.isBasicRateTaxCode("D2", isScottish = true) shouldBe true
       helper.isBasicRateTaxCode("NT") shouldBe false
-
-      helper.isBasicRateTaxCode("CBR") shouldBe true
-      helper.isBasicRateTaxCode("CD0") shouldBe true
-      helper.isBasicRateTaxCode("CD1") shouldBe true
-      helper.isBasicRateTaxCode("CD2") shouldBe false
     }
   }
 
@@ -90,11 +85,14 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     ("1185T", TaxYear_2018_2019, false),
     //2019-2020
     ("1250L", TaxYear_2019_2020, false),
+    ("0X", TaxYear_2019_2020, false),
     ("C1250L", TaxYear_2019_2020, false),
+    ("C0X", TaxYear_2019_2020, false),
     ("CS1250L", TaxYear_2019_2020, false),
     ("SC1250L", Scottish_TaxYear_2019_2020, false),
     ("SC1250L", TaxYear_2019_2020, false),
     ("S1250L", Scottish_TaxYear_2019_2020, false),
+    ("S0X", Scottish_TaxYear_2019_2020, false),
     ("1250 W1", TaxYear_2019_2020, true),
     ("1250 M1", TaxYear_2019_2020, true),
     ("1250W1", TaxYear_2019_2020, true),
@@ -117,8 +115,8 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     ("S1250M1", Scottish_TaxYear_2019_2020, true),
     ("S1250 X", Scottish_TaxYear_2019_2020, true),
     ("S1250L X", Scottish_TaxYear_2019_2020, true),
-    ("S1250X", TaxYear_2019_2020, true),
-    ("S1250LX", TaxYear_2019_2020, true)
+    ("S1250X", Scottish_TaxYear_2019_2020, true),
+    ("S1250LX", Scottish_TaxYear_2019_2020, true)
   )
 
   s"TaxCalculatorHelper isEmergencyTaxCode()" should {
@@ -149,6 +147,20 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
       helper.isValidScottishTaxCode("S0N")    shouldBe true
       helper.isValidScottishTaxCode("SNT")    shouldBe false
       helper.isValidScottishTaxCode("ST999")  shouldBe false
+      helper.isValidScottishTaxCode("S1250")  shouldBe false
+      helper.isValidScottishTaxCode("S1250X")  shouldBe true
+      helper.isValidScottishTaxCode("S1250 X")  shouldBe true
+      helper.isValidScottishTaxCode("S1250LX")  shouldBe true
+      helper.isValidScottishTaxCode("S1250MX")  shouldBe true
+      helper.isValidScottishTaxCode("S1250NX")  shouldBe true
+      helper.isValidScottishTaxCode("S1250 MX")  shouldBe true
+      helper.isValidScottishTaxCode("S1250 NX")  shouldBe true
+      helper.isValidScottishTaxCode("S1250 M1")  shouldBe true
+      helper.isValidScottishTaxCode("S1250 W1")  shouldBe true
+      helper.isValidScottishTaxCode("S1250M1")  shouldBe true
+      helper.isValidScottishTaxCode("S1250W1")  shouldBe true
+      helper.isValidScottishTaxCode("S1250 Z")  shouldBe false
+      helper.isValidScottishTaxCode("S1250Z")  shouldBe false
     }
   }
   "TaxCalculatorHelper isUnTaxedIncomeTaxCode" should {
@@ -203,7 +215,12 @@ class TaxCalculatorHelperSpec extends WordSpecLike with Matchers with TaxYearCha
     ("1250M1", TaxYear_2019_2020, "1250"),
     ("1250X", TaxYear_2019_2020, "1250"),
     ("1250LX", TaxYear_2019_2020, "1250"),
-    ("1250L X", TaxYear_2019_2020, "1250")
+    ("1250L X", TaxYear_2019_2020, "1250"),
+
+    ("1500M X", TaxYear_2019_2020, "1500"),
+    ("1500MX", TaxYear_2019_2020, "1500"),
+    ("1500N X", TaxYear_2019_2020, "1500"),
+    ("1500NX", TaxYear_2019_2020, "1500")
   )
 
   "TaxCalculatorHelper splitTaxCode" should {

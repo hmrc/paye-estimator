@@ -6,39 +6,51 @@
 <!-- NOTE: Example HTML page to test the generated JavaScript.
 The javascript file referenced here this is a copy of ../../../target/scala-2.11/classes/paye-estimator-fastopt-spike.js
 This file will be removed once the build is being uploaded.
+
+Dont use the intelliJ load for HTML as this cannot navigate to the folder. Just open the HTML from folder
 -->
 
-<script type="text/javascript" src="paye-estimator-opt.js"></script>
+<script type="text/javascript" src="../../../target/scala-2.11/paye-estimator-opt.js"></script>
 <script type="text/javascript">
 
     function calculate() {
         var isStatePensionAge = $('input[name="StatePensionAge"]:checked').val();
-        var taxYear = '2019-05-01';
+        var taxYear = $('input[name="Year"]:checked').val() + '-05-01';
         var taxCode = $('input[name="TaxCode"]').val();
-        var grossPayPence = parseInt($('input[name="GrossPay"]').val(), 10);
+        var grossPayPence = parseInt(($('input[name="GrossPay"]').val() + '00'), 10);
         var grossPayType = $("#GrossPayType").val();
         var numberOfHours = parseInt($('input[name="NumberOfHours"]').val(), 10);
 
-        var result = uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
+        $('#resultArea').text(JSON.stringify(JSON.parse(uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
             isStatePensionAge,
             taxYear,
             taxCode,
             grossPayPence,
             grossPayType,
-            numberOfHours);
-
-        document.querySelector('.results').innerHTML = result;
+            numberOfHours)),undefined, 4));
     }
-
 </script>
+<head>
+    <style>
 
+        textarea {
+            width: 100%;
+            min-height: 30rem;
+            font-family: "Lucida Console", Monaco, monospace;
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+
+    </style>
+
+</head>
 
 <body>
 
 <p>Demo Tax-Calculator interface to scala-js calculator JavaScript library.</p>
 
 <div>
-    Your tax code: <input type="text" name="TaxCode" value="1100L"><br>
+    Your tax code: <input type="text" name="TaxCode" value="1250L"><br>
 
     <br>
     Over State Pension Age?:
@@ -46,11 +58,15 @@ This file will be removed once the build is being uploaded.
         <input type="radio" name="StatePensionAge" value="true">Yes<br>
         <input type="radio" name="StatePensionAge" value="false" checked>No<br>
     </div>
+    <br>
 
+    <input type="radio" name="Year" value="2017">2017-2018<br>
+    <input type="radio" name="Year" value="2018">2018-2019<br>
+    <input type="radio" name="Year" value="2019" checked>2019-2020
 
     <br>
     <div>
-        Gross pay/Hourly rate: <input type="number" name="GrossPay" value="0"><br>
+        Gross pay/Hourly rate (£): <input type="number" name="GrossPay" value="43000"><br>
         <select id="GrossPayType">
             <option value="annual">Year</option>
             <option value="monthly">Month</option>
@@ -69,7 +85,7 @@ This file will be removed once the build is being uploaded.
     <br>
     <br>
     Calculation Object Result:
-    <div class="results"></div>
+    <br><textarea name="" id="resultArea" cols="100" rows="100"></textarea>
 </div>
 
 </body>
