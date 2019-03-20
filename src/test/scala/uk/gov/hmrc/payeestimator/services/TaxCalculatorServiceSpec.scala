@@ -605,29 +605,29 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
   "LiveTaxCalculatorService annualiseGrossPay" should {
     "convert 12345600 to its Pound Value if the payPeriod is 'annual'" in new LiveTaxCalcServiceSuccess {
-      val result: Money = service.annualiseGrossPay(12345600, None, "annual")
+      val result: Money = service.annualiseGrossPay(grossPayPence = 12345600, hours = None, payPeriod = Annual)
       result.value shouldBe BigDecimal(123456.00)
     }
 
     "multiply 12345600 by 12 and convert to its Pound Value if the payPeriod is 'monthly'" in new LiveTaxCalcServiceSuccess {
-      val result: Money = service.annualiseGrossPay(12345600, None, "monthly")
+      val result: Money = service.annualiseGrossPay(grossPayPence = 12345600, hours = None, payPeriod = Monthly)
       result.value shouldBe BigDecimal(12345600 * 12 / 100)
     }
 
     "multiply 12345600 by 52 and convert to its Pound Value if the payPeriod is 'weekly'" in new LiveTaxCalcServiceSuccess {
-      val result: Money = service.annualiseGrossPay(12345600, None, "weekly")
+      val result: Money = service.annualiseGrossPay(grossPayPence = 12345600, hours = None, payPeriod = Weekly)
       result.value shouldBe BigDecimal(12345600 * 52 / 100)
     }
 
     "throw an exception when the amount exceeds 999999999 regardless of the pay period" in new LiveTaxCalcServiceSuccess {
       intercept[Exception] {
-        service.annualiseGrossPay(1999999999, None, "weekly")
+        service.annualiseGrossPay(grossPayPence = 1999999999, hours = None, payPeriod = Weekly)
       }
       intercept[Exception] {
-        service.annualiseGrossPay(1999999999, None, "monthly")
+        service.annualiseGrossPay(grossPayPence = 1999999999, hours = None, payPeriod = Monthly)
       }
       intercept[Exception] {
-        service.annualiseGrossPay(1999999999, None, "annual")
+        service.annualiseGrossPay(1999999999, None, Annual)
       }
     }
   }
