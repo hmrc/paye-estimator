@@ -11,12 +11,15 @@ class NICTaxCategoryBuilderSpec extends WordSpecLike with Matchers {
       val employerNIC = Seq(Aggregation(BigDecimal(13.8), BigDecimal(300.00)))
       val nicResult   = NICTaxResult(BigDecimal(0), employeeNIC, employerNIC)
       val result      = NICTaxCategoryBuilder(nicResult).build()
+      val employeeNationalInsurance = EmployeeNationalInsurance.toString
+      val employerNationalInsurance = EmployerNationalInsurance.toString
+
       result.taxCategories.map { taxCategory =>
         taxCategory.taxType match {
-          case "employeeNationalInsurance" =>
+          case `employeeNationalInsurance` =>
             taxCategory.total            shouldBe 1500
             taxCategory.aggregation.size shouldBe 2
-          case "employerNationalInsurance" =>
+          case `employerNationalInsurance` =>
             taxCategory.total            shouldBe 300
             taxCategory.aggregation.size shouldBe 1
         }

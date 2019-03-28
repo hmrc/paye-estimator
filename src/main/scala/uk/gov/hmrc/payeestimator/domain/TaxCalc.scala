@@ -25,7 +25,11 @@ case class PAYETaxResult(
   bandRate:             BigDecimal,
   isTapered:            Boolean,
   additionalTaxablePay: Money) {
-  val payeTaxAmount: Money = if (band > 1) finalBandTaxedAmount + previousBandMaxTax else finalBandTaxedAmount
+  val payeTaxAmount: Money = if (band > 1) {
+    finalBandTaxedAmount + previousBandMaxTax
+  } else {
+    finalBandTaxedAmount
+  }
 }
 
 case class NICTaxResult(employeeNICBandRate: BigDecimal, employeeNIC: Seq[Aggregation], employerNIC: Seq[Aggregation])

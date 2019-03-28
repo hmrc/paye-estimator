@@ -3,7 +3,7 @@ package uk.gov.hmrc.payeestimator.services
 import org.scalatest.{Matchers, WordSpecLike}
 import uk.gov.hmrc.payeestimator.domain._
 
-class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
+class ExceedAnnualThresholdCalculatorSpec extends WordSpecLike with Matchers with TaxYearChanges {
 
   val TaxYear_2017_2018          = new TaxYear_2017_2018(isScottish = false)
   val TaxYear_2018_2019          = new TaxYear_2018_2019(isScottish = false)
@@ -47,7 +47,7 @@ class AnnualTaperingDeductionCalculatorSpec extends WordSpecLike with Matchers w
 
   forAll(input) { (taxCode, grossPay, taxCalcResource, success, isTapered, answer, isScottish) =>
     val append = if (isScottish) " for Scottish Rates" else ""
-    s"AnnualTaperingDeductionCalculator calculate(taxCode[$taxCode], grossPay[${grossPay.value}], taxYear[${taxCalcResource.taxYear}]) $append" should {
+    s"ExceedAnnualThresholdCalculator calculate(taxCode[$taxCode], grossPay[${grossPay.value}], taxYear[${taxCalcResource.taxYear}]) $append" should {
       s"return success[$success], isTapered[$isTapered], answer[$answer]" in {
 
         val result = AnnualTaperingDeductionCalculator(taxCode, grossPay, taxCalcResource).calculate()

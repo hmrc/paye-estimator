@@ -17,30 +17,33 @@
 package uk.gov.hmrc.payeestimator.services
 
 import org.scalatest.{Matchers, WordSpecLike}
+import uk.gov.hmrc.payeestimator.domain.TaxYear_2019_2020
 
 class AllowanceCalculatorSpec extends WordSpecLike with Matchers {
 
+  val taxCalcResource2019 = TaxYear_2019_2020()
+
   "AllowanceCalculator calculate " should {
     "should calculate a weekly allowance" in {
-      val result = AllowanceCalculator("1100T").calculate().result
+      val result = AllowanceCalculator("1100T", taxCalcResource2019).calculate().result
       result.allowance.value shouldBe 11009.00
       result.quotient.value  shouldBe 0
       result.remainder.value shouldBe 0
     }
     "should calculate a zero allowance with ZERO taxCode" in {
-      val result = AllowanceCalculator("ZERO").calculate().result
+      val result = AllowanceCalculator("ZERO",taxCalcResource2019).calculate().result
       result.allowance.value shouldBe 0.00
       result.quotient.value  shouldBe 0.00
       result.remainder.value shouldBe 0.00
     }
     "should calculate a zero allowance with K0" in {
-      val result = AllowanceCalculator("K0").calculate().result
+      val result = AllowanceCalculator("K0",taxCalcResource2019).calculate().result
       result.allowance.value shouldBe 0.00
       result.quotient.value  shouldBe 0.00
       result.remainder.value shouldBe 0.00
     }
     "should calculate a zero allowance with 0L" in {
-      val result = AllowanceCalculator("0L").calculate().result
+      val result = AllowanceCalculator("0L",taxCalcResource2019).calculate().result
       result.allowance.value shouldBe 0.00
       result.quotient.value  shouldBe 0.00
       result.remainder.value shouldBe 0.00

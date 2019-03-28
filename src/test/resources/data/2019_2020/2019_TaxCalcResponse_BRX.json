@@ -1,46 +1,37 @@
 {
   "statePensionAge":false,
-  "taxCode":"SK1185",
+  "taxCode":"BRX",
   "payPerHour":-1,
   "hours":-1,
-  "averageAnnualTaxRate":50,
-  "rateType":"SCOTLAND",
-  "marginalTaxRate":21,
+  "averageAnnualTaxRate":20,
+  "marginalTaxRate":20,
   "maxTaxRate":50,
-  "payeBand":21,
+  "payeBand":20,
   "employeeNICBand":0,
   "tapered":false,
   "taxBreakdown":[
     {
       "period":"annual",
-      "grossPay":1000,
+      "grossPay":200,
       "taxFreePay":0,
-      "taxablePay":12859,
-      "additionalTaxablePay":11859,
-      "maxTaxAmount":500,
+      "taxablePay":200,
+      "additionalTaxablePay":0,
+      "maxTaxAmount":-1,
       "taxCategories":[
         {
           "taxType":"incomeTax",
-          "total":2555.46,
+          "total":40,
           "aggregation":[
             {
-              "percentage":19,
-              "amount":389.31
-            },
-            {
               "percentage":20,
-              "amount":2079
+              "amount":40
             },
             {
-              "percentage":21,
-              "amount":87.15
-            },
-            {
-              "percentage":41,
+              "percentage":40,
               "amount":0
             },
             {
-              "percentage":46,
+              "percentage":45,
               "amount":0
             }
           ]
@@ -63,39 +54,31 @@
           ]
         }
       ],
-      "totalDeductions":500,
-      "takeHomePay":500
+      "totalDeductions":40,
+      "takeHomePay":160
     },
     {
       "period":"monthly",
-      "grossPay":83.33,
+      "grossPay":16.67,
       "taxFreePay":0,
-      "taxablePay":1071.58,
-      "additionalTaxablePay":988.25,
-      "maxTaxAmount":41.66,
+      "taxablePay":16.67,
+      "additionalTaxablePay":0,
+      "maxTaxAmount":-1,
       "taxCategories":[
         {
           "taxType":"incomeTax",
-          "total":212.96,
+          "total":3.33,
           "aggregation":[
             {
-              "percentage":19,
-              "amount":32.44
-            },
-            {
               "percentage":20,
-              "amount":173.25
+              "amount":3.33
             },
             {
-              "percentage":21,
-              "amount":7.26
-            },
-            {
-              "percentage":41,
+              "percentage":40,
               "amount":0
             },
             {
-              "percentage":46,
+              "percentage":45,
               "amount":0
             }
           ]
@@ -118,39 +101,31 @@
           ]
         }
       ],
-      "totalDeductions":41.66,
-      "takeHomePay":41.67
+      "totalDeductions":3.33,
+      "takeHomePay":13.34
     },
     {
       "period":"weekly",
-      "grossPay":19.23,
+      "grossPay":3.85,
       "taxFreePay":0,
-      "taxablePay":247.29,
-      "additionalTaxablePay":228.06,
-      "maxTaxAmount":9.61,
+      "taxablePay":3.85,
+      "additionalTaxablePay":0,
+      "maxTaxAmount":-1,
       "taxCategories":[
         {
           "taxType":"incomeTax",
-          "total":49.14,
+          "total":0.77,
           "aggregation":[
             {
-              "percentage":19,
-              "amount":7.49
-            },
-            {
               "percentage":20,
-              "amount":39.98
+              "amount":0.77
             },
             {
-              "percentage":21,
-              "amount":1.68
-            },
-            {
-              "percentage":41,
+              "percentage":40,
               "amount":0
             },
             {
-              "percentage":46,
+              "percentage":45,
               "amount":0
             }
           ]
@@ -173,8 +148,8 @@
           ]
         }
       ],
-      "totalDeductions":9.61,
-      "takeHomePay":9.62
+      "totalDeductions":0.77,
+      "takeHomePay":3.08
     }
   ]
 }

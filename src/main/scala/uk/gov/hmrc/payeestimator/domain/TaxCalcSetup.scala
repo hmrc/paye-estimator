@@ -103,26 +103,26 @@ case class TaxYear_2019_2020(isScottish: Boolean = false) extends TaxCalcResourc
     band      = 2,
     bandwidth = BigDecimal(2049.00),
     rate      = 19,
-    period    = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 2049.00, cumulativeMaxTax = 389.00, maxTax = 389.00))
+    period    = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 2049.00, cumulativeMaxTax = 389.31, maxTax = 389.31))
   val scottishTaxBands3 = Band(
     band           = 3,
     bandwidth      = BigDecimal(10395.00),
     rate           = 20,
-    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 12445.00, cumulativeMaxTax = 2468.00, maxTax = 2079.00),
+    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 12444.00, cumulativeMaxTax = 2468.31, maxTax = 2079.00),
     specialTaxCode = Some("BR")
   )
   val scottishTaxBands4 = Band(
     band           = 4,
-    bandwidth      = BigDecimal(18485.00),
+    bandwidth      = BigDecimal(18486.00),
     rate           = 21,
-    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 30930.00, cumulativeMaxTax = 6350.30, maxTax = 3882.30),
+    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 30930.00, cumulativeMaxTax = 6350.37, maxTax = 3882.06),
     specialTaxCode = Some("D0")
   )
   val scottishTaxBands5 = Band(
     band           = 5,
     bandwidth      = BigDecimal(119070.00),
     rate           = 41,
-    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 150000.00, cumulativeMaxTax = 50044.50, maxTax = 43694.20),
+    period         = PeriodCalc(periodType = "annual", maxAmountTaxedOn = 150000.00, cumulativeMaxTax = 55169.07, maxTax = 48818.70),
     specialTaxCode = Some("D1")
   )
   val scottishTaxBands6 = Band(

@@ -21,20 +21,23 @@ import uk.gov.hmrc.payeestimator.domain.{Money, PAYETaxResult, TaxCalcResource}
 trait PAYETaxCalculatorService extends TaxCalculatorHelper {
 
   def calculatePAYETax(taxCode: String, grossPay: Money, taxCalcResource: TaxCalcResource): PAYETaxResult = {
-
     def getPreviousBandMaxTaxAmount(band: Int): Option[BigDecimal] =
       taxCalcResource.getPreviousTaxBand(band).map(_.period.cumulativeMaxTax)
 
-    if (!isValidTaxCode(taxCode, taxCalcResource)) throw new TaxCalculatorConfigException("Invalid Tax Code!")
+    if (!isValidTaxCode(taxCode, taxCalcResource)) throw new TaxCalculatorConfigException(s"Invalid Tax Code - $taxCode!")
     else {
-      val taxablePay           = TaxablePayCalculator(taxCode, grossPay, taxCalcResource).calculate()
-      val taxBand              = TaxBandCalculator(taxCode, taxablePay.result, taxCalcResource).calculate().result
-      val excessPay            = ExcessPayCalculator(taxCode, taxBand.band, taxablePay.result, taxCalcResource).calculate().result
+      //Remove X for Basic Rate Tax Codes only
+      val removeXOnTaxCode = if (isBasicRateTaxCode(taxCode, taxCalcResource.isScottish)) taxCode.stripSuffix("X") else taxCode
+      val taxablePay           = TaxablePayCalculator(removeXOnTaxCode, grossPay, taxCalcResource).calculate()
+      val taxBand              = TaxBandCalculator(removeXOnTaxCode, taxablePay.result, taxCalcResource).calculate().result
+      val excessPay            = ExcessPayCalculator(removeXOnTaxCode, taxBand.band, taxablePay.result, taxCalcResource).calculate().result
       val finalBandTaxedAmount = Money(excessPay * (taxBand.rate / 100), 2, roundingUp = true)
       val previousBandMaxTax =
-        if (taxBand.band > 1 && !isBasicRateTaxCode(taxCode, taxCalcResource.isScottish))
+        if (taxBand.band > 1 && !isBasicRateTaxCode(removeXOnTaxCode, taxCalcResource.isScottish)) {
           Money(getPreviousBandMaxTaxAmount(taxBand.band).get, 2, roundingUp = true)
-        else Money(0)
+        } else {
+          Money(0)
+        }
       val rate = if (taxablePay.result.value == 0) BigDecimal(0) else taxBand.rate
       PAYETaxResult(
         taxablePay.result,

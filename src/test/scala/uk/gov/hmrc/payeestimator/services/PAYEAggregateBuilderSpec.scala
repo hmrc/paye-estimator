@@ -446,11 +446,11 @@ class PAYEAggregateBuilderSpec extends WordSpecLike with Matchers with TaxYearCh
     }
     "show distribution of tax payment of 160,000 across the applicable tax bands" in {
       val result = PAYEAggregateBuilder("Any Code", 6, Money(160000, 2, roundingUp = true), taxYear).build()
-      result.aggregation.head.amount shouldBe 389.00
+      result.aggregation.head.amount shouldBe 389.31
       result.aggregation(1).amount   shouldBe 2079.00
-      result.aggregation(2).amount   shouldBe 3882.30
-      result.aggregation(3).amount   shouldBe 43694.20
-      result.aggregation(4).amount   shouldBe 109955.50
+      result.aggregation(2).amount   shouldBe 3882.06
+      result.aggregation(3).amount   shouldBe 48818.70
+      result.aggregation(4).amount   shouldBe 104830.93
     }
   }
 }

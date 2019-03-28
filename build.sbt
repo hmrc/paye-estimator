@@ -26,7 +26,7 @@ playCrossCompilationSettings
 
 makePublicallyAvailableOnBintray := true
 
-scalaJSStage in Global := FastOptStage
+scalaJSStage in Global := FullOptStage
 
 topLevelDirectory := None
 
@@ -48,4 +48,3 @@ publish <<= publish dependsOn (packageZipTarball in Universal)
 publishM2 <<= publishM2 dependsOn (packageZipTarball in Universal)
 
 publishLocal <<= publishLocal dependsOn (packageZipTarball in Universal)
-
