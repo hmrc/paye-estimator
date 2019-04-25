@@ -35,7 +35,7 @@ calculate-tax
   "statePensionAge": false,
   "taxCode": "S1100L",
   "payPerHour": 55,
-  "hours": 40,
+  "hours": 40.0,
   "averageAnnualTaxRate": 37.99,
   "marginalTaxRate": 42,
   "maxTaxRate":"50"

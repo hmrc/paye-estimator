@@ -30,7 +30,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
   val input = Table(
     ("Test Description", "isStatePensionAge", "taxCalcResource", "taxCode", "grossPayPence", "payPeriod", "hoursIn", "expectedJson"),
-    ("return a annual TaxCalc response", "false", taxYear_2017_2018, "1100T", 1000000, "annual", -1, "/data/2017_2018/2017_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response", "false", taxYear_2017_2018, "1100T", 1000000, "annual", -1.0, "/data/2017_2018/2017_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true",
@@ -38,7 +38,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_no_NIC_Contribution_section_response.json"),
     (
       "return a NT TaxCalc response with no PAYE tax applied",
@@ -47,7 +47,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "NT",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_NT_TaxCode_Response.json"),
     (
       "return a BR TaxCalc response with PAYE tax applied at 20%",
@@ -56,7 +56,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "BR",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_BR_TaxCode_Response.json"),
     (
       "return a D0 TaxCalc response with PAYE tax applied at 40%",
@@ -65,7 +65,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D0",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_D0_TaxCode_Response.json"),
     (
       "return a D1 TaxCalc response with PAYE tax applied at 45%",
@@ -74,7 +74,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D1",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_D1_TaxCode_Response.json"),
     (
       "return tax calc response using an hourly rate input",
@@ -83,7 +83,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       9615,
       "annual",
-      40,
+      40.0,
       "/data/2017_2018/2017_Hourly_Rate_Response.json"),
     (
       "return tax calc response using tapering with emergency tax code input",
@@ -92,7 +92,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1150L",
       221200,
       "weekly",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Tapering_Emergency_TaxCode_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary",
@@ -101,7 +101,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K4000",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Max_Tax_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
@@ -110,7 +110,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K1100",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Max_Tax_Edge_Case_Response.json"),
     (
       "return a annual TaxCalc response",
@@ -119,7 +119,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Scottish_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
@@ -128,7 +128,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Scottish_no_NIC_Contribution_section_response.json"),
     (
       "return a SBR TaxCalc response with PAYE tax applied at 20%",
@@ -137,7 +137,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SBR",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_SBR_TaxCode_Response.json"),
     (
       "return a SD0 TaxCalc response with PAYE tax applied at 40%",
@@ -146,7 +146,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD0",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_SD0_TaxCode_Response.json"),
     (
       "return a SD1 TaxCalc response with PAYE tax applied at 45%",
@@ -155,7 +155,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD1",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_SD1_TaxCode_Response.json"),
     (
       "return tax calc response using an hourly rate input",
@@ -164,7 +164,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       9615,
       "annual",
-      40,
+      40.0,
       "/data/2017_2018/2017_Scottish_Hourly_Rate_Response.json"),
     (
       "return tax calc response using tapering with emergency tax code input",
@@ -173,7 +173,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1150L",
       221200,
       "weekly",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Scottish_Tapering_Emergency_TaxCode_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary",
@@ -182,7 +182,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK4000",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Scottish_Max_Tax_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
@@ -191,9 +191,10 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK1100",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2017_2018/2017_Scottish_Max_Tax_Edge_Case_Response.json"),
-    ("return a annual TaxCalc response", "false", taxYear_2018_2019, "1100T", 1000008, "annual", -1, "/data/2018_2019/2018_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response", "false", taxYear_2018_2019, "1100T", 1000008, "annual", -1.0, "/data/2018_2019/2018_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response on a weekly wage", "false", taxYear_2019_2020, "1250L", 300, "weekly", 37.5, "/data/2019_2020/2019_TaxCalcResponse_Weekly.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
       "true",
@@ -201,7 +202,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       1000008,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_no_NIC_Contribution_section_response.json"),
     (
       "return a NT TaxCalc response with no PAYE tax applied",
@@ -210,7 +211,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "nt",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_NT_TaxCode_Response.json"),
     (
       "return a BR TaxCalc response with PAYE tax applied at 20%",
@@ -219,7 +220,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "BR",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_BR_TaxCode_Response.json"),
     (
       "return a D0 TaxCalc response with PAYE tax applied at 40%",
@@ -228,7 +229,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D0",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_D0_TaxCode_Response.json"),
     (
       "return a D1 TaxCalc response with PAYE tax applied at 45%",
@@ -237,7 +238,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D1",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_D1_TaxCode_Response.json"),
     (
       "return tax calc response using an hourly rate input",
@@ -246,7 +247,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       9615,
       "annual",
-      40,
+      40.0,
       "/data/2018_2019/2018_Hourly_Rate_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary",
@@ -255,7 +256,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K4000",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Max_Tax_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
@@ -264,7 +265,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K1100",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Max_Tax_Edge_Case_Response.json"),
     (
       "return a annual TaxCalc response",
@@ -273,7 +274,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Scottish_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
@@ -282,7 +283,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Scottish_no_NIC_Contribution_section_response.json"),
     (
       "return a SBR TaxCalc response with PAYE tax applied at 20%",
@@ -291,7 +292,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SBR",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_SBR_TaxCode_Response.json"),
     (
       "return a SD0 TaxCalc response with PAYE tax applied at 21%",
@@ -300,7 +301,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD0",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_SD0_TaxCode_Response.json"),
     (
       "return a SD1 TaxCalc response with PAYE tax applied at 41%",
@@ -309,7 +310,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD1",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_SD1_TaxCode_Response.json"),
     (
       "return a SD2 TaxCalc response with PAYE tax applied at 46%",
@@ -318,7 +319,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD2",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_SD2_TaxCode_Response.json"),
     (
       "return tax calc response using an hourly rate input",
@@ -327,7 +328,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       9615,
       "annual",
-      40,
+      40.0,
       "/data/2018_2019/2018_Scottish_Hourly_Rate_Response.json"),
     (
       "return tax calc response using tapering with emergency tax code input",
@@ -336,7 +337,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1185L",
       221200,
       "weekly",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Scottish_Tapering_Emergency_TaxCode_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary",
@@ -345,7 +346,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK4000",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Scottish_Max_Tax_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
@@ -354,9 +355,9 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK1185",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2018_2019/2018_Scottish_Max_Tax_Edge_Case_Response.json"),
-    ("return a annual TaxCalc response", "false", taxYear_2019_2020, "1100T", 1000008, "annual", -1, "/data/2019_2020/2019_TaxCalcResponse.json"),
+    ("return a annual TaxCalc response", "false", taxYear_2019_2020, "1100T", 1000008, "annual", -1.0, "/data/2019_2020/2019_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response when Welsh",
       "false",
@@ -364,7 +365,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "C1100T",
       1000008,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_TaxCalcResponse_Welsh.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
@@ -373,7 +374,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       1000008,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_no_NIC_Contribution_section_response.json"),
     (
       "return a NT TaxCalc response with no PAYE tax applied",
@@ -382,7 +383,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "nt",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_NT_TaxCode_Response.json"),
     (
       "return a BR TaxCalc response with PAYE tax applied at 20%",
@@ -391,7 +392,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "BR",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_BR_TaxCode_Response.json"),
     (
       "return a D0 TaxCalc response with PAYE tax applied at 40%",
@@ -400,7 +401,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D0",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_D0_TaxCode_Response.json"),
     (
       "return a D1 TaxCalc response with PAYE tax applied at 45%",
@@ -409,7 +410,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D1",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_D1_TaxCode_Response.json"),
     (
       "return tax calc response using an hourly rate input",
@@ -418,7 +419,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "1100T",
       9615,
       "annual",
-      40,
+      40.0,
       "/data/2019_2020/2019_Hourly_Rate_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary",
@@ -427,7 +428,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K4000",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Max_Tax_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
@@ -436,7 +437,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K1100",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Max_Tax_Edge_Case_Response.json"),
     (
       "return a annual TaxCalc response",
@@ -445,7 +446,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_TaxCalcResponse.json"),
     (
       "return a annual TaxCalc response with zero value National Insurance Contributions Section",
@@ -454,7 +455,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_no_NIC_Contribution_section_response.json"),
     (
       "return a SBR TaxCalc response with PAYE tax applied at 20%",
@@ -463,7 +464,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SBR",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_SBR_TaxCode_Response.json"),
     (
       "return a SD0 TaxCalc response with PAYE tax applied at 21%",
@@ -472,7 +473,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD0",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_SD0_TaxCode_Response.json"),
     (
       "return a SD1 TaxCalc response with PAYE tax applied at 41%",
@@ -481,7 +482,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD1",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_SD1_TaxCode_Response.json"),
     (
       "return a SD2 TaxCalc response with PAYE tax applied at 46%",
@@ -490,7 +491,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD2",
       20000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_SD2_TaxCode_Response.json"),
     (
       "return tax calc response using an hourly rate input",
@@ -499,7 +500,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1100T",
       9615,
       "annual",
-      40,
+      40.0,
       "/data/2019_2020/2019_Scottish_Hourly_Rate_Response.json"),
     (
       "return tax calc response using tapering with emergency tax code input",
@@ -508,7 +509,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "S1250L",
       221200,
       "weekly",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_Tapering_Emergency_TaxCode_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary",
@@ -517,7 +518,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK4000",
       1000000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_Max_Tax_Response.json"),
     (
       "max tax rate should kick in when the paye amount is greater than 50% of annual salary and round down for edge case where rounding increases the value to just over 50%",
@@ -526,7 +527,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK1185",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_Max_Tax_Edge_Case_Response.json"),
     (
       "ensure that the BRX code produces a valid JSON",
@@ -535,7 +536,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "BRX",
       20000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_TaxCalcResponse_BRX.json"),
     (
       "ensure that the D0X code produces a valid JSON",
@@ -544,7 +545,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "D0X",
       20000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_TaxCalcResponse_D0X.json"),
     (
       "ensure that the K100X code produces a valid JSON",
@@ -553,7 +554,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "K100X",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_TaxCalcResponse_K100X.json"),
     (
       "ensure that the SK100X code produces a valid JSON",
@@ -562,7 +563,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SK100X",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_TaxCalcResponse_SK100X.json"),
     (
       "ensure that the SD0X code produces a valid JSON",
@@ -571,7 +572,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SD0X",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_TaxCalcResponse_SD0X.json"),
     (
       "ensure that the SBRX code produces a valid JSON",
@@ -580,11 +581,11 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SBRX",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json")  )
 
   "LiveTaxCalculatorService calculate tax" should {
-    forAll(input) { (testDescription, isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn, expectedJson) =>
+    forAll(input) { (testDescription, isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn: Double, expectedJson) =>
       s"${taxCalcResource.taxYear} $testDescription" in new LiveTaxCalcServiceSuccess {
 
         val result: TaxCalc = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
