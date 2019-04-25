@@ -167,7 +167,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       40,
       "/data/2017_2018/2017_Scottish_Hourly_Rate_Response.json"),
     (
-      "return tax calc response using tapering with emergency tax code input",
+      "return tax calc response scottish using tapering with emergency tax code input",
       "false",
       scottish_TaxYear_2017_2018,
       "S1150L",

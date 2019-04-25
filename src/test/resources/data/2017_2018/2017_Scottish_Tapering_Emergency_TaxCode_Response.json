@@ -3,25 +3,25 @@
   "taxCode": "S1150L",
   "payPerHour": -1,
   "hours": -1,
-  "averageAnnualTaxRate": 38.19,
+  "averageAnnualTaxRate": 35.58,
   "rateType": "SCOTLAND",
   "marginalTaxRate": 42,
   "maxTaxRate": 50,
   "payeBand": 40,
   "employeeNICBand": 2,
-  "tapered": true,
+  "tapered": false,
   "taxBreakdown": [
     {
       "period": "annual",
       "grossPay": 115024,
-      "taxFreePay": 3997,
-      "taxablePay": 111027,
+      "taxFreePay": 11509,
+      "taxablePay": 103515,
       "additionalTaxablePay": 0,
       "maxTaxAmount": -1,
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 38110.8,
+          "total": 35106,
           "aggregation": [
             {
               "percentage": 20,
@@ -29,7 +29,7 @@
             },
             {
               "percentage": 40,
-              "amount": 31810.8
+              "amount": 28806
             },
             {
               "percentage": 45,
@@ -62,20 +62,20 @@
           ]
         }
       ],
-      "totalDeductions": 43931.6,
-      "takeHomePay": 71092.4
+      "totalDeductions": 40926.8,
+      "takeHomePay": 74097.2
     },
     {
       "period": "monthly",
       "grossPay": 9585.33,
-      "taxFreePay": 333.08,
-      "taxablePay": 9252.25,
+      "taxFreePay": 959.08,
+      "taxablePay": 8626.25,
       "additionalTaxablePay": 0,
       "maxTaxAmount": -1,
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 3175.9,
+          "total": 2925.5,
           "aggregation": [
             {
               "percentage": 20,
@@ -83,7 +83,7 @@
             },
             {
               "percentage": 40,
-              "amount": 2650.9
+              "amount": 2400.5
             },
             {
               "percentage": 45,
@@ -116,20 +116,20 @@
           ]
         }
       ],
-      "totalDeductions": 3660.97,
-      "takeHomePay": 5924.36
+      "totalDeductions": 3410.57,
+      "takeHomePay": 6174.76
     },
     {
       "period": "weekly",
       "grossPay": 2212,
-      "taxFreePay": 76.87,
-      "taxablePay": 2135.13,
+      "taxFreePay": 221.33,
+      "taxablePay": 1990.67,
       "additionalTaxablePay": 0,
       "maxTaxAmount": -1,
       "taxCategories": [
         {
           "taxType": "incomeTax",
-          "total": 732.9,
+          "total": 675.12,
           "aggregation": [
             {
               "percentage": 20,
@@ -137,7 +137,7 @@
             },
             {
               "percentage": 40,
-              "amount": 611.75
+              "amount": 553.96
             },
             {
               "percentage": 45,
@@ -170,8 +170,8 @@
           ]
         }
       ],
-      "totalDeductions": 844.84,
-      "takeHomePay": 1367.16
+      "totalDeductions": 787.06,
+      "takeHomePay": 1424.94
     }
   ]
 }
