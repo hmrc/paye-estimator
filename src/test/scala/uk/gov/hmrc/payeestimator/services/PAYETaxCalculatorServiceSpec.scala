@@ -179,12 +179,12 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
 
     "Calculate Annual PAYE tax for a gross salary of 200000.00 in tax band 4 for 2018" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1185L", Money(200000.00), taxCalcResource2018)
-      result.payeTaxAmount.value shouldBe BigDecimal(75600.0)
+      result.payeTaxAmount.value shouldBe BigDecimal(70263.45)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 200000.00 in tax band 4 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(200000.00), taxCalcResource2019)
-      result.payeTaxAmount.value shouldBe BigDecimal(75000.0)
+      result.payeTaxAmount.value shouldBe BigDecimal(69370.95)
     }
     "Calculate Annual PAYE tax for a gross salary of 1190000.00 in tax band 4 for 2017" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1100L", Money(119000.00), taxCalcResource2017)
@@ -193,12 +193,12 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
 
     "Calculate Annual PAYE tax for a gross salary of 1190000.00 in tax band 4 for 2018" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1185L", Money(119000.00), taxCalcResource2018)
-      result.payeTaxAmount.value shouldBe BigDecimal(39756.40)
+      result.payeTaxAmount.value shouldBe BigDecimal(35956.40)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 1190000.00 in tax band 4 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(119000.00), taxCalcResource2019)
-      result.payeTaxAmount.value shouldBe BigDecimal(38896.40)
+      result.payeTaxAmount.value shouldBe BigDecimal(35096.40)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 45000.00 with tax code K100 for 2018" in new LivePAYETaxCalcServiceSuccess {
@@ -243,12 +243,12 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
 
     "Calculate Annual PAYE tax for a gross salary of 119000.00 in Scottish tax band 5 for 2018" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1185L", Money(119000.00), taxCalcResource2018Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(41365.31)
+      result.payeTaxAmount.value shouldBe BigDecimal(37470.31)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 160000.00 in Scottish tax band 6 for 2018" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1185L", Money(160000.00), taxCalcResource2018Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(59642.50)
+      result.payeTaxAmount.value shouldBe BigDecimal(54280.31)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 45000.00 K code (untaxed income) Scottish for 2018" in new LivePAYETaxCalcServiceSuccess {
@@ -363,12 +363,12 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
 
     "Calculate Annual PAYE tax for a gross salary of 119000.00 in Scottish tax band 5 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(119000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(41225.38)
+      result.payeTaxAmount.value shouldBe BigDecimal(37330.38)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 160000.00 in Scottish tax band 6 for 2019" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(160000.00), taxCalcResource2019Scottish)
-      result.payeTaxAmount.value shouldBe BigDecimal(59769.07)
+      result.payeTaxAmount.value shouldBe BigDecimal(54140.38)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 45000.00 K code (untaxed income) Scottish for 2019" in new LivePAYETaxCalcServiceSuccess {
