@@ -23,7 +23,10 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
 
   private def taxCalcFromJson(json: String): TaxCalc = {
     val resource: URL = getClass.getResource(json)
-    parse(fromURL(resource).getLines().mkString).as[TaxCalc](taxCalcFormat)
+    val file = fromURL(resource)
+    val taxCalc = parse(file.getLines().mkString).as[TaxCalc](taxCalcFormat)
+    file.close()
+    taxCalc
   }
 
   import org.scalatest.prop.TableDrivenPropertyChecks._
@@ -581,13 +584,14 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       100000,
       "annual",
       -1,
-      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json")  )
+      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json")
+  )
 
   "LiveTaxCalculatorService calculate tax" should {
     forAll(input) { (testDescription, isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn, expectedJson) =>
       s"${taxCalcResource.taxYear} $testDescription" in new LiveTaxCalcServiceSuccess {
 
-        val result: TaxCalc = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
+        val result:   TaxCalc = service.buildTaxCalc(isStatePensionAge, taxCalcResource, taxCode, grossPayPence, payPeriod, hoursIn)
         val expected: TaxCalc = taxCalcFromJson(expectedJson)
 
         print(Json.toJson(result))
