@@ -149,7 +149,7 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
   "PAYETaxCalculatorService.calculatePAYETax " should {
     "Calculate Annual PAYE tax for a gross salary of 35002.32 in tax band 2 for 2017" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1100T", Money(35002.32), taxCalcResource2017)
-      result.payeTaxAmount.value shouldBe BigDecimal(4798.60)
+      result.payeTaxAmount.value shouldBe BigDecimal(4798.66)
     }
 
     "Calculate Annual PAYE tax for a gross salary of 44000.00 in tax band 2 for 2018" in new LivePAYETaxCalcServiceSuccess {
@@ -161,6 +161,8 @@ class PAYETaxCalculatorServiceSpec extends WordSpecLike with Matchers with TaxYe
       val result: PAYETaxResult = service.calculatePAYETax("1250L", Money(44000.00), taxCalcResource2018)
       result.payeTaxAmount.value shouldBe BigDecimal(6298.20)
     }
+
+
 
     "Calculate Annual PAYE tax for a gross salary of 70000.00 in tax band 3 for 2017" in new LivePAYETaxCalcServiceSuccess {
       val result: PAYETaxResult = service.calculatePAYETax("1100T", Money(70000.00), taxCalcResource2017)
