@@ -584,7 +584,7 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       "SBRX",
       100000,
       "annual",
-      -1,
+      -1.0,
       "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json")
   )
   
