@@ -2,7 +2,7 @@
   "statePensionAge": false,
   "taxCode": "1100T",
   "payPerHour": "96.15",
-  "hours": 40,
+  "hours": 40.0,
   "averageAnnualTaxRate": "39.13",
   "marginalTaxRate": "47",
   "maxTaxRate": "50",

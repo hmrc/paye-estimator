@@ -19,7 +19,7 @@ Dont use the intelliJ load for HTML as this cannot navigate to the folder. Just 
         var taxCode = $('input[name="TaxCode"]').val();
         var grossPayPence = parseInt(($('input[name="GrossPay"]').val() + '00'), 10);
         var grossPayType = $("#GrossPayType").val();
-        var numberOfHours = parseInt($('input[name="NumberOfHours"]').val(), 10);
+        var numberOfHours = parseFloat($('input[name="NumberOfHours"]').val());
 
         $('#resultArea').text(JSON.stringify(JSON.parse(uk.gov.hmrc.payeestimator.services.LiveTaxCalculatorService().calculateTax(
             isStatePensionAge,
@@ -76,7 +76,7 @@ Dont use the intelliJ load for HTML as this cannot navigate to the folder. Just 
 
     <br>
     <div>
-        Number of hours: <input type="number" name="NumberOfHours" value="-1"><br>
+        Number of hours: <input type="number" step="0.5" min= -1 name="NumberOfHours" value="-1"><br>
     </div>
 
     <br>

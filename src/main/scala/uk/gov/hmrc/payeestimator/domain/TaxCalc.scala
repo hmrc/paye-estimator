@@ -38,7 +38,7 @@ case class TaxCalc(
   statePensionAge:      Boolean,
   taxCode:              String,
   payPerHour:           BigDecimal,
-  hours:                Int,
+  hours:                Double,
   averageAnnualTaxRate: BigDecimal,
   rateType:             Option[String],
   marginalTaxRate:      BigDecimal,
