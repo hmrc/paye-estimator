@@ -43,7 +43,7 @@ case class ExcessPayCalculator(taxCode: String, taxBandId: Int, taxablePay: Mone
         val previousBand = taxCalcResource
           .getPreviousTaxBand(taxBandId)
           .getOrElse(throw new TaxCalculatorConfigException(s"Could not find tax band configured for band ${taxBandId - 1}"))
-        applyResponse(success = true, Money(previousBand.period.maxAmountTaxedOn.-(taxablePay.value.intValue()).abs))
+        applyResponse(success = true, Money(previousBand.period.maxAmountTaxedOn.-(taxablePay.value).abs))
       }
     } else applyResponse(success = true, taxablePay)
 

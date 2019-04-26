@@ -585,7 +585,26 @@ class TaxCalculatorServiceSpec extends WordSpecLike with Matchers with Diagramme
       100000,
       "annual",
       -1.0,
-      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json")
+      "/data/2019_2020/2019_Scottish_TaxCalcResponse_SBRX.json"),
+    (
+      "ensure stuffs",
+      "false",
+      taxYear_2019_2020,
+      "1250L",
+      1475,
+      "weekly",
+      20.25,
+      "/data/2019_2020/2019_Hourly_Response.json")
+    ,
+    (
+      "ensure hourly pay with decimals works",
+      "false",
+      scottish_TaxYear_2019_2020,
+      "S1250L",
+      1050,
+      "weekly",
+      37.5,
+      "/data/2019_2020/2019_Scotland_Hourly_Response.json")
   )
   
   "LiveTaxCalculatorService calculate tax" should {
