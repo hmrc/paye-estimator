@@ -5,13 +5,11 @@ import uk.gov.hmrc.SbtArtifactory
 
 enablePlugins(SbtGitVersioning, ScalaJSPlugin, UniversalPlugin, SbtArtifactory)
 
-makePublicallyAvailableOnBintray := true
-
 name := "paye-estimator"
 
 LocalTempBuildSettings.localDefaultSettings
 
-majorVersion := 2
+majorVersion := 0
 
 scalaVersion := "2.11.12"
 
@@ -24,8 +22,6 @@ libraryDependencies ++= Seq(
 
 playCrossCompilationSettings
 
-makePublicallyAvailableOnBintray := true
-
 scalaJSStage in Global := FullOptStage
 
 topLevelDirectory := None
@@ -37,14 +33,14 @@ mappings in Universal ++= Seq((target.value / "scala-2.11" / s"${name.value}-opt
 val packageTgz = taskKey[File]("package-tgz")
 packageTgz := target.value / "universal" / (name.value + "-" + version.value + ".tgz")
 
-artifact in(Universal, packageTgz) ~= { art: Artifact => art.copy(`type` = "tgz", extension = "tgz") }
-addArtifact(artifact in(Universal, packageTgz), packageTgz in Universal)
+// artifact in(Universal, packageTgz) ~= { art: Artifact => art.copy(`type` = "tgz", extension = "tgz") }
+// addArtifact(artifact in(Universal, packageTgz), packageTgz in Universal)
 
 
-publishAndDistribute := (publishAndDistribute dependsOn (fullOptJS in Compile)).value
+// publishAndDistribute := (publishAndDistribute dependsOn (fullOptJS in Compile)).value
 
-publish <<= publish dependsOn (packageZipTarball in Universal)
+// publish <<= publish dependsOn (packageZipTarball in Universal)
 
-publishM2 <<= publishM2 dependsOn (packageZipTarball in Universal)
+// publishM2 <<= publishM2 dependsOn (packageZipTarball in Universal)
 
-publishLocal <<= publishLocal dependsOn (packageZipTarball in Universal)
+// publishLocal <<= publishLocal dependsOn (packageZipTarball in Universal)
