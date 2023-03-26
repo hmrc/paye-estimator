@@ -9,9 +9,11 @@ name := "paye-estimator"
 
 LocalTempBuildSettings.localDefaultSettings
 
+// TODO: I get complains when the major version is anything but 0, 
+// again, not sure why.
 majorVersion := 0
 
-scalaVersion := "2.11.12"
+scalaVersion := "2.12.17"
 
 crossScalaVersions := Seq("2.11.12")
 
@@ -33,14 +35,14 @@ mappings in Universal ++= Seq((target.value / "scala-2.11" / s"${name.value}-opt
 val packageTgz = taskKey[File]("package-tgz")
 packageTgz := target.value / "universal" / (name.value + "-" + version.value + ".tgz")
 
-// artifact in(Universal, packageTgz) ~= { art: Artifact => art.copy(`type` = "tgz", extension = "tgz") }
-// addArtifact(artifact in(Universal, packageTgz), packageTgz in Universal)
+artifact in(Universal, packageTgz) ~= { art: Artifact => art.withType("tgz").withExtension("tgz") }
+addArtifact(artifact in(Universal, packageTgz), packageTgz in Universal)
 
-
+// TODO: this doesn't work and I'm not sure why.
 // publishAndDistribute := (publishAndDistribute dependsOn (fullOptJS in Compile)).value
 
-// publish <<= publish dependsOn (packageZipTarball in Universal)
+publish := publish dependsOn (packageZipTarball in Universal)
 
-// publishM2 <<= publishM2 dependsOn (packageZipTarball in Universal)
+publishM2 := publishM2 dependsOn (packageZipTarball in Universal)
 
-// publishLocal <<= publishLocal dependsOn (packageZipTarball in Universal)
+publishLocal := publishLocal dependsOn (packageZipTarball in Universal)
