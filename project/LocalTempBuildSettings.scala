@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import scala.util.matching.Regex
 import org.eclipse.jgit.lib.{BranchConfig, Repository}
 import sbt.Keys._
 import sbt._
@@ -32,8 +32,8 @@ object LocalTempBuildSettings extends AutoPlugin {
       Resolvers() ++
       ArtefactDescription() ++
       Seq(
-        targetJvm := "jvm-1.8",
-        headers := HeaderSettings()
+        targetJvm := "jvm-1.8"
+        // headers := HeaderSettings()
       )
 }
 
@@ -62,13 +62,13 @@ object PublishSettings {
 }
 
 object HeaderSettings {
-
-  import de.heikoseeberger.sbtheader.license.Apache2_0
   import org.joda.time.DateTime
 
   val copyrightYear = DateTime.now().getYear.toString
   val copyrightOwner = "HM Revenue & Customs"
 
+  // The support for this type of mapping has been dropped
+  // headerLicense := Some(HeaderLicense.MIT("2015", "Heiko Seeberger"))
   def apply() = {
     Map(
       "scala" -> Apache2_0(copyrightYear, copyrightOwner),

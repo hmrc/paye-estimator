@@ -12,9 +12,6 @@ object Dependencies {
         "org.scalatest" %% "scalatest" % "3.0.5" % "test",
         "org.pegdown" % "pegdown" % "1.6.0"
       ),
-      play25 = Seq(
-        "com.typesafe.play" %% "play-json" % play25Version % "test"
-      ),
       play26 = Seq(
         "com.typesafe.play" %% "play-json" % play26Version % "test"
       )
